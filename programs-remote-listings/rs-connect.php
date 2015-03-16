@@ -116,6 +116,7 @@ class RS_Connect
     function rs_enqueue_items()
     {
         wp_enqueue_style('rs-f', plugins_url('/resources/frontend/rs.css', __FILE__));
+        wp_enqueue_script('rs-js', plugins_url('/resources/frontend/rs.js', __FILE__), array('jquery'));
     }
 
     function rs_set_title($title)
