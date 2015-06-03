@@ -1,0 +1,62 @@
+machine:
+  php:
+    version: 5.6.2
+
+  hosts:
+    programs.dev: 127.0.0.1
+
+dependencies:
+  pre:
+    # store repo plugins for later move
+    - mkdir ~/repo && mv * ~/repo
+
+    # get wordpress and move
+    - wget http://wordpress.org/latest.tar.gz
+    - tar xfz latest.tar.gz
+    - mv wordpress/* ./
+
+    # move plugins into place
+    - mv ~/repo/* wp-content/plugins/
+
+    # new database
+    - mysql -e 'CREATE DATABASE programs;' -uroot;
+
+    # setup wp-cli, db tables, wp-config.php
+    - wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
+    - php wp-cli.phar core config --dbname=programs --dbuser=root
+    - php wp-cli.phar core install --url='programs.dev' --title='Remote Plugin Test' --admin_user=admin --admin_email=admin@example.com --admin_password=admin
+
+    # setup codeception
+    # - wget http://codeception.com/releases/2.0.12/codecept.phar -P wp-content/plugins/programs-tests/
+    - cd wp-content/plugins/programs-remote-tests/ && composer install --prefer-source --no-interaction
+
+  post:
+    # web hosting
+    - cp wp-content/plugins/programs-tests/circleci-apache-conf /etc/apache2/sites-available
+    - a2ensite circleci-apache-conf
+    - sudo service apache2 restart
+
+    # enable phantomjs in webdriver mode
+    - phantomjs --webdriver=4444  --ssl-protocol=TLSv1:
+        background: true
+
+    # define braintree API vars
+    #- sed -i "s|$table_prefix = 'wp_';|$table_prefix = 'wp_'; \ndefine( 'BRAINTREE_MERCHANT_ID_TEST', 'fztvqpgwr4z8jrtj' ); \ndefine( 'BRAINTREE_PUBLIC_KEY_TEST', 'w7qbvtbx7zdzvcbz' ); \ndefine( 'BRAINTREE_PRIVATE_KEY_TEST', 'e688eb1eea0309363c7d4e3708c698cc' );|" wp-config.php
+
+    # set permalinks
+    # - php wp-cli.phar rewrite structure '/%postname%/'
+
+    # activate essential plugins
+    - php wp-cli.phar plugin activate programs-remote-listings
+    - php wp-cli.phar option update rs_settings '{"rs_domain": "tests","rs_template": {"before": "","after": ""} }' --format=json
+
+test:
+  override:
+    # combine these once all working
+    - cd wp-content/plugins/programs-remote-tests/ && php vendor/bin/codecept run --env ci --verbose
+
+general:
+  artifacts:
+    - "wp-content/plugins/programs-tests/_output"
+    - "wp-content/debug.log"
+    - "wp-content/uploads" # rs-debug logs live here
