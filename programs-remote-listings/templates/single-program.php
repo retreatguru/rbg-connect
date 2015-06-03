@@ -9,36 +9,19 @@ if(isset($options['rs_template']['before'])) echo $options['rs_template']['befor
 
 <?php global $rs_the_program; ?>
 
-        <article class="page type-page status-publish entry">
-
-        <?php // do_action( 'rs_before_single_program_page' ) ?>
-
-
+        <article class="page type-page status-publish single-program">
                 <header class="entry-header">
                 <h1 class="rs-program-title"><?php echo $rs_the_program->title; ?></h1>
                 </header>
 
                 <div class="entry-content">
-                <?php // do_action( 'rs_before_single_program' ) ?>
-
-                <?php // Thumbnail ?>
                 <?php  if ( $rs_the_program->photo_details ) : ?>
                 <div class="rs-program-photo">
                     <img src="<?php echo $rs_the_program->photo_details->medium->url; ?>" width="<? echo $rs_the_program->photo_details->medium->width; ?>" height="<? echo $rs_the_program->photo_details->medium->height; ?>">
-                    <?php //rs_post_thumbnail_caption(); ?>
                 </div>
-
                 <?php endif; ?>
-
-                <?php
-                // Link to wpmultisite edit page
-                // edit_post_link( __( 'Edit Program' ), '<div class="edit-link">', '</div>' );
-                ?>
-
-
                 <p class="rs-program-date"><?php echo $rs_the_program->date; ?></p>
 
-                <?php // Registration (link or message) ?>
                 <div class="rs-regsitration-wrap"><?php echo $rs_the_program->registration_action; ?></div>
 
                 <div class="rs-program-meta">
@@ -80,27 +63,14 @@ if(isset($options['rs_template']['before'])) echo $options['rs_template']['befor
                     <?php if ( $rs_the_program->custom ) : ?>
                         <div class="rs-program-custom-wrap"><?php echo $rs_the_program->custom; ?></div>
                     <?php endif; ?>
-
                 </div>
-                <?php //  endif; ?>
 
                 <?php // Program Details ?>
                 <div class="rs-program-content">
                     <?php if ( $rs_the_program->text ) : ?>
-                        <div class="rs-program-custom-wrap"><?php echo $rs_the_program->text_full; ?></div>
+                        <div class="rs-program-custom-wrap"><?php echo wpautop($rs_the_program->text_full); ?></div>
                     <?php endif; ?>
                 </div>
-
-            </div><!-- #program-## -->
-
-            <?php // do_action( 'rs_after_single_program' ) ?>
-
-
-            <?php
-            //     endforeach;
-            //   wp_reset_query();
-            //  endif; // end rs_has_teachers
-            //   ?>
 
             <?php // Category(ies) ?>
             <?php $program_cats = class_exists( 'RS_Enhanced_Plugin') ? rs_has_program_categories() : null; ?>
@@ -112,19 +82,27 @@ if(isset($options['rs_template']['before'])) echo $options['rs_template']['befor
             <?php endif; ?>
 
             <?php if ( $rs_the_program->additional_info ) : ?>
-
                 <div class="rs-program-additional-info"><?php echo $rs_the_program->additional_info; ?></div>
             <?php endif; ?>
 
-            <?php //comments_template( '', true ); ?>
+            <?php if ( $rs_the_program->teacher_details->teacher_objects ) : ?>
+                <div style="clear:left; float:left;">
+                <h3>Teachers</h3>
+                    <?php foreach($rs_the_program->teacher_details->teacher_objects as $teacher) : ?>
+                        <div class="teacher" style="clear:left; float:left; padding:10px 0;">
+                            <p>
+                                <a href="/teacher/<?php echo $teacher->ID; ?>/<?php echo $teacher->post_name; ?>"><img src="<?php echo $teacher->photo_details->thumbnail->url; ?>" style="float:left; margin:0 20px 10px 0;"></a>
+                                <strong><?php echo $teacher->post_title; ?></strong><br/>
 
-
-
-        <?php // do_action( 'rs_after_single_program_page' ) ?>
-
-</article></div>
-
-<?php get_sidebar(); ?>
+                                <?php echo wp_trim_words( nl2br($teacher->post_content), 70, '...' ); ?>
+                                <br/><a href="/teacher/<?php echo $teacher->ID; ?>/<?php echo $teacher->post_name; ?>">Learn more about <?php echo $teacher->post_title; ?></a>
+                            </p>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+            <?php endif; ?>
+            
+</article>
 
 <?php if(isset($options['rs_template']['after'])) echo $options['rs_template']['after']; ?>
 

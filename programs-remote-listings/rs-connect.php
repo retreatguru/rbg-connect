@@ -2,27 +2,31 @@
 
 /*
 Plugin Name: Booking Manager Connect
-Description: Connect to the Mandala Booking Manager to show program listings on your site and link to registration forms.
+Description: Connect to your Retreat Booking Guru platform
 Version: 1.2.1
-Author: Blue Mandala
-Author URI: http://bluemandala.com
+Author: Retreat Guru
+Author URI: http://retreat.guru
 */
 
 class RS_Connect
 {
-
     public function __construct()
     {
         // Base domain to connect with (do not include http://)
         $this->mbm_domain = 'secure.retreat.guru';
+        $options = get_option('rs_settings');
+
+        if(isset($options['style']))
+        {
+            $this->style = $options['style'];
+        } else {
+            $this->style = 'program';
+        }
 
         $this->plugin_dir      = plugin_dir_path( __FILE__ );
         $this->includes();
 
         add_filter('admin_init', array($this, 'rs_flush_rewrite_rules'));
-        add_filter('rewrite_rules_array', array($this, 'rs_create_rewrite_rules'));
-        add_filter('query_vars', array($this, 'rs_add_query_vars'));
-        add_filter('template_include', array($this, 'rs_redirect_intercept'));
         add_filter('wp_title', array($this, 'rs_set_title'), 100);
 
         add_action('wp_enqueue_scripts', array($this, 'rs_enqueue_items'));
@@ -30,65 +34,91 @@ class RS_Connect
         add_action('admin_init', array($this, 'rs_register_settings'));
         add_action('admin_notices', array($this, 'my_admin_notice'));
 
-        add_shortcode('rs_programs_table', array($this, 'rs_shortcode_programs_table'));
-//      add_shortcode('rs_programs', array($this, 'rs_shortcode_programs'));
+        add_shortcode('rs_programs', array($this, 'rs_shortcode_programs'));
+
+        add_action('init', array($this, 'setup_rewrite'));
+        add_filter( 'query_vars', array($this, 'register_query_var' ));
+        add_filter('template_include', array($this, 'template_include'), 1, 1);
 
     }
 
-    function includes()
-    {
-        if($this->configured()) include( "{$this->plugin_dir}rs-connect-widgets.php" );
+    function setup_rewrite() {
+        global $wp_rewrite;
+        // Programs
+        add_rewrite_rule( $this->style.'s/?$', 'index.php?programs=true', 'top' );
+        add_rewrite_rule( $this->style.'s/category/([^/]*)/?', 'index.php?programs=true&category=$matches[1]', 'top' );
+        add_rewrite_rule( $this->style.'/([^/]*)/?', 'index.php?programs=true&program=$matches[1]', 'top' );
+        add_rewrite_rule( $this->style.'/([^/]*)/([^/]*)/?', 'index.php?programs=true&program=$matches[1]', 'top' );
+        // Teachers
+        add_rewrite_rule( 'teachers/?$', 'index.php?teachers=true', 'top' );
+        add_rewrite_rule( 'teachers/category/([^/]*)/?', 'index.php?teachers=true&category=$matches[1]', 'top' );
+        add_rewrite_rule( 'teacher/([^/]*)/([^/]*)/?', 'index.php?teachers=true&teacher=$matches[1]', 'top' );
     }
 
-    /*    function rs_shortcode_programs($atts)
-        {
-            ob_start();
-            $this->rs_load_template('archive-program.php');
-            $ob_get = ob_get_contents();
-            ob_end_clean();
+    function register_query_var( $vars ) {
+        $vars[] = 'programs';
+        $vars[] = 'program';
+        $vars[] = 'teachers';
+        $vars[] = 'teacher';
+        $vars[] = 'category';
 
-            return $ob_get;
-        }*/
+        return $vars;
+    }
 
-    function rs_shortcode_programs_table($atts)
+    function rs_set_title($title)
     {
-        $vars = null;
+        global $wp_query;
 
-        if ($atts['category']) {
-            $vars .= 'category=' . $atts['category'] . '&';
+        if(get_query_var('category')) $category = get_query_var('category') . " | "; else $category = '';
+
+        if (get_query_var('program')) {
+            $rs_the_program = $this->get_program(get_query_var('program'));
+            return $rs_the_program->title . " | " . get_bloginfo('name');
         }
 
-        global $rs_the_programs;
-        $rs_the_programs = array_reverse($this->get_programs($vars));
+        if (get_query_var('programs')) {
+            return ucfirst($this->style) . 's' . " | " . $category . get_bloginfo('name');
+        }
 
-        ob_start();
-        $this->rs_load_template('shortcode-programs-table.php');
-        $ret = ob_get_contents();
-        ob_end_clean();
-
-        return $ret;
+        return $title;
     }
 
-    function rs_redirect_intercept($template)
+    function template_include($template)
     {
+        global $wp_query; //Load $wp_query object
 
-        if (get_query_var('pagename') == 'programs') {
-
-            $program = get_query_var('program');
-
-            global $api_vars;
-            if(get_query_var('category')) {  $api_vars .= 'category=' . get_query_var('category') . '&'; }
-
-            if (empty($program)) {
-                $this->rs_load_template('archive-program.php');
-                exit;
-            } else {
+        // Load program views
+        if($wp_query->query_vars['programs'])
+        {
+            if(isset($wp_query->query_vars['program']))
+            {
                 global $rs_the_program;
-                $rs_the_program = $this->get_program($program);
-                $this->rs_load_template('single-program.php');
-                exit;
+                $rs_the_program = $this->get_program($wp_query->query_vars['program']);
+
+                return $this->get_template_path('single-program.php');
             }
 
+            global $api_vars;
+            if($wp_query->query_vars['category']) {  $api_vars .= 'category=' . get_query_var('category') . '&'; }
+
+            return $this->get_template_path('archive-program.php');
+        }
+
+        // Load teachers views
+        if($wp_query->query_vars['teachers'])
+        {
+            if(isset($wp_query->query_vars['teacher']))
+            {
+                global $rs_the_teacher;
+                $rs_the_teacher= $this->get_teacher($wp_query->query_vars['teacher']);
+
+                return $this->get_template_path('single-teacher.php');
+            }
+
+            global $api_vars;
+            if($wp_query->query_vars['category']) {  $api_vars .= 'category=' . get_query_var('category') . '&'; }
+
+            return $this->get_template_path('archive-teacher.php');
         }
 
         return $template;
@@ -103,14 +133,68 @@ class RS_Connect
         }
     }
 
+    function get_template_path($template)
+    {
+        if($this->template_overridden($template)) {
+            return $this->template_overridden($template);
+        } else {
+            return plugin_dir_path(__FILE__) . 'templates/'.$template;
+        }
+    }
+
+    function template_overridden($template)
+    {
+        $path = locate_template($template);
+        if ($path) return $path;
+
+        return false;
+    }
+
+    function includes()
+    {
+        if($this->configured()) include( "{$this->plugin_dir}rs-connect-widgets.php" );
+    }
+
+    function rs_shortcode_programs($atts)
+    {
+        $vars = null;
+
+        if (isset($atts['category'])) {
+            $vars .= 'category=' . $atts['category'] . '&';
+        }
+
+        global $rs_the_programs;
+        $rs_the_programs = array_reverse($this->get_programs($vars));
+
+        global $shortcode_atts;
+        $shortcode_atts = $atts;
+
+        ob_start();
+        $this->rs_load_template('shortcode-programs.php');
+        $ret = ob_get_contents();
+        ob_end_clean();
+
+        return $ret;
+    }
+
     public function get_program($id)
     {
-        return json_decode($this->cURL($this->get_url_to_mbm() . '/wp-json/events/' . $id));
+        return json_decode($this->cURL($this->get_url_to_mbm() . '/wp-json/events/' . $id . '?' .rand()));
     }
 
     public function get_programs($vars = null)
     {
         return json_decode($this->cURL($this->get_url_to_mbm() . '/wp-json/events/?' . $vars . rand()));
+    }
+
+    public function get_teachers($vars = null)
+    {
+        return json_decode($this->cURL($this->get_url_to_mbm() . '/wp-json/teachers/?' . $vars . rand()));
+    }
+
+    public function get_teacher($id)
+    {
+        return json_decode($this->cURL($this->get_url_to_mbm() . '/wp-json/teachers/' . $id  . '?' .rand()));
     }
 
     function rs_enqueue_items()
@@ -119,20 +203,8 @@ class RS_Connect
         wp_enqueue_script('rs-js', plugins_url('/resources/frontend/rs.js', __FILE__), array('jquery'));
     }
 
-    function rs_set_title($title)
-    {
-        if(get_query_var('category')) $category = get_query_var('category'); else $category = '';
-        if (get_query_var('pagename') == 'programs') {
-            return 'Programs | ' . $category . get_bloginfo('name');
-        }
-
-
-        return $title;
-    }
-
     function rs_admin_menu_items()
     {
-
         add_menu_page('Booking Manager', 'Booking Manager', 'manage_options', 'booking-manager.php', arraY(&$this, 'admin_programs_page'), 'dashicons-calendar-alt');
         add_submenu_page('booking-manager.php', 'Program List', 'Program List', 'manage_options', 'booking-manager.php', array(&$this, 'admin_programs_page'));
         add_submenu_page('booking-manager.php', 'Settings', 'Settings', 'manage_options', 'options-mbm', array(&$this, 'admin_settings_page'));
@@ -142,31 +214,6 @@ class RS_Connect
     {
         global $wp_rewrite;
         $this->rs_flush_rewrite_rules();
-    }
-
-    function rs_create_rewrite_rules($rules)
-    {
-        global $wp_rewrite;
-        $newRule = array(
-            'programs/category/(.+)' => 'index.php?pagename=programs' . '&category=' . $wp_rewrite->preg_index(1),
-            'programs/(.+)/(.+)' => 'index.php?pagename=programs' . '&program=' . $wp_rewrite->preg_index(1),
-            'programs/' => 'index.php?pagename=programs' . '&program='
-        );
-
-        $newRules = $newRule + $rules;
-
-        return $newRules;
-    }
-
-
-    function rs_add_query_vars($qvars)
-    {
-        $qvars[] = 'program';
-        $qvars[] = 'programs';
-        $qvars[] = 'vars';
-        $qvars[] = 'category';
-
-        return $qvars;
     }
 
     function rs_flush_rewrite_rules()
@@ -195,11 +242,6 @@ class RS_Connect
 
     }
 
-
-    /*
-    * Register the settings
-    */
-
     function rs_register_settings()
     {
         register_setting('rs_settings', 'rs_settings');
@@ -213,14 +255,13 @@ class RS_Connect
         return true;
     }
 
-
     function my_admin_notice()
     {
         if($this->configured()) return true;
         ?>
         <div class="error">
-            <p>Please specify your mandala booking manager subdomain.
-                    <a href="<?php echo admin_url('admin.php?page=options-mbm'); ?>">Click Here</a></p>
+            <p>Please specify your Retreat Booking Guru subdomain.
+                <a href="<?php echo admin_url('admin.php?page=options-mbm'); ?>">Click Here</a></p>
         </div>
     <?php
     }
@@ -229,20 +270,18 @@ class RS_Connect
     {
         $options = get_option('rs_settings');
         if (empty($options['rs_domain'])) {
+
             return 'http://' . $this->mbm_domain;
         } else {
+
             return 'http://' . $options['rs_domain'] . "." . $this->mbm_domain;
         }
-
     }
 
     function admin_programs_page()
     {
-
         $rs_programs = $this->get_programs();
-
         ?>
-
         <div style="clear:left; margin:20px 20px 20px 0;">
             <a href="<?php echo $this->get_url_to_mbm(); ?>/wp-admin/admin.php?page=rs-programs" class="button">View All Programs</a>
             <a href="<?php echo $this->get_url_to_mbm(); ?>/wp-admin/admin.php?page=registrations" class="button">View All Registrations</a>
@@ -270,21 +309,19 @@ class RS_Connect
         </table>
 
     <?php
-
     }
 
-    //The markup for your plugin settings page
     function admin_settings_page()
     {
+        $this->rs_flush_rewrite_rules();
         ?>
         <div class="wrap">
-            <h2>Mandala Booking Manager Settings</h2>
+            <h2>Retreat Booking Guru Settings</h2>
 
             <form action="options.php" method="post"><?php
                 settings_fields('rs_settings');
                 do_settings_sections(__FILE__);
 
-                //get the older values, wont work the first time
                 $options = get_option('rs_settings'); ?>
                 <table class="form-table">
                     <tr>
@@ -297,6 +334,18 @@ class RS_Connect
                                     .<?php echo $this->mbm_domain; ?> <br/>
                                     <span class="description">Please enter a valid subdomain.</span>
                                 </label>
+                            </fieldset>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Style</th>
+                        <td>
+                            <fieldset>
+                                What do you offer?<br/>
+                                <small>This helps set up the correct permalink structure for your site</small><br/>
+                                <input type="radio" name="rs_settings[style]" value="program" <?php if($options['style'] == 'program' || ! isset($options['style'])) { echo "checked"; } ?>>Programs<br>
+                                <input type="radio" name="rs_settings[style]" value="event" <?php if($options['style'] == 'event') { echo "checked"; } ?>>Events<br>
+                                <input type="radio" name="rs_settings[style]" value="retreat" <?php if($options['style'] == 'retreat') { echo "checked"; } ?>>Retreats
                             </fieldset>
                         </td>
                     </tr>
@@ -322,10 +371,7 @@ class RS_Connect
         </div>
     <?php
     }
-
-
 }
-
 global $RS_Connect;
 $RS_Connect = new RS_Connect();
 register_activation_hook(__file__, array($RS_Connect, 'rs_activate'));
