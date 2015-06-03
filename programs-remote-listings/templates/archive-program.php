@@ -44,7 +44,7 @@ if(isset($options['rs_template']['before'])) echo $options['rs_template']['befor
 
             </div>
 
-        <? endforeach; } else { echo 'Sorry, no programs exist here.'; }?>
+        <?php endforeach; } else { echo 'Sorry, no programs exist here.'; }?>
 
         </div>
 
