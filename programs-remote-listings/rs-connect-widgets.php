@@ -86,7 +86,7 @@ if ( ! class_exists( 'RS_Connect_Widget' ) ) {
 
                         </li>
 
-                        <?
+                        <?php
                         $count++;
                     }
                 }
