@@ -48,7 +48,7 @@ dependencies:
 
     # activate essential plugins
     - php wp-cli.phar plugin activate programs-remote-listings
-    - php wp-cli.phar option update rs_settings '{"rs_domain": "tests","rs_template": {"before": "","after": ""} }' --format=json
+    - php wp-cli.phar option update rs_settings '{"rs_domain": "tests"}' --format=json
 
 test:
   override:
