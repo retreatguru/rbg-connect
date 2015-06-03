@@ -32,7 +32,7 @@ dependencies:
 
   post:
     # web hosting
-    - cp wp-content/plugins/programs-tests/circleci-apache-conf /etc/apache2/sites-available
+    - cp wp-content/plugins/programs-remote-tests/circleci-apache-conf /etc/apache2/sites-available
     - a2ensite circleci-apache-conf
     - sudo service apache2 restart
 
