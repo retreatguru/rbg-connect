@@ -23,8 +23,8 @@ dependencies:
 
     # setup wp-cli, db tables, wp-config.php
     - wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
-    - php wp-cli.phar core config --dbname=programs --dbuser=root
-    - php wp-cli.phar core install --url='programs.dev' --title='Remote Plugin Test' --admin_user=admin --admin_email=admin@example.com --admin_password=admin
+    - php wp-cli.phar core config --dbname=programsconnect --dbuser=root
+    - php wp-cli.phar core install --url='programsconnect.dev' --title='Remote Plugin Test' --admin_user=admin --admin_email=admin@example.com --admin_password=admin
 
     # setup codeception
     # - wget http://codeception.com/releases/2.0.12/codecept.phar -P wp-content/plugins/programs-tests/
