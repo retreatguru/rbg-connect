@@ -11,4 +11,10 @@ modules:
         - AcceptanceHelper
     config:
         PhpBrowser:
-            url: 'http://programsconnect.dev/'
+            url: 'http://programsconnect.dev'
+env:
+    ci:
+        modules:
+            config:
+                PhpBrowser:
+                    url: 'http://programsconnect.dev'
