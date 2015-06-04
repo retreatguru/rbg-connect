@@ -34,6 +34,7 @@ dependencies:
     # web hosting
     - cp wp-content/plugins/programs-remote-tests/circleci-apache-conf /etc/apache2/sites-available
     - a2ensite circleci-apache-conf
+    - a2enmod rewrite
     - sudo service apache2 restart
 
     # enable phantomjs in webdriver mode
@@ -44,12 +45,12 @@ dependencies:
     #- sed -i "s|$table_prefix = 'wp_';|$table_prefix = 'wp_'; \ndefine( 'BRAINTREE_MERCHANT_ID_TEST', 'fztvqpgwr4z8jrtj' ); \ndefine( 'BRAINTREE_PUBLIC_KEY_TEST', 'w7qbvtbx7zdzvcbz' ); \ndefine( 'BRAINTREE_PRIVATE_KEY_TEST', 'e688eb1eea0309363c7d4e3708c698cc' );|" wp-config.php
 
     # set permalinks
-    # - php wp-cli.phar rewrite structure '/%postname%/'
+    - cp wp-content/plugins/programs-remote-tests/wp-cli.yml wp-cli.yml
+    - php wp-cli.phar rewrite structure '/%postname%/' --hard
 
     # activate essential plugins
     - php wp-cli.phar plugin activate programs-remote-listings
     - php wp-cli.phar option update rs_settings "{\"rs_domain\":\"tests\"}" --format=json
-    - php wp-cli.phar rewrite structure '/%postname%/'
 
 test:
   override:
