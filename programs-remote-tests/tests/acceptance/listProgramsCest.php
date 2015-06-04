@@ -13,7 +13,7 @@ class listProgramsCest
 
     public function listPrograms(AcceptanceTester $I)
     {
-        $I->amOnPage('/programs');
+        $I->amOnPage('/?programs=true');
         $I->see('Donation Payment Program');
         $I->see('Example Program');
         $I->click('Example Program');
