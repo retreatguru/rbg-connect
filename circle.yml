@@ -19,7 +19,7 @@ dependencies:
     - mv ~/repo/* wp-content/plugins/
 
     # new database
-    - mysql -e 'CREATE DATABASE programs;' -uroot;
+    - mysql -e 'CREATE DATABASE programsconnect;' -uroot;
 
     # setup wp-cli, db tables, wp-config.php
     - wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
