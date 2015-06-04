@@ -53,7 +53,7 @@ dependencies:
 test:
   override:
     # combine these once all working
-    - cd wp-content/plugins/programs-remote-tests/ && php vendor/bin/codecept run --env ci --verbose
+    - cd wp-content/plugins/programs-remote-tests/ && php vendor/bin/codecept run --verbose
 
 general:
   artifacts:
