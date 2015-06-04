@@ -3,7 +3,7 @@
 <VirtualHost *:80>
   LoadModule php5_module /home/ubuntu/.phpenv/versions/5.6.2/libexec/apache2/libphp5.so
 
-  DocumentRoot /home/ubuntu/programsconnect
+  DocumentRoot /home/ubuntu/programs-connect
   DirectoryIndex index.php
   ServerName programsconnect.dev
   <FilesMatch \.php$>
