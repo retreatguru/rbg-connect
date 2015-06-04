@@ -46,11 +46,11 @@ dependencies:
 
     # set permalinks
     - cp wp-content/plugins/programs-remote-tests/wp-cli.yml wp-cli.yml
-    - php wp-cli.phar rewrite structure '/%postname%/' --hard
 
     # activate essential plugins
     - php wp-cli.phar plugin activate programs-remote-listings
     - php wp-cli.phar option update rs_settings "{\"rs_domain\":\"tests\", \"style\":\"program\"}" --format=json
+    - php wp-cli.phar rewrite structure '/%postname%/' --hard
 
 test:
   override:
