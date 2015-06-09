@@ -2,7 +2,7 @@
 
 /*
 Plugin Name: Booking Manager Connect
-Description: Connect to your Retreat Booking Guru platform
+Description: Connect to Retreat Booking Guru to show program listings on your site and link to registration forms.
 Version: 1.2.1
 Author: Retreat Guru
 Author URI: http://retreat.guru
@@ -261,7 +261,7 @@ class RS_Connect
         ?>
         <div class="error">
             <p>Please specify your Retreat Booking Guru subdomain.
-                <a href="<?php echo admin_url('admin.php?page=options-mbm'); ?>">Click Here</a></p>
+                    <a href="<?php echo admin_url('admin.php?page=options-mbm'); ?>">Click Here</a></p>
         </div>
     <?php
     }
@@ -285,7 +285,7 @@ class RS_Connect
         <div style="clear:left; margin:20px 20px 20px 0;">
             <a href="<?php echo $this->get_url_to_mbm(); ?>/wp-admin/admin.php?page=rs-programs" class="button">View All Programs</a>
             <a href="<?php echo $this->get_url_to_mbm(); ?>/wp-admin/admin.php?page=registrations" class="button">View All Registrations</a>
-            <a href="<?php echo $this->get_url_to_mbm(); ?>/wp-admin/admin.php?page=rs-transactions" class="button">View All Finance</a>
+            <a href="<?php echo $this->get_url_to_mbm(); ?>/wp-admin/admin.php?page=rs-transactions" class="button">View All Transactions</a>
         </div>
 
         <table class="wp-list-table widefat fixed posts">

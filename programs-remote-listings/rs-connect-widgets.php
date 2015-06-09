@@ -62,13 +62,13 @@ if ( ! class_exists( 'RS_Connect_Widget' ) ) {
                         <li>
                             <?php if ($show_thumbnail && $program->photo_details) : ?>
                                 <div class="rs-program-thumbnail">
-                                    <a href="/programs/<?php echo $program->ID; ?>/<?php echo $program->slug; ?>"><img
+                                    <a href="/<?php echo $RS_Connect->style; ?>/<?php echo $program->ID; ?>/<?php echo $program->slug; ?>"><img
                                             src="<?php echo $program->photo_details->thumbnail->url; ?>"
                                             width="<?php echo $image_w; ?>" height="<?php echo $image_h; ?>"></a>
                                 </div>
                             <?php endif; ?>
                             <h4 class="rs-program-title"><a
-                                    href="/programs/<?php echo $program->ID; ?>/<?php echo $program->slug; ?>"><?php echo $program->title; ?></a>
+                                    href="/<?php echo $RS_Connect->style; ?>/<?php echo $program->ID; ?>/<?php echo $program->slug; ?>"><?php echo $program->title; ?></a>
                             </h4>
 
                             <?php if ($show_teacher && !empty($program->teacher_objects)) : ?>
@@ -81,7 +81,7 @@ if ( ! class_exists( 'RS_Connect_Widget' ) ) {
 
                             <p class="rs-program-excerpt"><?php if ($show_excerpt) {
                                     echo wp_trim_words($program->text, $excerpt_words);
-                                    if ($excerpt_more) echo '<a href="/programs/'.$program->ID.'/'.$program->slug.'">'.$excerpt_more.'</a>';
+                                    if ($excerpt_more) echo '<a href="/'.$RS_Connect->style.'s/'.$program->ID.'/'.$program->slug.'">'.$excerpt_more.'</a>';
                                 } ?></p>
 
                         </li>
@@ -96,7 +96,7 @@ if ( ! class_exists( 'RS_Connect_Widget' ) ) {
             ?>
             </ul>
             <?php
-            echo $after_widget;
+
         }
 
         // do validation
