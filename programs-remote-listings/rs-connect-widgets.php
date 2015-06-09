@@ -71,10 +71,6 @@ if ( ! class_exists( 'RS_Connect_Widget' ) ) {
                                     href="/<?php echo $RS_Connect->style; ?>/<?php echo $program->ID; ?>/<?php echo $program->slug; ?>"><?php echo $program->title; ?></a>
                             </h4>
 
-                            <?php if ($show_teacher && !empty($program->teacher_objects)) : ?>
-                                <p class="rs-program-teacher"><?php echo $program->teacher_list; ?></p>
-                            <?php endif; ?>
-
                             <p class="rs-program-date"><?php if ($show_date) {
                                     echo $program->date;
                                 } ?></p>
@@ -91,7 +87,7 @@ if ( ! class_exists( 'RS_Connect_Widget' ) ) {
                     }
                 }
 
-            if ( $view_all )  echo '<p><a href="/programs">' . $view_all . '</a></p>';
+            if ( $view_all )  echo '<p><a href="/'.$RS_Connect->style.'s/'.'">' . $view_all . '</a></p>';
 
             ?>
             </ul>
@@ -175,10 +171,6 @@ if ( ! class_exists( 'RS_Connect_Widget' ) ) {
                 <label for="<?php echo $this->get_field_id('view_all'); ?>"><?php _e('"View all" link text:'); ?></label> <input class="widefat" id="<?php echo $this->get_field_id('view_all'); ?>" name="<?php echo $this->get_field_name('view_all'); ?>" type="text" value="<?php echo esc_attr( $instance['view_all'] ); ?>" />
             </p>
             <h4><?php _e( 'Options:' ); ?></h4>
-            <p>
-                <input type="checkbox" class="checkbox" id="<?php echo $this->get_field_id('featured_only'); ?>" name="<?php echo $this->get_field_name('featured_only'); ?>"<?php checked( $instance['featured_only'] ); ?> />
-                <label for="<?php echo $this->get_field_id('featured_only'); ?>"><?php _e( 'Only featured programs' ); ?></label>
-            </p>
             <p>
                 <label for="<?php echo $this->get_field_id('category'); ?>"><?php _e( 'Only from category (use slug):' ); ?></label> <input type="text" value="<?php echo esc_attr( $instance['category'] ); ?>" name="<?php echo $this->get_field_name('category'); ?>" id="<?php echo $this->get_field_id('category'); ?>" class="widefat" />
             </p>
