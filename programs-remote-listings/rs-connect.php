@@ -157,22 +157,29 @@ class RS_Connect
 
     function rs_shortcode_programs($atts)
     {
+        global $rs_the_programs, $shortcode_atts;
+
         $vars = null;
 
         if (isset($atts['category'])) {
             $vars .= 'category=' . $atts['category'] . '&';
         }
 
-        global $rs_the_programs;
-        $rs_the_programs = array_reverse($this->get_programs($vars));
+        $template = 'shortcode-programs.php';
+        if (isset($atts['table'])) {
+            $template = 'shortcode-programs-table.php';
+        }
 
-        global $shortcode_atts;
+        $rs_the_programs = array_reverse($this->get_programs($vars));
         $shortcode_atts = $atts;
 
         ob_start();
-        $this->rs_load_template('shortcode-programs.php');
-        $ret = ob_get_contents();
-        ob_end_clean();
+        if ($overridden_template = locate_template('shortcode-programs.php')) {
+            include($overridden_template);
+        } else {
+            include(plugin_dir_path(__FILE__) . 'templates/' . $template);
+        }
+        $ret = ob_get_clean();
 
         return $ret;
     }
