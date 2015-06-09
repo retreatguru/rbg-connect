@@ -101,7 +101,7 @@ if(isset($options['rs_template']['before'])) echo $options['rs_template']['befor
                     <?php endforeach; ?>
                 </div>
             <?php endif; ?>
-            
+        <div style="clear:both;"></div>
 </article>
 
 <?php if(isset($options['rs_template']['after'])) echo $options['rs_template']['after']; ?>
