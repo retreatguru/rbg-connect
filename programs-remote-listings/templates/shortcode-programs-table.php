@@ -1,7 +1,7 @@
 <table class="pure-table">
     <thead>
         <tr>
-            <th>Start Date - End Date</th>
+            <th>Dates</th>
             <th>Available Spots</th>
             <th>Availability</th>
         </tr>
