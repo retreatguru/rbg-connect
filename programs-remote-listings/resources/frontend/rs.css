@@ -125,5 +125,9 @@ div.hasDatepicker { float: left; margin-right: 20px; }
 .shortcode .status div { display:inline; }
 .shortcode .status { width:150px;  }
 
-.rs-program.shortcode.table td, .rs-program.shortcode.table th { padding:5px; }
-.rs-program.shortcode.table tr:nth-child(even) {background: #f9f9f9;}
+.rs-program.shortcode.table td, .rs-program.shortcode.table th { padding:5px; border-bottom: 1px solid #eaeaea; }
+.rs-program.shortcode.table tr:nth-child(even) {background: #f9f9f9 !important;}
+
+.rs-program.shortcode.table .rs-availability { text-align:center; }
+.rs-program.shortcode.table .rs-show-more-link { text-align:center; }
+.rs-program.shortcode.table .rs-show-register-link { text-align:center; }
