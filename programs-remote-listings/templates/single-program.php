@@ -27,32 +27,32 @@ if(isset($options['rs_template']['before'])) echo $options['rs_template']['befor
                 <div class="rs-program-meta">
 
                     <?php // Pricing ?>
-                    <?php if ( $rs_the_program->price_details ) : ?>
+                    <?php if ( isset($rs_the_program->price_details) ) : ?>
                         <div class="rs-program-price"><?php echo $rs_the_program->price_details ?></div>
                     <?php endif; ?>
 
                     <?php // Datetime details ?>
-                    <?php if ( $rs_the_program->date_time ) : ?>
+                    <?php if ( isset($rs_the_program->date_time) ) : ?>
                         <p class="rs-program-datetime"><span class="rs-program-label">Date and Time Details:</span> <?php echo $rs_the_program->date_time; ?></p>
                     <?php endif; ?>
 
                     <?php // Location ?>
-                    <?php if ( $rs_the_program->location ) : ?>
+                    <?php if ( isset($rs_the_program->location) ) : ?>
                         <p class="rs-program-location"><span class="rs-program-label">Location:</span> <?php echo $rs_the_program->location; ?></p>
                     <?php endif; ?>
 
                     <?php // Location Address ?>
-                    <?php if ( $rs_the_program->address ) : ?>
+                    <?php if ( isset($rs_the_program->address) ) : ?>
                         <p class="rs-program-location-address"><span class="rs-program-label">Address:</span> <?php echo $rs_the_program->address; ?></p>
                     <?php endif; ?>
 
                     <?php // Contact details ?>
-                    <?php if ( $rs_the_program->contact ) : ?>
+                    <?php if ( isset($rs_the_program->contact) ) : ?>
                         <p class="rs-program-contact"><?php echo $rs_the_program->contact ?></p>
                     <?php endif; ?>
 
                     <?php // Information Message ?>
-                    <?php if ( $rs_the_program->message ) : ?>
+                    <?php if ( isset($rs_the_program->message) ) : ?>
                         <p class="rs-program-message-link">
                             <a href="#"><?php _e( 'View Visitor Information' ); ?> <span>+</span></a>
                         </p>

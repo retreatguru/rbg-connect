@@ -1,6 +1,4 @@
 <?php
-global $rs_the_programs;
-global $shortcode_atts;
 global $RS_Connect;
 if(is_array($shortcode_atts)) extract($shortcode_atts);
 if(! empty($rs_the_programs)) {

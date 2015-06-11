@@ -77,7 +77,7 @@ if ( ! class_exists( 'RS_Connect_Widget' ) ) {
 
                             <p class="rs-program-excerpt"><?php if ($show_excerpt) {
                                     echo wp_trim_words($program->text, $excerpt_words);
-                                    if ($excerpt_more) echo '<a href="/'.$RS_Connect->style.'s/'.$program->ID.'/'.$program->slug.'">'.$excerpt_more.'</a>';
+                                    if ($excerpt_more) echo '<a href="/'.$RS_Connect->style.'/'.$program->ID.'/'.$program->slug.'">'.$excerpt_more.'</a>';
                                 } ?></p>
 
                         </li>

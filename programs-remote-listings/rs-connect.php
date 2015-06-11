@@ -171,6 +171,11 @@ class RS_Connect
         }
 
         $rs_the_programs = array_reverse($this->get_programs($vars));
+
+        if (isset($atts['limit'])) {
+            $rs_the_programs = array_slice($rs_the_programs, 0, $atts['limit']);
+        }
+
         $shortcode_atts = $atts;
 
         ob_start();
