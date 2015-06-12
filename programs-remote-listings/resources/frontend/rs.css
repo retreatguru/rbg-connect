@@ -11,7 +11,7 @@
 .rs-program.minor, .rs-programs-widget.minor { display: none; }
 .rs-program-thumbnail, .rs-teacher-thumbnail { float: left; margin-right: 15px; clear: left; margin-bottom: 5px;}
 .rs-program-title, .rs-program-teacher, .rs-teacher-title { line-height: 1.2; clear: none; }
-.rs-program-photo { float: right; margin-bottom: 20px; margin-left: 10px; }
+.rs-program-photo { float: right; margin-bottom: 20px; margin-left: 20px; }
 .rs-teacher-photo { float: left; margin-right: 20px; margin-bottom: 5px; }
 .rs-teacher-bio { clear: left; }
 

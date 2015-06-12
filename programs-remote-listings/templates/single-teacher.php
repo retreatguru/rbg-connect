@@ -22,18 +22,18 @@ if(isset($options['rs_template']['before'])) echo $options['rs_template']['befor
             <?php endif; ?>
 
             <?php if ( $rs_the_teacher->text ) : ?>
-                <div class="rs-program-custom-wrap"><?php echo $rs_the_teacher->text; ?></div>
+                <div class="rs-program-custom-wrap"><?php echo wpautop($rs_the_teacher->text_full); ?></div>
             <?php endif; ?>
         </div>
         <div class="rs-program-teachers" style="clear: left; margin:20px;">
             <?php if( ! empty($rs_the_teacher->programs)) : ?>
-                <h3 style="margin-top: 30px;">Programs by <?php echo $rs_the_teacher->name; ?></h3>
+                <h3 style="margin-top: 30px;">Events with <?php echo $rs_the_teacher->name; ?></h3>
 
                 <?php foreach($rs_the_teacher->programs as $program) : ?>
                     <div class="program" style="float:left; clear:left;">
                         <a href="/<?php echo $RS_Connect->style; ?>/<?php echo $program->ID; ?>/<?php echo $program->slug; ?>"><img src="<?php echo $program->photo_details->thumbnail->url; ?>" style="float:left; margin:0 15px 15px 0;"></a>
                         <strong><a href="/<?php echo $RS_Connect->style; ?>/<?php echo $program->ID; ?>/<?php echo $program->slug; ?>"><?php echo $program->post_title; ?></a></strong><br/>
-                        <?php echo date('F d, Y @ g:h A', $program->start); ?>
+                        <?php echo date('F d, Y', $program->start); ?>
                         <p><?php echo wp_trim_words( nl2br($program->post_content), 70, '...' ); ?></p>
                     </div>
                 <?php endforeach; ?>

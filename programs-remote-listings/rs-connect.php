@@ -1,11 +1,11 @@
 <?php
 
 /*
-Plugin Name: Booking Manager Connect
+Plugin Name: Retreat Booking Guru Connect
 Description: Connect to Retreat Booking Guru to show program listings on your site and link to registration forms.
 Version: 1.2.1
 Author: Retreat Guru
-Author URI: http://retreat.guru
+Author URI: http://retreat.guru/booking
 */
 
 class RS_Connect
@@ -217,7 +217,7 @@ class RS_Connect
 
     function rs_admin_menu_items()
     {
-        add_menu_page('Booking Manager', 'Booking Manager', 'manage_options', 'booking-manager.php', arraY(&$this, 'admin_programs_page'), 'dashicons-calendar-alt');
+        add_menu_page('Retreat Booking Guru', 'Retreat Booking Guru', 'manage_options', 'booking-manager.php', arraY(&$this, 'admin_programs_page'), 'dashicons-calendar-alt');
         add_submenu_page('booking-manager.php', 'Program List', 'Program List', 'manage_options', 'booking-manager.php', array(&$this, 'admin_programs_page'));
         add_submenu_page('booking-manager.php', 'Settings', 'Settings', 'manage_options', 'options-mbm', array(&$this, 'admin_settings_page'));
     }
@@ -310,9 +310,9 @@ class RS_Connect
             </thead>
 
             <tbody>
-            <?php foreach ($rs_programs as $program): ?>
+            <?php foreach ((array)$rs_programs as $program): ?>
                 <tr>
-                    <td><a href="<?php echo $this->get_url_to_mbm(); ?>/wp-admin/post.php?action=edit&post=<?php echo $program->ID; ?>"><?php echo $program->title; ?></a></td>
+                    <td><a href="<?php echo $this->get_url_to_mbm(); ?>/wp-admin/post.php?action=edit&post=<?php echo $program->ID; ?>"><?php echo $program->title; ?></a> - <a href="/<?php echo $this->style; ?>/<?php echo $program->ID; ?>/<?php echo $program->slug; ?>">view</a></td>
                     <td><?php echo $program->date; ?></td>
                     <td><?php echo ucfirst($program->registration_status); ?></td>
                 </tr>
