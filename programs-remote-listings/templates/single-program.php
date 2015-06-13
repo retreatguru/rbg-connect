@@ -51,14 +51,6 @@ if(isset($options['rs_template']['before'])) echo $options['rs_template']['befor
                         <p class="rs-program-contact"><?php echo $rs_the_program->contact ?></p>
                     <?php endif; ?>
 
-                    <?php // Information Message ?>
-                    <?php if ( isset($rs_the_program->message) ) : ?>
-                        <p class="rs-program-message-link">
-                            <a href="#"><?php _e( 'View Visitor Information' ); ?> <span>+</span></a>
-                        </p>
-                        <div class="rs-program-message" style="display:none;"><?php echo wpautop( $rs_the_program->message ); ?></div>
-                    <?php endif; ?>
-
                     <?php // Custom fields ?>
                     <?php if ( $rs_the_program->custom ) : ?>
                         <div class="rs-program-custom-wrap"><?php echo $rs_the_program->custom; ?></div>
@@ -68,7 +60,7 @@ if(isset($options['rs_template']['before'])) echo $options['rs_template']['befor
                 <?php // Program Details ?>
                 <div class="rs-program-content">
                     <?php if ( $rs_the_program->text ) : ?>
-                        <div class="rs-program-custom-wrap"><?php echo wpautop($rs_the_program->text_full); ?></div>
+                        <div class="rs-program-custom-wrap"><?php echo $rs_the_program->text_full; ?></div>
                     <?php endif; ?>
                 </div>
 
@@ -91,10 +83,10 @@ if(isset($options['rs_template']['before'])) echo $options['rs_template']['befor
                     <?php foreach($rs_the_program->teacher_details->teacher_objects as $teacher) : ?>
                         <div class="teacher" style="clear:left; float:left; padding:10px 0;">
                             <p>
-                                <a href="/teacher/<?php echo $teacher->ID; ?>/<?php echo $teacher->post_name; ?>"><img src="<?php echo $teacher->photo_details->thumbnail->url; ?>" style="float:left; margin:0 20px 10px 0;"></a>
-                                <strong><?php echo $teacher->post_title; ?></strong><br/>
+                                <a href="/teacher/<?php echo $teacher->ID; ?>/<?php echo $teacher->post_name; ?>"><img src="<?php echo $teacher->photo_details->thumbnail->url; ?>" style="float:left; margin:5px 20px 10px 0;"></a>
+                                <a href="/teacher/<?php echo $teacher->ID; ?>/<?php echo $teacher->post_name; ?>"><strong><?php echo $teacher->post_title; ?></strong></a><br/>
 
-                                <?php echo wp_trim_words( nl2br($teacher->post_content), 70, '...' ); ?>
+                                <?php echo wp_trim_words( $teacher->post_content, 100, '...' ); ?>
                                 <br/><a href="/teacher/<?php echo $teacher->ID; ?>/<?php echo $teacher->post_name; ?>">Learn more about <?php echo $teacher->post_title; ?></a>
                             </p>
                         </div>

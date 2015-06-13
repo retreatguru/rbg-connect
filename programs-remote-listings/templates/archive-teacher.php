@@ -22,7 +22,7 @@ if(! empty($teachers)) {
                     <div class="rs-teacher-thumbnail"><a href="/teacher/<?php echo $teacher->ID . "/" . $teacher->slug; ?>"><img width="150" height="150" src="<?php echo $teacher->photo_details->thumbnail->url; ?>" class="attachment-thumbnail wp-post-image" alt="DavidRome700" /></a></div>
                 <?php } ?>
                 <h2 class="rs-teacher-title"><a href="/teacher/<?php echo $teacher->ID . "/" . $teacher->slug; ?>"><?php echo $teacher->name; ?></a></h2>
-                <p><?php echo $teacher->text; ?></p>
+                <p class="rs-teacher-excerpt"><?php echo wp_trim_words($teacher->text, 100); ?></p>
             </div>
         </div>
     <?php endforeach; } else { echo 'Sorry, no teachers exist here.'; }?>
