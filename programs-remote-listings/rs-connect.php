@@ -35,6 +35,7 @@ class RS_Connect
         add_action('admin_notices', array($this, 'my_admin_notice'));
 
         add_shortcode('rs_programs', array($this, 'rs_shortcode_programs'));
+        add_shortcode('rs_register_button', array($this, 'rs_shortcode_register_button'));
 
         add_action('init', array($this, 'setup_rewrite'));
         add_filter( 'query_vars', array($this, 'register_query_var' ));
@@ -153,6 +154,14 @@ class RS_Connect
     function includes()
     {
         if($this->configured()) include( "{$this->plugin_dir}rs-connect-widgets.php" );
+    }
+
+    function rs_shortcode_register_button($atts)
+    {
+        if(! isset($atts['id'])) { return 'Error: You must specify a program ID in your shortcode<br/>e.g. [rs_register_button <strong>id="45"</strong>]'; }
+        // todo: Build link here to customize the link title instead of pulling it dynamically or maybe just search and replace string
+        $program = $this->get_program($atts['id']);
+        return $program->registration_action;
     }
 
     function rs_shortcode_programs($atts)
