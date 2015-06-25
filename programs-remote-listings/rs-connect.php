@@ -40,7 +40,6 @@ class RS_Connect
         add_action('init', array($this, 'setup_rewrite'));
         add_filter( 'query_vars', array($this, 'register_query_var' ));
         add_filter('template_include', array($this, 'template_include'), 1, 1);
-
     }
 
     function setup_rewrite() {
@@ -66,7 +65,8 @@ class RS_Connect
         return $vars;
     }
 
-    function rs_set_title($title)
+    // todo: optimize this so we are only using 'get_program' once, instead of here and in template_include()
+    function rs_set_title($title = null)
     {
         global $wp_query;
 
@@ -87,6 +87,11 @@ class RS_Connect
     function template_include($template)
     {
         global $wp_query; //Load $wp_query object
+
+        // Support Yoast SEO
+        add_filter( 'wpseo_canonical', array($this, 'canonical_url' ));
+        add_filter( 'wpseo_title', array($this, 'rs_set_title' ));
+        add_filter( 'wpseo_metadesc', '__return_false' );
 
         // Load program views
         if($wp_query->query_vars['programs'])
@@ -123,6 +128,11 @@ class RS_Connect
         }
 
         return $template;
+    }
+
+    function canonical_url()
+    {
+        return $_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"];
     }
 
     function rs_load_template($template)
