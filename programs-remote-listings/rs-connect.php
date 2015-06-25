@@ -232,6 +232,12 @@ class RS_Connect
     {
         wp_enqueue_style('rs-f', plugins_url('/resources/frontend/rs.css', __FILE__), null, '20150612a');
         wp_enqueue_script('rs-js', plugins_url('/resources/frontend/rs.js', __FILE__), array('jquery'), '20150612a');
+
+        $options = get_option('rs_settings');
+        if(isset($options['rs_template']['css']))
+        {
+            wp_add_inline_style('rs-f', $options['rs_template']['css']);
+        }
     }
 
     function rs_admin_menu_items()
@@ -363,17 +369,16 @@ class RS_Connect
                                     https:// <input name="rs_settings[rs_domain]" type="text" id="rs_domain"
                                                     value="<?php echo (isset($options['rs_domain']) && $options['rs_domain'] != '') ? $options['rs_domain'] : ''; ?>"/>
                                     .<?php echo $this->mbm_domain; ?> <br/>
-                                    <span class="description">Please enter a valid subdomain.</span>
                                 </label>
                             </fieldset>
                         </td>
                     </tr>
                     <tr>
-                        <th scope="row">Style</th>
+                        <th scope="row">Label</th>
                         <td>
                             <fieldset>
-                                What do you offer?<br/>
-                                <small>This helps set up the correct permalink structure for your site</small><br/>
+                              What do you offer?<br/>
+                                <small>This provides the correct permalink structure for your site</small><br/>
                                 <input type="radio" name="rs_settings[style]" value="program" <?php if($options['style'] == 'program' || ! isset($options['style'])) { echo "checked"; } ?>>Programs<br>
                                 <input type="radio" name="rs_settings[style]" value="event" <?php if($options['style'] == 'event') { echo "checked"; } ?>>Events<br>
                                 <input type="radio" name="rs_settings[style]" value="retreat" <?php if($options['style'] == 'retreat') { echo "checked"; } ?>>Retreats
@@ -386,18 +391,32 @@ class RS_Connect
                             <fieldset>
                                 Wrap template tags around the program listings to fix template bugs<br/>
                                 <label>
-                                    <textarea name="rs_settings[rs_template][before]" type="text" id="rs_settings[rs_template][before]"><?php if(isset($options['rs_template']['before'])) echo $options['rs_template']['before']; ?>
+                                    <textarea name="rs_settings[rs_template][before]" type="text" style="width:700px;" id="rs_settings[rs_template][before]"><?php if(isset($options['rs_template']['before'])) echo $options['rs_template']['before']; ?>
                                     </textarea>
                                 </label><br/>
                                 <label>
-                                    <textarea name="rs_settings[rs_template][after]" type="text" id="rs_settings[rs_template][after]"><?php if(isset($options['rs_template']['after'])) echo $options['rs_template']['after']; ?>
+                                    <textarea name="rs_settings[rs_template][after]" type="text" style="width:700px;" id="rs_settings[rs_template][after]"><?php if(isset($options['rs_template']['after'])) echo $options['rs_template']['after']; ?>
                                     </textarea>
                                 </label>
                             </fieldset>
                         </td>
                     </tr>
+                    <tr>
+                        <th scope="row">Style Adjustments</th>
+                        <td>
+                            <fieldset>
+                                Customize or add CSS site styles below<br/>
+                                <label>
+                                    <textarea name="rs_settings[rs_template][css]" type="text" style="width:700px; height:200px;" id="rs_settings[rs_template][css]"><?php if(isset($options['rs_template']['css'])) echo trim($options['rs_template']['css']); ?>
+                                    </textarea><br/>
+                            </fieldset>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row"></th>
+                        <td><input type="submit" style="font-size: 24px;" value="Save"/></td>
+                    </tr>
                 </table>
-                <input type="submit" value="Save"/>
             </form>
         </div>
     <?php
