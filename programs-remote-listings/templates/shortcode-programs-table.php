@@ -49,7 +49,7 @@ if(is_array($shortcode_atts)) extract($shortcode_atts);
 
             <?php if(isset($show_more_link)) : ?>
                 <td class="rs-show-more-link">
-                    <?php echo '<a href="/'.$RS_Connect->style.'/'.$program->ID.'/'.$program->slug.'">View Details</a>'; ?>
+                    <?php echo '<a href="'.get_site_url().'/'.$RS_Connect->style.'/'.$program->ID.'/'.$program->slug.'">View Details</a>'; ?>
                 </td>
             <?php endif; ?>
 

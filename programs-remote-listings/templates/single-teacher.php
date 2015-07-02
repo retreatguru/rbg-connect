@@ -31,8 +31,8 @@ if(isset($options['rs_template']['before'])) echo $options['rs_template']['befor
 
                 <?php foreach($rs_the_teacher->programs as $program) : ?>
                     <div class="program" style="float:left; clear:left;">
-                        <a href="/<?php echo $RS_Connect->style; ?>/<?php echo $program->ID; ?>/<?php echo $program->slug; ?>"><img src="<?php echo $program->photo_details->thumbnail->url; ?>" style="float:left; margin:5px 15px 15px 0;"></a>
-                        <strong><a href="/<?php echo $RS_Connect->style; ?>/<?php echo $program->ID; ?>/<?php echo $program->slug; ?>"><?php echo $program->post_title; ?></a></strong><br/>
+                        <a href="<?php echo get_site_url(); ?>/<?php echo $RS_Connect->style; ?>/<?php echo $program->ID; ?>/<?php echo $program->slug; ?>"><img src="<?php echo $program->photo_details->thumbnail->url; ?>" style="float:left; margin:5px 15px 15px 0;"></a>
+                        <strong><a href="<?php echo get_site_url(); ?>/<?php echo $RS_Connect->style; ?>/<?php echo $program->ID; ?>/<?php echo $program->slug; ?>"><?php echo $program->post_title; ?></a></strong><br/>
                         <?php echo date('F d, Y', $program->start); ?>
                         <p><?php echo wp_trim_words( $program->post_content, 100, '...' ); ?></p>
                     </div>

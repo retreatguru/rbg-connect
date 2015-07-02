@@ -234,10 +234,22 @@ class RS_Connect
         wp_enqueue_script('rs-js', plugins_url('/resources/frontend/rs.js', __FILE__), array('jquery'), '20150612a');
 
         $options = get_option('rs_settings');
+        $inline_styles = '';
+
+        if(isset($options['rs_template']['register_now']))
+        {
+            $inline_styles .= '
+            .rs-register-link a {
+            border-color: #'.$options['rs_template']['register_now'].';
+            color: #'.$options['rs_template']['register_now'].'!important ;
+            }';
+        }
+
         if(isset($options['rs_template']['css']))
         {
-            wp_add_inline_style('rs-f', $options['rs_template']['css']);
+            $inline_styles .= $options['rs_template']['css'];
         }
+        wp_add_inline_style('rs-f', $inline_styles);
     }
 
     function rs_admin_menu_items()
@@ -413,8 +425,19 @@ class RS_Connect
                         </td>
                     </tr>
                     <tr>
-                        <th scope="row"></th>
-                        <td><input type="submit" style="font-size: 24px;" value="Save"/></td>
+                        <th scope="row">Register Now Button Color</th>
+                        <td>
+                            <fieldset>
+                                <label>
+                                    #<input name="rs_settings[rs_template][register_now]" type="text" id="rs_settings[rs_template][register_now]"
+                                                    value="<?php echo (isset($options['rs_template']['register_now']) && $options['rs_template']['register_now'] != '') ? $options['rs_template']['register_now'] : ''; ?>"/>
+                                </label>
+                            </fieldset>
+                        </td>
+                    </tr>
+                    <tr>
+                    <th scope="row"></th>
+                    <td><input type="submit" style="font-size: 24px;" value="Save"/></td>
                     </tr>
                 </table>
             </form>

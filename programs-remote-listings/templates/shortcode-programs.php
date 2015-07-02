@@ -8,11 +8,11 @@ if(! empty($rs_the_programs)) {
         <div class="rs-program rs-group">
 
             <?php if ( $program->photo_details && ! isset($hide_photo) ) : ?>
-                <div class="rs-program-thumbnail"><a href="/<?php echo $RS_Connect->style; ?>/<?php echo $program->ID; ?>/<?php echo $program->slug; ?>"><img src="<?php echo $program->photo_details->thumbnail->url; ?>"></a></div>
+                <div class="rs-program-thumbnail"><a href="<?php echo get_site_url(); ?>/<?php echo $RS_Connect->style; ?>/<?php echo $program->ID; ?>/<?php echo $program->slug; ?>"><img src="<?php echo $program->photo_details->thumbnail->url; ?>"></a></div>
             <?php endif; ?>
 
             <?php if ( $program->title && ! isset($hide_title) ) : ?>
-                <h2 class="rs-program-title"><a href="/<?php echo $RS_Connect->style; ?>/<?php echo $program->ID; ?>/<?php echo $program->slug; ?>"><?php echo $program->title; ?></a></h2>
+                <h2 class="rs-program-title"><a href="<?php echo get_site_url(); ?>/<?php echo $RS_Connect->style; ?>/<?php echo $program->ID; ?>/<?php echo $program->slug; ?>"><?php echo $program->title; ?></a></h2>
             <?php endif; ?>
 
             <?php if ( $program->date && ! isset($hide_date) ) : ?>
