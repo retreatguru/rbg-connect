@@ -41,11 +41,6 @@ if(isset($options['rs_template']['before'])) echo $options['rs_template']['befor
                         <p class="rs-program-location"><span class="rs-program-label">Location:</span> <?php echo $rs_the_program->location; ?></p>
                     <?php endif; ?>
 
-                    <?php // Location Address ?>
-                    <?php if ( isset($rs_the_program->address) ) : ?>
-                        <p class="rs-program-location-address"><span class="rs-program-label">Address:</span> <?php echo $rs_the_program->address; ?></p>
-                    <?php endif; ?>
-
                     <?php // Contact details ?>
                     <?php if ( isset($rs_the_program->contact) ) : ?>
                         <p class="rs-program-contact"><?php echo $rs_the_program->contact ?></p>
