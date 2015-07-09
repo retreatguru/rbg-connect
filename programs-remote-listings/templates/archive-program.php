@@ -1,6 +1,6 @@
 <?php
 /**
- * The template for programs archive
+ * The template for programs archive 
  */
 
 get_header();
