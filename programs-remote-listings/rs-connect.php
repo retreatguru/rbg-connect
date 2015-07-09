@@ -257,6 +257,8 @@ class RS_Connect
         add_menu_page('Retreat Booking Guru', 'Retreat Booking Guru', 'manage_options', 'booking-manager.php', arraY(&$this, 'admin_programs_page'), 'dashicons-calendar-alt');
         add_submenu_page('booking-manager.php', 'Program List', 'Program List', 'manage_options', 'booking-manager.php', array(&$this, 'admin_programs_page'));
         add_submenu_page('booking-manager.php', 'Settings', 'Settings', 'manage_options', 'options-mbm', array(&$this, 'admin_settings_page'));
+        add_submenu_page('booking-manager.php', 'Help', 'Help', 'manage_options', 'mbm-help', array(&$this, 'admin_mbm_help_page'));
+
     }
 
     function rs_activate()
@@ -360,6 +362,48 @@ class RS_Connect
     <?php
     }
 
+    function admin_mbm_help_page()
+    {
+?>
+        <div class="card">
+        <h2>Using the Program Listing Shortcode</h2>
+        <p>Use the [rs_programs] shortcode to add a list of your programs to any Wordpress post, page or theme file. Simply insert the following into the contents of your page or post and it will automatically list out the programs you've added to Mandala Booking Manager.</p>
+
+        <p><em>[rs_programs]</em></p>
+
+
+        <h3>Only list one category</h3>
+        <p>If you'd like to list programs specific to one program cateogry on your site, add the category attribute with the "slug" value of that category.  Here is an example:</p>
+
+        <p><em>[rs_programs category="featured-events"]</em></p>
+
+        <p>This will now only list programs you've added to a "Featured Events" category. You can create new categories and see a list of categories and their "slugs" by loging in to Mandala Booking Manager and clicking "Programs -> Category"</p>
+
+
+        <h3>Hide certain properties like the program picture or description</h3>
+        <p>If you'd like to simplify the programs list you can add the following attributes to remove certain elements.  Here is an example that would hide everything except the title:</p>
+
+        <p><em>[rs_programs hide_photo="true" hide_date="true" hide_location="true"  hide_text="true"]</em></p>
+
+
+        <h3>Add a link directly to the registration form</h3>
+        <p>To add a link underneath each program that points directly to the registration form, you can add the following attribute to the shortcode:</p>
+
+        <p><em>[rs_programs show_register_link="true"]</em></p>
+
+
+        <h3>Adding the shortcode to  a template file</h3>
+        <p>For websmasters and site developers who want to position a program list that can't be done through editing a post, page or widget, you can also implement this shortcode in a theme file using the following wordpress method:</p>
+        <p><em>&#x3C;?php echo do_shortcode(&#x27;[rs_programs]&#x27;); ?&#x3E;</em></p>
+
+        <h3>Customize the color of the register now button</h3>
+        <p>Available as an option on the <a href="<?php echo admin_url('admin.php?page=options-mbm'); ?>">settings page</a> to do this.</p>
+        </div>
+
+
+        <?php
+    }
+
     function admin_settings_page()
     {
         $this->rs_flush_rewrite_rules();
@@ -398,6 +442,17 @@ class RS_Connect
                         </td>
                     </tr>
                     <tr>
+                        <th scope="row">Register Now Button Color</th>
+                        <td>
+                            <fieldset>
+                                <label>
+                                    #<input name="rs_settings[rs_template][register_now]" type="text" id="rs_settings[rs_template][register_now]"
+                                            value="<?php echo (isset($options['rs_template']['register_now']) && $options['rs_template']['register_now'] != '') ? $options['rs_template']['register_now'] : ''; ?>"/>
+                                </label>
+                            </fieldset>
+                        </td>
+                    </tr>
+                    <tr>
                         <th scope="row">Before theme & after</th>
                         <td>
                             <fieldset>
@@ -421,17 +476,6 @@ class RS_Connect
                                 <label>
                                     <textarea name="rs_settings[rs_template][css]" type="text" style="width:700px; height:200px;" id="rs_settings[rs_template][css]"><?php if(isset($options['rs_template']['css'])) echo trim($options['rs_template']['css']); ?>
                                     </textarea><br/>
-                            </fieldset>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row">Register Now Button Color</th>
-                        <td>
-                            <fieldset>
-                                <label>
-                                    #<input name="rs_settings[rs_template][register_now]" type="text" id="rs_settings[rs_template][register_now]"
-                                                    value="<?php echo (isset($options['rs_template']['register_now']) && $options['rs_template']['register_now'] != '') ? $options['rs_template']['register_now'] : ''; ?>"/>
-                                </label>
                             </fieldset>
                         </td>
                     </tr>

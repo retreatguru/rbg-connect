@@ -5,12 +5,14 @@
 
 get_header();
 $options = get_option('rs_settings');
+if(isset($options['rs_template']['before'])) { echo $options['rs_template']['before']; }
 
 global $api_vars;
 global $RS_Connect;
-if(isset($options['rs_template']['before'])) echo $options['rs_template']['before']; ?>
 
-<h1><?php _e( ucfirst($RS_Connect->style).'s', $RS_Connect->style.'s' ); ?></h1>
+?>
+
+<h1 class="rs-archive-title"><?php _e( ucfirst($RS_Connect->style).'s', $RS_Connect->style.'s' ); ?></h1>
 <?php
 $programs = array_reverse($RS_Connect->get_programs($api_vars));
 
@@ -46,6 +48,6 @@ foreach($programs as $program): ?>
 
 </div>
 
-<?php if(isset($options['rs_template']['after'])) echo $options['rs_template']['after']; ?>
+<?php if(isset($options['rs_template']['after'])) { echo $options['rs_template']['after']; } ?>
 
 <?php get_footer(); ?>
