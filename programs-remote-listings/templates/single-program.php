@@ -7,7 +7,7 @@ get_header();
 $options = get_option('rs_settings');
 if(isset($options['rs_template']['before'])) echo $options['rs_template']['before']; ?>
 
-<?php global $rs_the_program; ?>
+<?php $rs_the_program = $RS_Connect->program; ?>
 
         <article class="page type-page status-publish single-program">
 

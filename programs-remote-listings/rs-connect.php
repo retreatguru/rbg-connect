@@ -10,6 +10,9 @@ Author URI: http://retreat.guru/booking
 
 class RS_Connect
 {
+
+    public $program = null;
+
     public function __construct()
     {
         // Base domain to connect with (do not include http://)
@@ -27,6 +30,7 @@ class RS_Connect
         $this->includes();
 
         add_filter('admin_init', array($this, 'rs_flush_rewrite_rules'));
+        add_action('wp_head', array($this, 'rs_set_meta'));
         add_filter('wp_title', array($this, 'rs_set_title'), 100);
 
         add_action('wp_enqueue_scripts', array($this, 'rs_enqueue_items'));
@@ -65,7 +69,6 @@ class RS_Connect
         return $vars;
     }
 
-    // todo: optimize this so we are only using 'get_program' once, instead of here and in template_include()
     function rs_set_title($title = null)
     {
         global $wp_query;
@@ -73,8 +76,14 @@ class RS_Connect
         if(get_query_var('category')) $category = get_query_var('category') . " | "; else $category = '';
 
         if (get_query_var('program')) {
-            $rs_the_program = $this->get_program(get_query_var('program'));
-            return $rs_the_program->title . " | " . get_bloginfo('name');
+
+            if(isset($this->program->title)) {
+                $program_title = $this->program->title . " | " . get_bloginfo('name');
+            } else {
+                $program_title = get_bloginfo('name');
+            }
+
+            return $program_title;
         }
 
         if (get_query_var('programs')) {
@@ -82,6 +91,14 @@ class RS_Connect
         }
 
         return $title;
+    }
+
+    function rs_set_meta() {
+        if(isset($this->program->text)) {
+            echo '<meta property="og:description" content="' . wp_trim_words($this->program->text, 100, '...') . '" />';
+        }
+
+        echo '<meta property="og:title" content="' . $this->rs_set_title() . '" />';
     }
 
     function template_include($template)
@@ -98,9 +115,7 @@ class RS_Connect
         {
             if(isset($wp_query->query_vars['program']))
             {
-                global $rs_the_program;
-                $rs_the_program = $this->get_program($wp_query->query_vars['program']);
-
+                $this->program = $this->get_program($wp_query->query_vars['program']);
                 return $this->get_template_path('single-program.php');
             }
 
