@@ -9,6 +9,7 @@ if(is_array($shortcode_atts)) extract($shortcode_atts);
         <?php if(isset($show_availability)){ ?><th class="rs-availability">Available Spots</th><?php } ?>
         <?php if(isset($show_title)){ ?><th class="rs-title">Name</th><?php } ?>
         <?php if(isset($show_teachers)){ ?><th class="rs-teachers">Hosts</th><?php } ?>
+        <?php if(isset($show_location)){ ?><th class="rs-location">Location</th><?php } ?>
         <?php if(isset($show_more_link)){ ?><th class="rs-show-more-link" >Details</th><?php } ?>
         <?php if(isset($show_register_link)){ ?><th class="rs-show-register-link">Register</th><?php } ?>
     </tr>
@@ -43,6 +44,14 @@ if(is_array($shortcode_atts)) extract($shortcode_atts);
                 <td class="rs-teachers">
                     <?php if ( isset($program->teacher_details->teacher_objects) ) : ?>
                         <?php echo $program->teacher_details->teacher_list; ?>
+                    <?php endif; ?>
+                </td>
+            <?php endif; ?>
+
+            <?php if(isset($show_location)) : ?>
+                <td class="rs-location">
+                    <?php if ( isset($program->location) ) : ?>
+                        <?php echo $program->location; ?>
                     <?php endif; ?>
                 </td>
             <?php endif; ?>
