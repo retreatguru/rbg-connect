@@ -406,6 +406,13 @@ class RS_Connect
 
         <p><em>[rs_programs show_register_link="true"]</em></p>
 
+            <h3>Table view</h3>
+            <p>This view is useful when your programs are mainly identical except for the dates, location or teachers. You can decide what data to show in the table list. All items are optional. A simple and more detailed examples are below:</p>
+
+            <p><em>[rs_programs table="true" show_date="true" show_register_link="true"]</em></p>
+
+            <p><em>[rs_programs table="true" show_date="true" show_availability="true" show_teachers="true" show_title="true" show_location="true" show_more_link="true" show_register_link="true"]</em></p>
+
 
         <h3>Adding the shortcode to  a template file</h3>
         <p>For websmasters and site developers who want to position a program list that can't be done through editing a post, page or widget, you can also implement this shortcode in a theme file using the following wordpress method:</p>
