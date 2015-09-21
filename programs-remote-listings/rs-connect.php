@@ -355,7 +355,9 @@ class RS_Connect
             <tbody>
             <?php foreach ((array)$rs_programs as $program): ?>
                 <tr>
-                    <td><a href="<?php echo $this->get_url_to_mbm(); ?>/wp-admin/post.php?action=edit&post=<?php echo $program->ID; ?>"><?php echo $program->title; ?></a> - <a href="/<?php echo $this->style; ?>/<?php echo $program->ID; ?>/<?php echo $program->slug; ?>">view</a></td>
+                    <td>
+                        <a href="<?php echo $this->get_url_to_mbm(); ?>/wp-admin/post.php?action=edit&post=<?php echo $program->ID; ?>"><?php echo $program->title; ?></a>
+                        - <a href="<?php echo get_site_url() . '/' . $this->style . '/' . $program->ID . '/' . $program->slug; ?>">view</a></td>
                     <td><?php echo $program->date; ?></td>
                     <td><?php echo ucfirst($program->registration_status); ?></td>
                 </tr>
