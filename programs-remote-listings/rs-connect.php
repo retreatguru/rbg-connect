@@ -191,7 +191,9 @@ class RS_Connect
 
     function rs_shortcode_programs($atts)
     {
-        global $rs_the_programs, $shortcode_atts;
+        global $rs_the_programs;
+
+        $shortcode_atts = $this->normalize_empty_atts( $atts );
 
         $vars = null;
 
@@ -200,7 +202,7 @@ class RS_Connect
         }
 
         $template = 'shortcode-programs.php';
-        if (isset($atts['table'])) {
+        if (! empty($shortcode_atts['table'])) {
             $template = 'shortcode-programs-table.php';
         }
 
@@ -210,10 +212,14 @@ class RS_Connect
             $rs_the_programs = array_slice($rs_the_programs, 0, $atts['limit']);
         }
 
-        $shortcode_atts = $atts;
+        // the proper way to do it
+//        $shortcode_atts = shortcode_atts(array(
+//            'show_location' => false,
+//         ), $atts, 'rs_programs');
 
         ob_start();
-        if ($overridden_template = locate_template('shortcode-programs.php')) {
+        $overridden_template = locate_template('shortcode-programs.php');
+        if ($overridden_template) {
             include($overridden_template);
         } else {
             include(plugin_dir_path(__FILE__) . 'templates/' . $template);
@@ -221,6 +227,18 @@ class RS_Connect
         $ret = ob_get_clean();
 
         return $ret;
+    }
+
+    function normalize_empty_atts ($atts) {
+        if (! $atts) return array();
+
+        foreach ($atts as $attribute => $value) {
+            if (is_int($attribute)) {
+                $atts[strtolower($value)] = true;
+                unset($atts[$attribute]);
+            }
+        }
+        return $atts;
     }
 
     public function get_program($id)
@@ -375,13 +393,13 @@ class RS_Connect
         <h2>Using the Program Listing Shortcode</h2>
         <p>Use the [rs_programs] shortcode to add a list of your programs to any Wordpress post, page or theme file. Simply insert the following into the contents of your page or post and it will automatically list out the programs you've added to Mandala Booking Manager.</p>
 
-        <p><em>[rs_programs]</em></p>
+        <p><code>[rs_programs]</code></p>
 
 
         <h3>Only list one category</h3>
         <p>If you'd like to list programs specific to one program cateogry on your site, add the category attribute with the "slug" value of that category.  Here is an example:</p>
 
-        <p><em>[rs_programs category="featured-events"]</em></p>
+        <p><code>[rs_programs category="featured-events"]</code></p>
 
         <p>This will now only list programs you've added to a "Featured Events" category. You can create new categories and see a list of categories and their "slugs" by loging in to Mandala Booking Manager and clicking "Programs -> Category"</p>
 
@@ -389,25 +407,25 @@ class RS_Connect
         <h3>Hide certain properties like the program picture or description</h3>
         <p>If you'd like to simplify the programs list you can add the following attributes to remove certain elements.  Here is an example that would hide everything except the title:</p>
 
-        <p><em>[rs_programs hide_photo="true" hide_date="true" hide_location="true"  hide_text="true"]</em></p>
+        <p><code>[rs_programs hide_photo hide_date hide_location hide_text]</code></p>
 
 
         <h3>Add a link directly to the registration form</h3>
         <p>To add a link underneath each program that points directly to the registration form, you can add the following attribute to the shortcode:</p>
 
-        <p><em>[rs_programs show_register_link="true"]</em></p>
+        <p><code>[rs_programs show_register_link]</code></p>
 
             <h3>Table view</h3>
             <p>This view is useful when your programs are mainly identical except for the dates, location or teachers. You can decide what data to show in the table list. All items are optional. A simple and more detailed examples are below:</p>
 
-            <p><em>[rs_programs table="true" show_date="true" show_register_link="true"]</em></p>
+            <p><code>[rs_programs table show_date show_register_link]</code></p>
 
-            <p><em>[rs_programs table="true" show_date="true" show_availability="true" show_teachers="true" show_title="true" show_location="true" show_more_link="true" show_register_link="true"]</em></p>
+            <p><code>[rs_programs table show_date show_availability show_teachers show_title show_location show_price_details show_more_link show_register_link]</code></p>
 
 
         <h3>Adding the shortcode to  a template file</h3>
         <p>For websmasters and site developers who want to position a program list that can't be done through editing a post, page or widget, you can also implement this shortcode in a theme file using the following wordpress method:</p>
-        <p><em>&#x3C;?php echo do_shortcode(&#x27;[rs_programs]&#x27;); ?&#x3E;</em></p>
+        <p><code>&#x3C;?php echo do_shortcode(&#x27;[rs_programs]&#x27;); ?&#x3E;</code></p>
 
         <h3>Customize the color of the register now button</h3>
         <p>Available as an option on the <a href="<?php echo admin_url('admin.php?page=options-mbm'); ?>">settings page</a> to do this.</p>

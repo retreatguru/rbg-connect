@@ -7,27 +7,27 @@ if(! empty($rs_the_programs)) {
 
         <div class="rs-program rs-group">
 
-            <?php if ( $program->photo_details && ! isset($hide_photo) ) : ?>
+            <?php if ( $program->photo_details && empty($hide_photo) ) : ?>
                 <div class="rs-program-thumbnail"><a href="<?php echo get_site_url(); ?>/<?php echo $RS_Connect->style; ?>/<?php echo $program->ID; ?>/<?php echo $program->slug; ?>"><img src="<?php echo $program->photo_details->thumbnail->url; ?>"></a></div>
             <?php endif; ?>
 
-            <?php if ( $program->title && ! isset($hide_title) ) : ?>
+            <?php if ( $program->title && empty($hide_title) ) : ?>
                 <h2 class="rs-program-title"><a href="<?php echo get_site_url(); ?>/<?php echo $RS_Connect->style; ?>/<?php echo $program->ID; ?>/<?php echo $program->slug; ?>"><?php echo $program->title; ?></a></h2>
             <?php endif; ?>
 
-            <?php if ( $program->date && ! isset($hide_date) ) : ?>
+            <?php if ( $program->date && empty($hide_date) ) : ?>
                 <div class="rs-program-date"><?php echo $program->date; ?></div>
             <?php endif; ?>
 
-            <?php if ( $program->location && ! isset($hide_location) ) : ?>
+            <?php if ( $program->location && empty($hide_location) ) : ?>
                 <div class="rs-program-location"><?php echo $program->location; ?></div>
             <?php endif; ?>
 
-            <?php if ( $program->text && ! isset($hide_text) ) : ?>
+            <?php if ( $program->text && empty($hide_text) ) : ?>
                 <div class="rs-program-excerpt"><?php echo wp_trim_words($program->text, 100); ?></div>
             <?php endif; ?>
 
-            <?php if ( isset($show_register_link) ) : ?>
+            <?php if (! empty($show_register_link) ) : ?>
                 <?php if ($program->registration_bookable): ?>
                     <a href="<?php echo $program->registration_link; ?>" target="_blank">Register Now</a>
                 <?php else: ?>

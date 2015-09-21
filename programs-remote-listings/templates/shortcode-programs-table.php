@@ -5,64 +5,79 @@ if(is_array($shortcode_atts)) extract($shortcode_atts);
 <table class="pure-table rs-program rs-group shortcode table">
     <thead>
     <tr>
-        <?php if(isset($show_date)){ ?><th class="rs-dates">Dates</th><?php } ?>
-        <?php if(isset($show_availability)){ ?><th class="rs-availability">Available Spots</th><?php } ?>
-        <?php if(isset($show_title)){ ?><th class="rs-title">Name</th><?php } ?>
-        <?php if(isset($show_teachers)){ ?><th class="rs-teachers">Hosts</th><?php } ?>
-        <?php if(isset($show_location)){ ?><th class="rs-location">Location</th><?php } ?>
-        <?php if(isset($show_more_link)){ ?><th class="rs-show-more-link" >Details</th><?php } ?>
-        <?php if(isset($show_register_link)){ ?><th class="rs-show-register-link">Register</th><?php } ?>
+        <?php if(! empty($show_date)){ ?><th class="rs-dates">Dates</th><?php } ?>
+        <?php if(! empty($show_availability)){ ?><th class="rs-availability">Available Spots</th><?php } ?>
+        <?php if(! empty($show_title)){ ?><th class="rs-title">Name</th><?php } ?>
+        <?php if(! empty($show_teachers)){ ?><th class="rs-teachers">Hosts</th><?php } ?>
+        <?php if(! empty($show_location)){ ?><th class="rs-location">Location</th><?php } ?>
+        <?php if(! empty($show_price_details)){ ?><th class="rs-price">Price</th><?php } ?>
+        <?php if(! empty($show_more_link)){ ?><th class="rs-show-more-link" >Details</th><?php } ?>
+        <?php if(! empty($show_register_link)){ ?><th class="rs-show-register-link">Register</th><?php } ?>
     </tr>
     </thead>
     <tbody>
     <?php foreach($rs_the_programs as $program): ?>
         <tr>
-            <?php if(isset($show_date)){ ?>
-            <td class="rs-dates">
-                <?php if ( isset($program->date) ) : ?>
-                    <?php echo $program->date; ?>
-                <?php endif; ?>
-                <?php } ?>
+            <?php if(! empty($show_date)){ ?>
+                <td class="rs-dates">
+                    <?php if ( ! empty($program->date) ) : ?>
+                        <?php echo $program->date; ?>
+                    <?php endif; ?>
+                </td>
+            <?php } ?>
 
-                <?php if(isset($show_availability)) : ?>
-            <td class="rs-availability">
-                <?php if ( isset($program->date) ) : ?>
-                    <?php echo $program->registration_spaces_available; ?>
-                <?php endif; ?>
-            </td>
-        <?php endif; ?>
+            <?php if(! empty($show_availability)) : ?>
+                <td class="rs-availability">
+                    <?php if ( ! empty($program->date) ) : ?>
+                        <?php echo $program->registration_spaces_available; ?>
+                    <?php endif; ?>
+                </td>
+            <?php endif; ?>
 
-            <?php if(isset($show_title)) : ?>
+            <?php if(! empty($show_title)) : ?>
                 <td class="rs-title">
-                    <?php if ( isset($program->title) ) : ?>
+                    <?php if ( ! empty($program->title) ) : ?>
                         <?php echo $program->title; ?>
                     <?php endif; ?>
                 </td>
             <?php endif; ?>
 
-            <?php if(isset($show_teachers)) : ?>
+            <?php if(! empty($show_teachers)) : ?>
                 <td class="rs-teachers">
-                    <?php if ( isset($program->teacher_details->teacher_objects) ) : ?>
+                    <?php if ( ! empty($program->teacher_details->teacher_objects) ) : ?>
                         <?php echo $program->teacher_details->teacher_list; ?>
                     <?php endif; ?>
                 </td>
             <?php endif; ?>
 
-            <?php if(isset($show_location)) : ?>
+            <?php if(! empty($show_location)) : ?>
                 <td class="rs-location">
-                    <?php if ( isset($program->location) ) : ?>
+                    <?php if ( ! empty($program->location) ) : ?>
                         <?php echo $program->location; ?>
                     <?php endif; ?>
                 </td>
             <?php endif; ?>
 
-            <?php if(isset($show_more_link)) : ?>
+            <?php if(! empty($show_price_details) ) : ?>
+                <td class="rs-price">
+                    <?php if ( ! empty($program->price_details) ) : ?>
+                        <?php
+                        // we don't want this stuff in table view
+                        $rs_price_output = str_replace('<span class="rs-program-label">Prices</span>', '', $program->price_details );
+                        $rs_price_output = preg_replace('/<p class="rs-program-price-note">.*<\/p>/', '', $rs_price_output);
+                        echo $rs_price_output;
+                        ?>
+                    <?php endif; ?>
+                </td>
+            <?php endif; ?>
+
+            <?php if(! empty($show_more_link)) : ?>
                 <td class="rs-show-more-link">
                     <?php echo '<a href="'.get_site_url().'/'.$RS_Connect->style.'/'.$program->ID.'/'.$program->slug.'">View Details</a>'; ?>
                 </td>
             <?php endif; ?>
 
-            <?php if(isset($show_register_link)) : ?>
+            <?php if(! empty($show_register_link)) : ?>
                 <td class="rs-show-register-link">
                     <?php if ($program->registration_bookable): ?>
                         <a href="<?php echo $program->registration_link; ?>" target="_blank">Register Now</a>
