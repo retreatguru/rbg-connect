@@ -225,22 +225,22 @@ class RS_Connect
 
     public function get_program($id)
     {
-        return json_decode($this->cURL($this->get_url_to_mbm() . '/wp-json/events/' . $id . '?' .rand()));
+        return $this->remote_get($this->get_url_to_mbm() . '/wp-json/events/' . $id . '?' .rand());
     }
 
     public function get_programs($vars = null)
     {
-        return json_decode($this->cURL($this->get_url_to_mbm() . '/wp-json/events/?' . $vars . rand()));
+        return $this->remote_get($this->get_url_to_mbm() . '/wp-json/events/?' . $vars . rand());
     }
 
     public function get_teachers($vars = null)
     {
-        return json_decode($this->cURL($this->get_url_to_mbm() . '/wp-json/teachers/?' . $vars . rand()));
+        return $this->remote_get($this->get_url_to_mbm() . '/wp-json/teachers/?' . $vars . rand());
     }
 
     public function get_teacher($id)
     {
-        return json_decode($this->cURL($this->get_url_to_mbm() . '/wp-json/teachers/' . $id  . '?' .rand()));
+        return $this->remote_get($this->get_url_to_mbm() . '/wp-json/teachers/' . $id  . '?' .rand());
     }
 
     function rs_enqueue_items()
@@ -273,7 +273,6 @@ class RS_Connect
         add_submenu_page('booking-manager.php', 'Program List', 'Program List', 'manage_options', 'booking-manager.php', array(&$this, 'admin_programs_page'));
         add_submenu_page('booking-manager.php', 'Settings', 'Settings', 'manage_options', 'options-mbm', array(&$this, 'admin_settings_page'));
         add_submenu_page('booking-manager.php', 'Help', 'Help', 'manage_options', 'mbm-help', array(&$this, 'admin_mbm_help_page'));
-
     }
 
     function rs_activate()
@@ -288,24 +287,14 @@ class RS_Connect
         $wp_rewrite->flush_rules();
     }
 
-    private function cURL($url)
+    private function remote_get($url, $args = array())
     {
-        $curl = curl_init();
-        $connect = false;
+        $response = wp_remote_get($url, $args);
 
-        curl_setopt_array($curl, array(
-            CURLOPT_RETURNTRANSFER => 1,
-            CURLOPT_URL => $url,
-            CURLOPT_HTTPHEADER => array("API-Version: 1")
-        ));
+		if ( is_wp_error( $response ) || 200 != wp_remote_retrieve_response_code( $response ) )
+			return false;
 
-        $connect = curl_exec($curl);
-        if ($connect == false) {
-            // Error notice
-        } else {
-            return $connect;
-        }
-
+		return json_decode( wp_remote_retrieve_body( $response ) );
     }
 
     function rs_register_settings()
