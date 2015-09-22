@@ -17,6 +17,7 @@ class RS_Connect
     {
         // Base domain to connect with (do not include http://)
         $this->mbm_domain = 'secure.retreat.guru';
+//        $this->mbm_domain = 'programs.dev'; // debug
         $options = get_option('rs_settings');
 
         if(isset($options['style']))

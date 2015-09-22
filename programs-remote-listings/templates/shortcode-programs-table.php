@@ -6,12 +6,13 @@ if(is_array($shortcode_atts)) extract($shortcode_atts);
     <thead>
     <tr>
         <?php if(! empty($show_date)){ ?><th class="rs-dates">Dates</th><?php } ?>
-        <?php if(! empty($show_availability)){ ?><th class="rs-availability">Available Spots</th><?php } ?>
         <?php if(! empty($show_title)){ ?><th class="rs-title">Name</th><?php } ?>
         <?php if(! empty($show_teachers)){ ?><th class="rs-teachers">Hosts</th><?php } ?>
         <?php if(! empty($show_location)){ ?><th class="rs-location">Location</th><?php } ?>
         <?php if(! empty($show_price_details)){ ?><th class="rs-price">Price</th><?php } ?>
         <?php if(! empty($show_more_link)){ ?><th class="rs-show-more-link" >Details</th><?php } ?>
+        <?php if(! empty($show_availability)){ ?><th class="rs-availability">Available Spots</th><?php } ?>
+        <?php if(! empty($show_availability_words)){ ?><th class="rs-availability-words">Availability</th><?php } ?>
         <?php if(! empty($show_register_link)){ ?><th class="rs-show-register-link">Register</th><?php } ?>
     </tr>
     </thead>
@@ -26,14 +27,6 @@ if(is_array($shortcode_atts)) extract($shortcode_atts);
                 </td>
             <?php } ?>
 
-            <?php if(! empty($show_availability)) : ?>
-                <td class="rs-availability">
-                    <?php if ( ! empty($program->date) ) : ?>
-                        <?php echo $program->registration_spaces_available; ?>
-                    <?php endif; ?>
-                </td>
-            <?php endif; ?>
-
             <?php if(! empty($show_title)) : ?>
                 <td class="rs-title">
                     <?php if ( ! empty($program->title) ) : ?>
@@ -44,7 +37,7 @@ if(is_array($shortcode_atts)) extract($shortcode_atts);
 
             <?php if(! empty($show_teachers)) : ?>
                 <td class="rs-teachers">
-                    <?php if ( ! empty($program->teacher_details->teacher_objects) ) : ?>
+                    <?php if ( ! empty($program->teacher_details->teacher_list) ) : ?>
                         <?php echo $program->teacher_details->teacher_list; ?>
                     <?php endif; ?>
                 </td>
@@ -74,6 +67,22 @@ if(is_array($shortcode_atts)) extract($shortcode_atts);
             <?php if(! empty($show_more_link)) : ?>
                 <td class="rs-show-more-link">
                     <?php echo '<a href="'.get_site_url().'/'.$RS_Connect->style.'/'.$program->ID.'/'.$program->slug.'">View Details</a>'; ?>
+                </td>
+            <?php endif; ?>
+
+            <?php if(! empty($show_availability)) : ?>
+                <td class="rs-availability">
+                    <?php if ( ! empty($program->registration_spaces_available) ) : ?>
+                        <?php echo $program->registration_spaces_available; ?>
+                    <?php endif; ?>
+                </td>
+            <?php endif; ?>
+
+            <?php if(! empty($show_availability_words)) : ?>
+                <td class="rs-availability">
+                    <?php if ( ! empty($program->registration_spaces_available_words) ) : ?>
+                        <?php echo $program->registration_spaces_available_words; ?>
+                    <?php endif; ?>
                 </td>
             <?php endif; ?>
 

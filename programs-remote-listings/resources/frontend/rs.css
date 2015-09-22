@@ -136,3 +136,4 @@ div.hasDatepicker { float: left; margin-right: 20px; }
 .rs-program.shortcode.table .rs-availability { text-align:center; }
 .rs-program.shortcode.table .rs-show-more-link { text-align:center; }
 .rs-program.shortcode.table .rs-show-register-link { text-align:center; }
+.rs-program.shortcode.table .rs-price ul { margin: 0; }
