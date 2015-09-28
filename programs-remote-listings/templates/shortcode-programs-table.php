@@ -7,6 +7,7 @@ if(is_array($shortcode_atts)) extract($shortcode_atts);
     <tr>
         <?php if(! empty($show_date)){ ?><th class="rs-dates">Dates</th><?php } ?>
         <?php if(! empty($show_title)){ ?><th class="rs-title">Name</th><?php } ?>
+        <?php if(! empty($extra_display_field)){ ?><th class="rs-custom-field"><?php echo $extra_display_field; ?></th><?php } ?>
         <?php if(! empty($show_teachers)){ ?><th class="rs-teachers">Hosts</th><?php } ?>
         <?php if(! empty($show_location)){ ?><th class="rs-location">Location</th><?php } ?>
         <?php if(! empty($show_price_details)){ ?><th class="rs-price">Price</th><?php } ?>
@@ -31,6 +32,17 @@ if(is_array($shortcode_atts)) extract($shortcode_atts);
                 <td class="rs-title">
                     <?php if ( ! empty($program->title) ) : ?>
                         <?php echo $program->title; ?>
+                    <?php endif; ?>
+                </td>
+            <?php endif; ?>
+
+            <?php if(! empty($extra_display_field)) : ?>
+                <td class="rs-custom-fields">
+                    <?php if ( ! empty($program->custom_fields) ) : ?>
+                        <?php $custom_fields_array = wp_list_pluck($program->custom_fields, 'value', 'title'); ?>
+                        <?php if ( ! empty($custom_fields_array[$extra_display_field]) ) : ?>
+                            <?php echo $custom_fields_array[$extra_display_field]; ?>
+                        <?php endif; ?>
                     <?php endif; ?>
                 </td>
             <?php endif; ?>

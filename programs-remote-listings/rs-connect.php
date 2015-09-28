@@ -16,6 +16,7 @@ class RS_Connect
     public function __construct()
     {
         // Base domain to connect with (do not include http://)
+        // todo: make this dynamic based on RG_TESTING in wp-config.php
         $this->mbm_domain = 'secure.retreat.guru';
 //        $this->mbm_domain = 'programs.dev'; // debug
         $options = get_option('rs_settings');
@@ -207,7 +208,10 @@ class RS_Connect
             $template = 'shortcode-programs-table.php';
         }
 
-        $rs_the_programs = array_reverse($this->get_programs($vars));
+        $rs_the_programs = $this->get_programs($vars);
+        if ( ! is_array($rs_the_programs)) return '';
+
+        $rs_the_programs = array_reverse($rs_the_programs);
 
         if (isset($atts['limit'])) {
             $rs_the_programs = array_slice($rs_the_programs, 0, $atts['limit']);
@@ -291,7 +295,7 @@ class RS_Connect
         add_menu_page('Retreat Booking Guru', 'Retreat Booking Guru', 'manage_options', 'booking-manager.php', arraY(&$this, 'admin_programs_page'), 'dashicons-calendar-alt');
         add_submenu_page('booking-manager.php', 'Program List', 'Program List', 'manage_options', 'booking-manager.php', array(&$this, 'admin_programs_page'));
         add_submenu_page('booking-manager.php', 'Settings', 'Settings', 'manage_options', 'options-mbm', array(&$this, 'admin_settings_page'));
-        add_submenu_page('booking-manager.php', 'Help', 'Help', 'manage_options', 'mbm-help', array(&$this, 'admin_mbm_help_page'));
+//        add_submenu_page('booking-manager.php', 'Help', 'Help', 'manage_options', 'mbm-help', array(&$this, 'admin_mbm_help_page'));
     }
 
     function rs_activate()
@@ -357,15 +361,18 @@ class RS_Connect
         $rs_programs = $this->get_programs();
         ?>
         <div style="clear:left; margin:20px 20px 20px 0;">
+            <a href="<?php echo add_query_arg( array('page' => 'options-mbm'), admin_url('admin.php')); ?>" class="button">Plugin Settings</a>
+            &nbsp; &nbsp; &nbsp;
             <a href="<?php echo $this->get_url_to_mbm(); ?>/wp-admin/admin.php?page=rs-programs" class="button">View All Programs</a>
             <a href="<?php echo $this->get_url_to_mbm(); ?>/wp-admin/admin.php?page=registrations" class="button">View All Registrations</a>
             <a href="<?php echo $this->get_url_to_mbm(); ?>/wp-admin/admin.php?page=rs-transactions" class="button">View All Transactions</a>
         </div>
 
+        <div style="width: 58%; float: left;">
         <table class="wp-list-table widefat fixed posts">
             <thead>
             <tr>
-                <th width="400">Program</th>
+                <th width="300">Program</th>
                 <th width="100">Dates</th>
                 <th width="100">Registration</th>
             </tr>
@@ -383,57 +390,13 @@ class RS_Connect
             <?php endforeach; ?>
             </tbody>
         </table>
-
-    <?php
-    }
-
-    function admin_mbm_help_page()
-    {
-?>
-        <div class="card">
-        <h2>Using the Program Listing Shortcode</h2>
-        <p>Use the [rs_programs] shortcode to add a list of your programs to any Wordpress post, page or theme file. Simply insert the following into the contents of your page or post and it will automatically list out the programs you've added to Mandala Booking Manager.</p>
-
-        <p><code>[rs_programs]</code></p>
-
-
-        <h3>Only list one category</h3>
-        <p>If you'd like to list programs specific to one program cateogry on your site, add the category attribute with the "slug" value of that category.  Here is an example:</p>
-
-        <p><code>[rs_programs category="featured-events"]</code></p>
-
-        <p>This will now only list programs you've added to a "Featured Events" category. You can create new categories and see a list of categories and their "slugs" by loging in to Mandala Booking Manager and clicking "Programs -> Category"</p>
-
-
-        <h3>Hide certain properties like the program picture or description</h3>
-        <p>If you'd like to simplify the programs list you can add the following attributes to remove certain elements.  Here is an example that would hide everything except the title:</p>
-
-        <p><code>[rs_programs hide_photo hide_date hide_location hide_text]</code></p>
-
-
-        <h3>Add a link directly to the registration form</h3>
-        <p>To add a link underneath each program that points directly to the registration form, you can add the following attribute to the shortcode:</p>
-
-        <p><code>[rs_programs show_register_link]</code></p>
-
-            <h3>Table view</h3>
-            <p>This view is useful when your programs are mainly identical except for the dates, location or teachers. You can decide what data to show in the table list. All items are optional. A simple and more detailed examples are below:</p>
-
-            <p><code>[rs_programs table show_date show_register_link]</code></p>
-
-            <p><code>[rs_programs table show_date show_availability show_teachers show_title show_location show_price_details show_more_link show_register_link]</code></p>
-
-
-        <h3>Adding the shortcode to  a template file</h3>
-        <p>For websmasters and site developers who want to position a program list that can't be done through editing a post, page or widget, you can also implement this shortcode in a theme file using the following wordpress method:</p>
-        <p><code>&#x3C;?php echo do_shortcode(&#x27;[rs_programs]&#x27;); ?&#x3E;</code></p>
-
-        <h3>Customize the color of the register now button</h3>
-        <p>Available as an option on the <a href="<?php echo admin_url('admin.php?page=options-mbm'); ?>">settings page</a> to do this.</p>
         </div>
 
+        <div style="width: 40%; float: right;">
+            <?php include($this->plugin_dir . '/views/admin-help.php'); ?>
+        </div>
 
-        <?php
+    <?php
     }
 
     function admin_settings_page()
