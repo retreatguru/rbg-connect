@@ -16,9 +16,8 @@ class RS_Connect
     public function __construct()
     {
         // Base domain to connect with (do not include http://)
-        // todo: make this dynamic based on RG_TESTING in wp-config.php
         $this->mbm_domain = 'secure.retreat.guru';
-//        $this->mbm_domain = 'programs.dev'; // debug
+
         $options = get_option('rs_settings');
 
         if(isset($options['style']))
@@ -28,7 +27,7 @@ class RS_Connect
             $this->style = 'program';
         }
 
-        $this->plugin_dir      = plugin_dir_path( __FILE__ );
+        $this->plugin_dir = plugin_dir_path( __FILE__ );
         $this->includes();
 
         add_filter('admin_init', array($this, 'rs_flush_rewrite_rules'));
@@ -347,13 +346,12 @@ class RS_Connect
     function get_url_to_mbm()
     {
         $options = get_option('rs_settings');
-        if (empty($options['rs_domain'])) {
 
-            return 'http://' . $this->mbm_domain;
-        } else {
+        if (RS_TESTING && empty($options['rs_domain'])) return 'http://programs.dev'; // local debug
 
-            return 'http://' . $options['rs_domain'] . "." . $this->mbm_domain;
-        }
+        $sub_domain = ! empty($options['rs_domain']) ? $options['rs_domain'] : 'demo';
+
+        return 'http://' . $sub_domain . "." . $this->mbm_domain;
     }
 
     function admin_programs_page()

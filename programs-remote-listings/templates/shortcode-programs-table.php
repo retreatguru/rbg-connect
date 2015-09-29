@@ -11,6 +11,7 @@ if(is_array($shortcode_atts)) extract($shortcode_atts);
         <?php if(! empty($show_teachers)){ ?><th class="rs-teachers">Hosts</th><?php } ?>
         <?php if(! empty($show_location)){ ?><th class="rs-location">Location</th><?php } ?>
         <?php if(! empty($show_price_details)){ ?><th class="rs-price">Price</th><?php } ?>
+        <?php if(! empty($show_price_first)){ ?><th class="rs-price-first">Price</th><?php } ?>
         <?php if(! empty($show_more_link)){ ?><th class="rs-show-more-link" >Details</th><?php } ?>
         <?php if(! empty($show_availability)){ ?><th class="rs-availability">Available Spots</th><?php } ?>
         <?php if(! empty($show_availability_words)){ ?><th class="rs-availability-words">Availability</th><?php } ?>
@@ -68,10 +69,18 @@ if(is_array($shortcode_atts)) extract($shortcode_atts);
                     <?php if ( ! empty($program->price_details) ) : ?>
                         <?php
                         // we don't want this stuff in table view
-                        $rs_price_output = str_replace('<span class="rs-program-label">Prices</span>', '', $program->price_details );
+                        $rs_price_output = preg_replace('/<span class="rs-program-label">Price.*<\/span>/', '', $program->price_details );
                         $rs_price_output = preg_replace('/<p class="rs-program-price-note">.*<\/p>/', '', $rs_price_output);
                         echo $rs_price_output;
                         ?>
+                    <?php endif; ?>
+                </td>
+            <?php endif; ?>
+
+            <?php if(! empty($show_price_first) ) : ?>
+                <td class="rs-price-first">
+                    <?php if ( ! empty($program->price_first) ) : ?>
+                        <?php echo $program->price_first; ?>
                     <?php endif; ?>
                 </td>
             <?php endif; ?>
