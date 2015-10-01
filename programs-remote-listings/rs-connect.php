@@ -20,13 +20,6 @@ class RS_Connect
 
         $options = get_option('rs_settings');
 
-        if(! isset($options['config']['override']))
-        {
-            $this->rewrite_base = 'index.php';
-        } else {
-            $this->rewrite_base = 'page.php';
-        }
-
         if(isset($options['style']))
         {
             $this->style = $options['style'];
@@ -51,20 +44,20 @@ class RS_Connect
 
         add_action('init', array($this, 'setup_rewrite'));
         add_filter( 'query_vars', array($this, 'register_query_var' ));
-        add_filter('template_include', array($this, 'template_include'), 1, 1);
+        add_filter('template_include', array($this, 'template_include'), 100, 1);
     }
 
     function setup_rewrite() {
         global $wp_rewrite;
         // Programs todo: switch to ?rs_program instead of ?program
-        add_rewrite_rule( $this->style.'s/?$',  $this->rewrite_base . '?programs=true', 'top' );
-        add_rewrite_rule( $this->style.'s/category/([^/]*)/?',  $this->rewrite_base . '?programs=true&category=$matches[1]', 'top' );
-        add_rewrite_rule( $this->style.'/([^/]*)/?',  $this->rewrite_base . '?programs=true&program=$matches[1]', 'top' );
-        add_rewrite_rule( $this->style.'/([^/]*)/([^/]*)/?',  $this->rewrite_base . '?programs=true&program=$matches[1]', 'top' );
+        add_rewrite_rule( $this->style.'s/?$',  'index.php?programs=true', 'top' );
+        add_rewrite_rule( $this->style.'s/category/([^/]*)/?',  'index.php?programs=true&category=$matches[1]', 'top' );
+        add_rewrite_rule( $this->style.'/([^/]*)/?',  'index.php?programs=true&program=$matches[1]', 'top' );
+        add_rewrite_rule( $this->style.'/([^/]*)/([^/]*)/?',  'index.php?programs=true&program=$matches[1]', 'top' );
         // Teachers
-        add_rewrite_rule( 'teachers/?$',  $this->rewrite_base . '?teachers=true', 'top' );
-        add_rewrite_rule( 'teachers/category/([^/]*)/?',  $this->rewrite_base . '?teachers=true&category=$matches[1]', 'top' );
-        add_rewrite_rule( 'teacher/([^/]*)/([^/]*)/?',  $this->rewrite_base . '?teachers=true&teacher=$matches[1]', 'top' );
+        add_rewrite_rule( 'teachers/?$',  'index.php?teachers=true', 'top' );
+        add_rewrite_rule( 'teachers/category/([^/]*)/?',  'index.php?teachers=true&category=$matches[1]', 'top' );
+        add_rewrite_rule( 'teacher/([^/]*)/([^/]*)/?',  'index.php?teachers=true&teacher=$matches[1]', 'top' );
     }
 
     function register_query_var( $vars ) {
@@ -112,6 +105,7 @@ class RS_Connect
     function template_include($template)
     {
         global $wp_query; //Load $wp_query object
+        global $api_vars;
 
         // Support Yoast SEO
         add_filter( 'wpseo_canonical', array($this, 'canonical_url' ));
@@ -119,16 +113,22 @@ class RS_Connect
         add_filter( 'wpseo_metadesc', '__return_false' );
 
         // Load program views
-        if($wp_query->query_vars['programs'])
+        $programs = get_query_var('programs');
+        $program = get_query_var('program');
+        $category = get_query_var('category');
+
+        if($programs)
         {
-            if(isset($wp_query->query_vars['program']))
+            if($program)
             {
-                $this->program = $this->get_program($wp_query->query_vars['program']);
+                $this->program = $this->get_program($program);
                 return $this->get_template_path('single-program.php');
             }
 
-            global $api_vars;
-            if($wp_query->query_vars['category']) {  $api_vars .= 'category=' . get_query_var('category') . '&'; }
+
+            if($category) {  $api_vars .= 'category=' . $category . '&'; }
+
+
 
             return $this->get_template_path('archive-program.php');
         }
@@ -482,20 +482,6 @@ class RS_Connect
                     <tr>
                     <th scope="row"></th>
                     <td><input type="submit" style="font-size: 24px;" value="Save"/></td>
-                    </tr>
-                    <tr>
-                        <th scope="row">Override rewrite rule</th>
-                        <td>
-                            <fieldset>
-                                <label>
-                                    <input type="checkbox" name="rs_settings[config][override]"  id="rs_settings[config][override]" <?php if($options['config']['override']) { echo "checked"; } ?>>
-                                    <br/>
-                            </fieldset>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row"></th>
-                        <td><input type="submit" style="font-size: 24px;" value="Save"/></td>
                     </tr>
                 </table>
             </form>
