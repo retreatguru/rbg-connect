@@ -20,6 +20,13 @@ class RS_Connect
 
         $options = get_option('rs_settings');
 
+        if(! isset($options['config']['override']))
+        {
+            $this->rewrite_base = 'index.php';
+        } else {
+            $this->rewrite_base = 'page.php';
+        }
+
         if(isset($options['style']))
         {
             $this->style = $options['style'];
@@ -49,15 +56,15 @@ class RS_Connect
 
     function setup_rewrite() {
         global $wp_rewrite;
-        // Programs
-        add_rewrite_rule( $this->style.'s/?$', 'index.php?programs=true', 'top' );
-        add_rewrite_rule( $this->style.'s/category/([^/]*)/?', 'index.php?programs=true&category=$matches[1]', 'top' );
-        add_rewrite_rule( $this->style.'/([^/]*)/?', 'index.php?programs=true&program=$matches[1]', 'top' );
-        add_rewrite_rule( $this->style.'/([^/]*)/([^/]*)/?', 'index.php?programs=true&program=$matches[1]', 'top' );
+        // Programs todo: switch to ?rs_program instead of ?program
+        add_rewrite_rule( $this->style.'s/?$',  $this->rewrite_base . '?programs=true', 'top' );
+        add_rewrite_rule( $this->style.'s/category/([^/]*)/?',  $this->rewrite_base . '?programs=true&category=$matches[1]', 'top' );
+        add_rewrite_rule( $this->style.'/([^/]*)/?',  $this->rewrite_base . '?programs=true&program=$matches[1]', 'top' );
+        add_rewrite_rule( $this->style.'/([^/]*)/([^/]*)/?',  $this->rewrite_base . '?programs=true&program=$matches[1]', 'top' );
         // Teachers
-        add_rewrite_rule( 'teachers/?$', 'index.php?teachers=true', 'top' );
-        add_rewrite_rule( 'teachers/category/([^/]*)/?', 'index.php?teachers=true&category=$matches[1]', 'top' );
-        add_rewrite_rule( 'teacher/([^/]*)/([^/]*)/?', 'index.php?teachers=true&teacher=$matches[1]', 'top' );
+        add_rewrite_rule( 'teachers/?$',  $this->rewrite_base . '?teachers=true', 'top' );
+        add_rewrite_rule( 'teachers/category/([^/]*)/?',  $this->rewrite_base . '?teachers=true&category=$matches[1]', 'top' );
+        add_rewrite_rule( 'teacher/([^/]*)/([^/]*)/?',  $this->rewrite_base . '?teachers=true&teacher=$matches[1]', 'top' );
     }
 
     function register_query_var( $vars ) {
@@ -475,6 +482,20 @@ class RS_Connect
                     <tr>
                     <th scope="row"></th>
                     <td><input type="submit" style="font-size: 24px;" value="Save"/></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Override rewrite rule</th>
+                        <td>
+                            <fieldset>
+                                <label>
+                                    <input type="checkbox" name="rs_settings[config][override]"  id="rs_settings[config][override]" <?php if($options['config']['override']) { echo "checked"; } ?>>
+                                    <br/>
+                            </fieldset>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row"></th>
+                        <td><input type="submit" style="font-size: 24px;" value="Save"/></td>
                     </tr>
                 </table>
             </form>
