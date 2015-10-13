@@ -274,7 +274,7 @@ class RS_Connect
 
     function rs_enqueue_items()
     {
-        wp_enqueue_style('rs-f', plugins_url('/resources/frontend/rs.css', __FILE__), null, '20150612a');
+        wp_enqueue_style('rs-f', plugins_url('/resources/frontend/rs.css', __FILE__), null, '20151013a');
         wp_enqueue_script('rs-js', plugins_url('/resources/frontend/rs.js', __FILE__), array('jquery'), '20150612a');
 
         $options = get_option('rs_settings');
