@@ -24,22 +24,22 @@ if(isset($options['rs_template']['before'])) echo $options['rs_template']['befor
                     <div class="rs-meta-content-container">
 
                         <?php // Pricing ?>
-                        <?php if ( isset($rs_the_program->price_details) ) : ?>
+                        <?php if ( $rs_the_program->price_details ) : ?>
                             <div class="rs-program-price"><?php echo $rs_the_program->price_details ?></div>
                         <?php endif; ?>
 
                         <?php // Datetime details ?>
-                        <?php if ( isset($rs_the_program->date_time) ) : ?>
-                            <p class="rs-program-datetime"><span class="rs-program-label">Date and Time Details:</span> <?php echo $rs_the_program->date_time; ?></p>
+                        <?php if ( $rs_the_program->date_time ) : ?>
+                            <p class="rs-program-datetime"><span class="rs-program-label">Date &amp; Time Details:</span> <?php echo $rs_the_program->date_time; ?></p>
                         <?php endif; ?>
 
                         <?php // Location ?>
-                        <?php if ( isset($rs_the_program->location) ) : ?>
+                        <?php if ( $rs_the_program->location ) : ?>
                             <p class="rs-program-location"><span class="rs-program-label">Location:</span> <?php echo $rs_the_program->location; ?></p>
                         <?php endif; ?>
 
                         <?php // Contact details ?>
-                        <?php if ( isset($rs_the_program->contact) ) : ?>
+                        <?php if ( $rs_the_program->contact ) : ?>
                             <p class="rs-program-contact"><?php echo $rs_the_program->contact ?></p>
                         <?php endif; ?>
 
@@ -52,10 +52,8 @@ if(isset($options['rs_template']['before'])) echo $options['rs_template']['befor
                 </div>
 
                 <header class="entry-header">
-                <h1 class="rs-program-title"><?php echo $rs_the_program->title; ?></h1>
+                    <h1 class="rs-program-title"><?php echo $rs_the_program->title; ?></h1>
                 </header>
-
-
 
                 <p class="rs-program-date"><?php echo $rs_the_program->date; ?></p>
 

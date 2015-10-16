@@ -44,9 +44,8 @@ foreach($programs as $program): ?>
         <?php do_action('rs_after_archive_program'); ?>
 
     </div>
-<?php endforeach; } else { echo 'Sorry, no programs exist here.'; }?>
 
-</div>
+<?php endforeach; } else { echo 'Sorry, no programs exist here.'; }?>
 
 <?php if(isset($options['rs_template']['after'])) { echo $options['rs_template']['after']; } ?>
 
