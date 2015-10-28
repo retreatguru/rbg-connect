@@ -6,7 +6,7 @@ if(is_array($shortcode_atts)) extract($shortcode_atts);
     <thead>
     <tr>
         <?php if(! empty($show_date)){ ?><th class="rs-dates">Dates</th><?php } ?>
-        <?php if(! empty($show_title)){ ?><th class="rs-title">Name</th><?php } ?>
+        <?php if(! empty($show_title)){ ?><th class="rs-title"><?php _e( ucfirst($RS_Connect->style) ); ?> Name</th><?php } ?>
         <?php if(! empty($extra_display_field)){ ?><th class="rs-custom-field"><?php echo $extra_display_field; ?></th><?php } ?>
         <?php if(! empty($show_teachers)){ ?><th class="rs-teachers">Hosts</th><?php } ?>
         <?php if(! empty($show_location)){ ?><th class="rs-location">Location</th><?php } ?>

@@ -437,7 +437,8 @@ class RS_Connect
                                 <small>This provides the correct permalink structure for your site</small><br/>
                                 <input type="radio" name="rs_settings[style]" value="program" <?php if($options['style'] == 'program' || ! isset($options['style'])) { echo "checked"; } ?>>Programs<br>
                                 <input type="radio" name="rs_settings[style]" value="event" <?php if($options['style'] == 'event') { echo "checked"; } ?>>Events<br>
-                                <input type="radio" name="rs_settings[style]" value="retreat" <?php if($options['style'] == 'retreat') { echo "checked"; } ?>>Retreats
+                                <input type="radio" name="rs_settings[style]" value="retreat" <?php if($options['style'] == 'retreat') { echo "checked"; } ?>>Retreats<br>
+                                <input type="radio" name="rs_settings[style]" value="workshop" <?php if($options['style'] == 'workshop') { echo "checked"; } ?>>Workshops
                             </fieldset>
                         </td>
                     </tr>
