@@ -135,7 +135,7 @@ class RS_Connect
         }
 
         // Load teachers views
-        if($wp_query->query_vars['teachers'])
+        if(isset($wp_query->query_vars['teachers']))
         {
             if(isset($wp_query->query_vars['teacher']))
             {
@@ -355,7 +355,7 @@ class RS_Connect
     {
         $options = get_option('rs_settings');
 
-        if (RS_TESTING && empty($options['rs_domain'])) return 'http://programs.dev'; // local debug
+        if (defined('RS_TESTING') && empty($options['rs_domain'])) return 'http://programs.dev'; // local debug
 
         $sub_domain = ! empty($options['rs_domain']) ? $options['rs_domain'] : 'demo';
 
