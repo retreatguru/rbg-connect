@@ -96,7 +96,8 @@
 /* widgets */
 /*.rs-programs-widget { margin: 15px 0; list-style: none; clear: left; }*/
 .rs-programs-widget h4, .rs-programs-widget p { clear: none; line-height: 1.0; margin-bottom: 0px; }
-.rs_widget_programs ul { margin-left: 0 !important; }
+.rs-programs-widget ul { margin-left: 0 !important; }
+.rs-programs-widget ul li { clear: both; }
 
 
 .rs-custom-field-table th { width: 140px; }

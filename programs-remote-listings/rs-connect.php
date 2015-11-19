@@ -459,11 +459,11 @@ class RS_Connect
                             <fieldset>
                                 Wrap template tags around the program listings to fix template bugs<br/>
                                 <label>
-                                    <textarea name="rs_settings[rs_template][before]" type="text" style="width:700px;" id="rs_settings[rs_template][before]"><?php if(isset($options['rs_template']['before'])) echo $options['rs_template']['before']; ?>
+                                    <textarea name="rs_settings[rs_template][before]" type="text" style="width:700px;height:200px;" id="rs_settings[rs_template][before]"><?php if(isset($options['rs_template']['before'])) echo $options['rs_template']['before']; ?>
                                     </textarea>
                                 </label><br/>
                                 <label>
-                                    <textarea name="rs_settings[rs_template][after]" type="text" style="width:700px;" id="rs_settings[rs_template][after]"><?php if(isset($options['rs_template']['after'])) echo $options['rs_template']['after']; ?>
+                                    <textarea name="rs_settings[rs_template][after]" type="text" style="width:700px;height:100px;" id="rs_settings[rs_template][after]"><?php if(isset($options['rs_template']['after'])) echo $options['rs_template']['after']; ?>
                                     </textarea>
                                 </label>
                             </fieldset>

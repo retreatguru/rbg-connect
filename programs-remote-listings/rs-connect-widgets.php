@@ -93,6 +93,8 @@ if ( ! class_exists( 'RS_Connect_Widget' ) ) {
             </ul>
             <?php
 
+            echo $after_widget;
+
         }
 
         // do validation
