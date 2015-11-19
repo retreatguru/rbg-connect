@@ -10,23 +10,26 @@ if(isset($options['rs_template']['before'])) { echo $options['rs_template']['bef
 global $api_vars;
 global $RS_Connect;
 
+$programs = array_reverse($RS_Connect->get_programs($api_vars));
+
 ?>
 
 <h1 class="rs-archive-title"><?php _e( ucfirst($RS_Connect->style).'s', $RS_Connect->style.'s' ); ?></h1>
 <?php
-$programs = array_reverse($RS_Connect->get_programs($api_vars));
 
 if(! empty($programs)) {
 foreach($programs as $program): ?>
 
+    <?php $details_url = $program->alternate_url ? $program->alternate_url : get_site_url().'/'.$RS_Connect->style.'/'.$program->ID.'/'.$program->slug; ?>
+
     <div class="rs-program rs-group">
 
         <?php if ( $program->photo_details ) : ?>
-            <div class="rs-program-thumbnail"><a href="<?php echo get_site_url(); ?>/<?php echo $RS_Connect->style; ?>/<?php echo $program->ID; ?>/<?php echo $program->slug; ?>"><img src="<?php echo $program->photo_details->thumbnail->url; ?>"></a></div>
+            <div class="rs-program-thumbnail"><a href="<?php echo $details_url; ?>"><img src="<?php echo $program->photo_details->thumbnail->url; ?>"></a></div>
         <?php endif; ?>
 
         <?php if ( $program->title ) : ?>
-            <h2 class="rs-program-title"><a href="<?php echo get_site_url(); ?>/<?php echo $RS_Connect->style; ?>/<?php echo $program->ID; ?>/<?php echo $program->slug; ?>"><?php echo $program->title; ?></a></h2>
+            <h2 class="rs-program-title"><a href="<?php echo $details_url; ?>"><?php echo $program->title; ?></a></h2>
         <?php endif; ?>
 
         <?php if ( $program->date ) : ?>

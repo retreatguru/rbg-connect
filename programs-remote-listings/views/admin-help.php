@@ -33,6 +33,9 @@
 
         <p>Program extra display fields can be accesses using <code>extra_display_field="My Title"</code> where "My Title" is the exact title of the extra display field as set when editing the program.</p>
 
+        <h3>Alternate program description URL</h3>
+        <p>If you run one program many times it makes sense to keep the program description on your own website rather than duplicating it in each program then choose table view to display available dates. If so then enter the URL for the page on your website in the "Alternate Description URL" field (inside More Program Details when editing your program).</p>
+
         <h3>Adding the shortcode to  a template file</h3>
         <p>For websmasters and site developers who want to position a program list that can't be done through editing a post, page or widget, you can also implement this shortcode in a theme file using the following wordpress method:</p>
         <p><code>&#x3C;?php echo do_shortcode(&#x27;[rs_programs]&#x27;); ?&#x3E;</code></p>
