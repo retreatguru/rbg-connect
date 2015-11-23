@@ -3,7 +3,7 @@
 /*
 Plugin Name: Retreat Booking Guru Connect
 Description: Connect to Retreat Booking Guru to show program listings on your site and link to registration forms.
-Version: 1.5
+Version: 1.5.1
 Author: Retreat Guru
 Author URI: http://retreat.guru/booking
 */
@@ -386,10 +386,11 @@ class RS_Connect
 
             <tbody>
             <?php foreach ((array)$rs_programs as $program): ?>
+                <?php $details_url = $program->alternate_url ? $program->alternate_url : get_site_url().'/'.$this->style.'/'.$program->ID.'/'.$program->slug; ?>
                 <tr>
                     <td>
                         <a href="<?php echo $this->get_url_to_mbm(); ?>/wp-admin/post.php?action=edit&post=<?php echo $program->ID; ?>"><?php echo $program->title; ?></a>
-                        - <a href="<?php echo get_site_url() . '/' . $this->style . '/' . $program->ID . '/' . $program->slug; ?>">view</a></td>
+                        - <a href="<?php echo $details_url; ?>">view</a></td>
                     <td><?php echo $program->date; ?></td>
                     <td><?php echo ucfirst($program->registration_status); ?></td>
                 </tr>

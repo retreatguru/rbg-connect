@@ -58,17 +58,18 @@ if ( ! class_exists( 'RS_Connect_Widget' ) ) {
                 <?php
                 foreach ($rs_the_programs as $program) {
                     if ($count < $number) {
+                        $details_url = $program->alternate_url ? $program->alternate_url : get_site_url().'/'.$RS_Connect->style.'/'.$program->ID.'/'.$program->slug;
                         ?>
                         <li>
                             <?php if ($show_thumbnail && $program->photo_details) : ?>
                                 <div class="rs-program-thumbnail">
-                                    <a href="<?php echo get_site_url(); ?>/<?php echo $RS_Connect->style; ?>/<?php echo $program->ID; ?>/<?php echo $program->slug; ?>"><img
+                                    <a href="<?php echo $details_url; ?>"><img
                                             src="<?php echo $program->photo_details->thumbnail->url; ?>"
                                             width="<?php echo $image_w; ?>" height="<?php echo $image_h; ?>"></a>
                                 </div>
                             <?php endif; ?>
-                            <h4 class="rs-program-title"><a
-                                    href="<?php echo get_site_url(); ?>/<?php echo $RS_Connect->style; ?>/<?php echo $program->ID; ?>/<?php echo $program->slug; ?>"><?php echo $program->title; ?></a>
+                            <h4 class="rs-program-title">
+                                <a href="<?php echo $details_url ?>"><?php echo $program->title; ?></a>
                             </h4>
 
                             <p class="rs-program-date"><?php if ($show_date) {
@@ -77,7 +78,7 @@ if ( ! class_exists( 'RS_Connect_Widget' ) ) {
 
                             <p class="rs-program-excerpt"><?php if ($show_excerpt) {
                                     echo wp_trim_words($program->text, $excerpt_words);
-                                    if ($excerpt_more) echo '<a href="'.get_site_url().'/'.$RS_Connect->style.'/'.$program->ID.'/'.$program->slug.'">'.$excerpt_more.'</a>';
+                                    if ($excerpt_more) echo '<a href="'.$details_url.'">'.$excerpt_more.'</a>';
                                 } ?></p>
 
                         </li>
