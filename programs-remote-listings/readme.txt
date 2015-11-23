@@ -1,5 +1,5 @@
 === Plugin Name ===
-Contributors: dwenaus
+Contributors: ryandury, dwenaus, benirving
 Donate link: http://retreat.guru/booking
 Tags: retreat, booking, events, registration, retreat guru
 Requires at least: 3.0
