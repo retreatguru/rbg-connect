@@ -435,12 +435,14 @@ class RS_Connect
                         <th scope="row">Label</th>
                         <td>
                             <fieldset>
-                              What do you offer?<br/>
-                                <small>This provides the correct permalink structure for your site</small><br/>
+                              What kind of experience do you offer?<br/>
+                                <small>This provides the correct url structure and page titles</small><br/>
                                 <input type="radio" name="rs_settings[style]" value="program" <?php if($options['style'] == 'program' || ! isset($options['style'])) { echo "checked"; } ?>>Programs<br>
                                 <input type="radio" name="rs_settings[style]" value="event" <?php if($options['style'] == 'event') { echo "checked"; } ?>>Events<br>
                                 <input type="radio" name="rs_settings[style]" value="retreat" <?php if($options['style'] == 'retreat') { echo "checked"; } ?>>Retreats<br>
-                                <input type="radio" name="rs_settings[style]" value="workshop" <?php if($options['style'] == 'workshop') { echo "checked"; } ?>>Workshops
+                                <input type="radio" name="rs_settings[style]" value="workshop" <?php if($options['style'] == 'workshop') { echo "checked"; } ?>>Workshops<br>
+                                <input type="radio" name="rs_settings[style]" value="trip" <?php if($options['style'] == 'trip') { echo "checked"; } ?>>Trips<br>
+                                <input type="radio" name="rs_settings[style]" value="tour" <?php if($options['style'] == 'tour') { echo "checked"; } ?>>Tours
                             </fieldset>
                         </td>
                     </tr>
