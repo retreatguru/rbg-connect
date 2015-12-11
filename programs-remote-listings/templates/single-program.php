@@ -13,12 +13,16 @@ if(isset($options['rs_template']['before'])) echo $options['rs_template']['befor
 
             <div class="entry-content">
 
+                <h1 class="rs-program-title"><?php echo $rs_the_program->title; ?></h1>
+
+                <p class="rs-program-date"><?php echo $rs_the_program->date; ?></p>
+
                 <div class="rs-program-meta">
 
                     <?php  if ( $rs_the_program->photo_details ) : ?>
-                    <div class="rs-program-photo">
-                        <img src="<?php echo $rs_the_program->photo_details->large->url; ?>" width="100%">
-                    </div>
+                        <div class="rs-program-photo">
+                            <img src="<?php echo $rs_the_program->photo_details->large->url; ?>" width="100%">
+                        </div>
                     <?php endif; ?>
 
                     <div class="rs-meta-content-container">
@@ -50,12 +54,6 @@ if(isset($options['rs_template']['before'])) echo $options['rs_template']['befor
 
                     </div>
                 </div>
-
-                <header class="entry-header">
-                    <h1 class="rs-program-title"><?php echo $rs_the_program->title; ?></h1>
-                </header>
-
-                <p class="rs-program-date"><?php echo $rs_the_program->date; ?></p>
 
                 <div class="rs-regsitration-wrap"><?php echo $rs_the_program->registration_action; ?></div>
 

@@ -19,6 +19,8 @@
     position: relative;
 }
 
+.rs-program-title { padding:20px 0 0; }
+
 .single-program .entry-content {
     float:left; width:100%;
 }
@@ -144,4 +146,10 @@ div.hasDatepicker { float: left; margin-right: 20px; }
     .rs-program.table, .rs-program thead, .rs-program tbody, .rs-program tfoot, .rs-program th, .rs-program td, .rs-program tr { display:block; }
     .rs-program.shortcode.table tr { margin-top:2em; margin-bottom: 2em; border-bottom: 1px solid #eaeaea; border-top: 1px solid #eaeaea; }
     .rs-program.shortcode.table td, .rs-program.shortcode.table th { border-bottom: none; border-top: none; padding: 2px; text-align: center; }
+}
+
+
+@media only screen and (max-width: 520px)
+{
+    .single-program .rs-program-meta { width:100% !important; }
 }
