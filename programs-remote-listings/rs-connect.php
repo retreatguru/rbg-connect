@@ -3,7 +3,7 @@
 /*
 Plugin Name: Retreat Booking Guru Connect
 Description: Connect to Retreat Booking Guru to show program listings on your site and link to registration forms.
-Version: 1.5.1
+Version: 1.6.0
 Author: Retreat Guru
 Author URI: http://retreat.guru/booking
 */
@@ -17,7 +17,11 @@ class RS_Connect
     {
         // Base domain to connect with (do not include http://)
         $this->mbm_domain = 'secure.retreat.guru';
-//        $this->mbm_domain = 'programs.dev';
+
+        // local testing
+        if (isset($_SERVER['SERVER_NAME']) && 'programs-remote.dev' == $_SERVER['SERVER_NAME']) {
+            $this->mbm_domain = 'programs.dev';
+        }
 
         $options = get_option('rs_settings');
 

@@ -30,10 +30,12 @@ if(! empty($rs_the_programs)) {
             <?php endif; ?>
 
             <?php if (! empty($show_register_link) ) : ?>
-                <?php if ($program->registration_bookable): ?>
+                <?php if ($program->registration_wait_list): ?>
+                    <a href="<?php echo $program->registration_link; ?>" target="_blank">Join waiting list</a>
+                <?php elseif ($program->registration_bookable): ?>
                     <a href="<?php echo $program->registration_link; ?>" target="_blank">Register Now</a>
                 <?php else: ?>
-                    <?php if(empty($program->registration_action)) { echo "Closed"; } else { echo $program->registration_action; } ?>
+                    <?php if (empty($program->registration_action)) { echo "Closed"; } else { echo $program->registration_action; } ?>
                 <?php endif; ?>
             <?php endif; ?>
 

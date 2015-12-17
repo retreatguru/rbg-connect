@@ -110,10 +110,12 @@ if(is_array($shortcode_atts)) extract($shortcode_atts);
 
             <?php if(! empty($show_register_link)) : ?>
                 <td class="rs-show-register-link">
-                    <?php if ($program->registration_bookable): ?>
-                        <a href="<?php echo $program->registration_link; ?>" target="_blank">Register Now</a>
+                    <?php if ($program->registration_wait_list): ?>
+                        <a href="<?php echo $program->registration_link; ?>" target="_blank">Join waiting list</a>
+                    <?php elseif ($program->registration_bookable): ?>
+                        <a href="<?php echo $program->registration_link; ?>" target="_blank">Register now</a>
                     <?php else: ?>
-                        <?php if(empty($program->registration_action)) { echo "Closed"; } else { echo $program->registration_action; } ?>
+                        <?php if (empty($program->registration_action)) { echo "Closed"; } else { echo $program->registration_action; } ?>
                     <?php endif; ?>
                 </td>
             <?php endif; ?>
