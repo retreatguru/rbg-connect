@@ -56,35 +56,37 @@ if ( ! class_exists( 'RS_Connect_Widget' ) ) {
 
             <ul class="rs-programs-widget">
                 <?php
-                foreach ($rs_the_programs as $program) {
-                    if ($count < $number) {
-                        $details_url = $program->alternate_url ? $program->alternate_url : get_site_url().'/'.$RS_Connect->style.'/'.$program->ID.'/'.$program->slug;
-                        ?>
-                        <li>
-                            <?php if ($show_thumbnail && $program->photo_details) : ?>
-                                <div class="rs-program-thumbnail">
-                                    <a href="<?php echo $details_url; ?>"><img
-                                            src="<?php echo $program->photo_details->thumbnail->url; ?>"
-                                            width="<?php echo $image_w; ?>" height="<?php echo $image_h; ?>"></a>
-                                </div>
-                            <?php endif; ?>
-                            <h4 class="rs-program-title">
-                                <a href="<?php echo $details_url ?>"><?php echo $program->title; ?></a>
-                            </h4>
+                if ($rs_the_programs) {
+                    foreach ($rs_the_programs as $program) {
+                        if ($count < $number) {
+                            $details_url = $program->alternate_url ? $program->alternate_url : get_site_url().'/'.$RS_Connect->style.'/'.$program->ID.'/'.$program->slug;
+                            ?>
+                            <li>
+                                <?php if ($show_thumbnail && $program->photo_details) : ?>
+                                    <div class="rs-program-thumbnail">
+                                        <a href="<?php echo $details_url; ?>"><img
+                                                src="<?php echo $program->photo_details->thumbnail->url; ?>"
+                                                width="<?php echo $image_w; ?>" height="<?php echo $image_h; ?>"></a>
+                                    </div>
+                                <?php endif; ?>
+                                <h4 class="rs-program-title">
+                                    <a href="<?php echo $details_url ?>"><?php echo $program->title; ?></a>
+                                </h4>
 
-                            <p class="rs-program-date"><?php if ($show_date) {
-                                    echo $program->date;
-                                } ?></p>
+                                <p class="rs-program-date"><?php if ($show_date) {
+                                        echo $program->date;
+                                    } ?></p>
 
-                            <p class="rs-program-excerpt"><?php if ($show_excerpt) {
-                                    echo wp_trim_words($program->text, $excerpt_words);
-                                    if ($excerpt_more) echo '<a href="'.$details_url.'">'.$excerpt_more.'</a>';
-                                } ?></p>
+                                <p class="rs-program-excerpt"><?php if ($show_excerpt) {
+                                        echo wp_trim_words($program->text, $excerpt_words);
+                                        if ($excerpt_more) echo '<a href="'.$details_url.'">'.$excerpt_more.'</a>';
+                                    } ?></p>
 
-                        </li>
+                            </li>
 
-                        <?php
-                        $count++;
+                            <?php
+                            $count++;
+                        }
                     }
                 }
 
