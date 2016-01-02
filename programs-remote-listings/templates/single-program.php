@@ -5,7 +5,7 @@
 
 get_header();
 $options = get_option('rs_settings');
-if(isset($options['rs_template']['before'])) echo $options['rs_template']['before']; ?>
+if (isset($options['rs_template']['before'])) echo $options['rs_template']['before']; ?>
 
 <?php $rs_the_program = $RS_Connect->program; ?>
 
@@ -98,7 +98,7 @@ if(isset($options['rs_template']['before'])) echo $options['rs_template']['befor
 
 </article>
 
-<?php if(isset($options['rs_template']['after'])) echo $options['rs_template']['after']; ?>
+<?php if (isset($options['rs_template']['after'])) echo $options['rs_template']['after']; ?>
 
 <?php get_footer(); ?>
 

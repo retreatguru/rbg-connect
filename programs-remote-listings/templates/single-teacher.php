@@ -5,7 +5,7 @@
 global $RS_Connect;
 get_header();
 $options = get_option('rs_settings');
-if(isset($options['rs_template']['before'])) echo $options['rs_template']['before']; ?>
+if (isset($options['rs_template']['before'])) echo $options['rs_template']['before']; ?>
 
 <?php global $rs_the_teacher; ?>
 
@@ -17,7 +17,7 @@ if(isset($options['rs_template']['before'])) echo $options['rs_template']['befor
     <div class="entry-content">
         <?php // Program Details ?>
         <div class="rs-teacher-content" style="padding:20px;">
-            <?php if(isset($rs_the_teacher->photo_details->medium)) : ?>
+            <?php if (isset($rs_the_teacher->photo_details->medium)) : ?>
                 <img src="<?php echo $rs_the_teacher->photo_details->medium->url; ?>" class="alignleft" style="padding:0 20px 20px 0px; float: left;">
             <?php endif; ?>
 
@@ -26,7 +26,7 @@ if(isset($options['rs_template']['before'])) echo $options['rs_template']['befor
             <?php endif; ?>
         </div>
         <div class="rs-teacher-programs" style="clear: left; margin:20px;">
-            <?php if( ! empty($rs_the_teacher->programs)) : ?>
+            <?php if ( ! empty($rs_the_teacher->programs)) : ?>
                 <h3 style="margin-top: 30px;">Events with <?php echo $rs_the_teacher->name; ?></h3>
 
                 <?php foreach($rs_the_teacher->programs as $program) : ?>
@@ -44,6 +44,6 @@ if(isset($options['rs_template']['before'])) echo $options['rs_template']['befor
 
 </article>
 
-<?php if(isset($options['rs_template']['after'])) echo $options['rs_template']['after']; ?>
+<?php if (isset($options['rs_template']['after'])) echo $options['rs_template']['after']; ?>
 
 <?php get_footer(); ?>

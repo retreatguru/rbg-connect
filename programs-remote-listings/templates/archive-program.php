@@ -5,7 +5,7 @@
 
 get_header();
 $options = get_option('rs_settings');
-if(isset($options['rs_template']['before'])) { echo $options['rs_template']['before']; }
+if (isset($options['rs_template']['before'])) { echo $options['rs_template']['before']; }
 
 global $api_vars;
 global $RS_Connect;
@@ -17,7 +17,7 @@ $programs = array_reverse($RS_Connect->get_programs($api_vars));
 <h1 class="rs-archive-title"><?php _e( ucfirst($RS_Connect->style).'s', $RS_Connect->style.'s' ); ?></h1>
 <?php
 
-if(! empty($programs)) {
+if (! empty($programs)) {
 foreach($programs as $program): ?>
 
     <?php $details_url = $program->alternate_url ? $program->alternate_url : get_site_url().'/'.$RS_Connect->style.'/'.$program->ID.'/'.$program->slug; ?>
@@ -50,6 +50,6 @@ foreach($programs as $program): ?>
 
 <?php endforeach; } else { echo 'Sorry, no programs exist here.'; }?>
 
-<?php if(isset($options['rs_template']['after'])) { echo $options['rs_template']['after']; } ?>
+<?php if (isset($options['rs_template']['after'])) { echo $options['rs_template']['after']; } ?>
 
 <?php get_footer(); ?>

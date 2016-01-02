@@ -43,7 +43,7 @@ if ( ! class_exists( 'RS_Connect_Widget' ) ) {
             $vars = null;
 
             if ($category) {
-                $vars .= 'category=' . $category . '&';
+                $vars .= 'category=' . $category;
             }
             $rs_the_programs = array_reverse((array)$RS_Connect->get_programs($vars));
 

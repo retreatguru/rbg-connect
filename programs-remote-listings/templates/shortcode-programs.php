@@ -1,7 +1,7 @@
 <?php
 global $RS_Connect;
-if(is_array($shortcode_atts)) extract($shortcode_atts);
-if(! empty($rs_the_programs)) {
+if (is_array($shortcode_atts)) extract($shortcode_atts);
+if (! empty($rs_the_programs)) {
 
     foreach($rs_the_programs as $program): ?>
 
