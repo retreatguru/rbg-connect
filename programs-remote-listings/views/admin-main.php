@@ -6,10 +6,10 @@
     <a href="<?php echo $this->get_url_to_mbm(); ?>/wp-admin/admin.php?page=rs-transactions" class="button">View All Transactions</a>
 </div>
 
-<div style="width: 58%; float: left;">
+<div style="width: 49%; float: left;">
     <?php include($this->plugin_dir . '/views/admin-programs.php'); ?>
 </div>
 
-<div style="width: 40%; float: right;">
+<div style="width: 49%; float: right;">
     <?php include($this->plugin_dir . '/views/admin-help.php'); ?>
 </div>

@@ -1,4 +1,4 @@
-    <div class="card" style="margin-top: 0;">
+    <div class="card" style="margin-top: 0; max-width: 1000px; margin-right: 20px;">
         <h2>Using the Program Listing Shortcode</h2>
         <p>Use the [rs_programs] shortcode to add a list of your programs to any Wordpress post, page or theme file. Simply insert the following into the contents of your page or post and it will automatically list out the programs you've added to Mandala Booking Manager.</p>
 

@@ -6,14 +6,14 @@
 get_header();
 $options = get_option('rs_settings');
 
-global $api_vars;
+global $rs_api_vars;
 global $RS_Connect;
 
 if (isset($options['rs_template']['before'])) echo $options['rs_template']['before']; ?>
 
 <h1>Teachers</h1>
 <?php
-$teachers = array_reverse($RS_Connect->get_teachers($api_vars));
+$teachers = array_reverse($RS_Connect->get_teachers($rs_api_vars));
 
 if (! empty($teachers)) {
     foreach ($teachers as $teacher) : ?>

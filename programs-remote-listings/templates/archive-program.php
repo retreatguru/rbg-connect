@@ -7,10 +7,10 @@ get_header();
 $options = get_option('rs_settings');
 if (isset($options['rs_template']['before'])) { echo $options['rs_template']['before']; }
 
-global $api_vars;
+global $rs_api_vars;
 global $RS_Connect;
 
-$programs = array_reverse($RS_Connect->get_programs($api_vars));
+$programs = array_reverse($RS_Connect->get_programs($rs_api_vars));
 
 ?>
 

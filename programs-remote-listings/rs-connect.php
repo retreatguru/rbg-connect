@@ -11,16 +11,22 @@ Author URI: http://retreat.guru/booking
 class RS_Connect
 {
 
+    // todo: separate this plugin into front end and admin classes
+    // todo: stop creating urls via . use add_query_args() or other abstracted method
+    // todo: general clean up to make plugin better organized
+
     public $program = null;
 
     public function __construct()
     {
         // Base domain to connect with (do not include http://)
         $this->mbm_domain = 'secure.retreat.guru';
+        $this->https = 'https://';
 
         // local testing
         if (isset($_SERVER['SERVER_NAME']) && 'programs-remote.dev' == $_SERVER['SERVER_NAME']) {
             $this->mbm_domain = 'programs.dev';
+            $this->https = 'http://';
         }
 
         $options = get_option('rs_settings');
@@ -53,7 +59,6 @@ class RS_Connect
 
     function setup_rewrite()
     {
-        global $wp_rewrite;
         // Programs todo: switch to ?rs_program instead of ?program
         add_rewrite_rule($this->style . 's/?$', 'index.php?programs=true', 'top');
         add_rewrite_rule($this->style . 's/category/([^/]*)/?', 'index.php?programs=true&category=$matches[1]', 'top');
@@ -116,7 +121,7 @@ class RS_Connect
     function template_include($template)
     {
         global $wp_query; //Load $wp_query object
-        global $api_vars;
+        global $rs_api_vars;
 
         // Support Yoast SEO
         add_filter( 'wpseo_canonical', array($this, 'canonical_url' ));
@@ -135,7 +140,7 @@ class RS_Connect
             }
 
             if ($category) {
-                $api_vars .= 'category=' . $category;
+                $rs_api_vars .= 'category=' . $category;
             }
 
             return $this->get_template_path('archive-program.php');
@@ -151,7 +156,7 @@ class RS_Connect
             }
 
             if ($wp_query->query_vars['category']) {
-                $api_vars .= 'category=' . get_query_var('category');
+                $rs_api_vars .= 'category=' . get_query_var('category');
             }
 
             return $this->get_template_path('archive-teacher.php');
@@ -290,18 +295,54 @@ class RS_Connect
         return $this->remote_get($this->get_url_to_mbm() . '/wp-json/teachers/' . $id);
     }
 
-    private function remote_get($url, $args = array())
+    /**
+     * If the RBG api is down, return cached data, otherwise get fresh from api and save data for later
+     * todo: better would be to always serve cached data, then reset cache when new data is available via remote post from RBG
+     *
+     * @param $url
+     * @return array|bool|mixed|object
+     */
+    private function remote_get($url)
     {
-        global $api_status;
+        global $rs_api_status;
 
-        $response = wp_remote_get($url, $args);
-
-        if (is_wp_error($response) || 200 != wp_remote_retrieve_response_code($response)) {
-            return false;
+        if ( $rs_api_status == 'down') {
+            // if api is down then return cached version
+            return $this->get_api_cache($url);
         }
 
-        return json_decode(wp_remote_retrieve_body($response));
+        // ensure api calls are not cached
+        $rand_url = add_query_arg(array('rs-rand' => rand()), $url);
+        $response = wp_remote_get($rand_url, array('timeout' => 4));
+
+        if (is_wp_error($response) || 200 != wp_remote_retrieve_response_code($response)) {
+            $rs_api_status = 'down';
+            return $this->get_api_cache($url);
+        }
+
+        $rs_api_status = 'good';
+        $body = json_decode(wp_remote_retrieve_body($response));
+        $this->save_api_cache($url, $body);
+
+        return $body;
     }
+
+    // save api data in case RBG is down later, if the value is the same, wp won't update it
+    public function save_api_cache($url, $body)
+    {
+        update_option($this->api_cache_slug($url), serialize($body));
+    }
+
+    public function get_api_cache($url)
+    {
+        return unserialize(get_option($this->api_cache_slug($url)));
+    }
+
+    public function api_cache_slug($url)
+    {
+        return 'rs_api_cache_' . preg_replace('/[^a-zA-Z0-9_-]/', '',  $url);
+    }
+
 
     function rs_enqueue_items()
     {
@@ -366,12 +407,9 @@ class RS_Connect
     function get_url_to_mbm()
     {
         $options = get_option('rs_settings');
-
-        if (defined('RS_TESTING') && empty($options['rs_domain'])) return 'http://programs.dev'; // local debug
-
         $sub_domain = ! empty($options['rs_domain']) ? $options['rs_domain'] : 'demo';
 
-        return 'http://' . $sub_domain . "." . $this->mbm_domain;
+        return $this->https . $sub_domain . "." . $this->mbm_domain;
     }
 
     function admin_programs_page()
@@ -385,6 +423,7 @@ class RS_Connect
 
         include($this->plugin_dir . '/views/admin-settings.php');
     }
+
 }
 
 global $RS_Connect;
