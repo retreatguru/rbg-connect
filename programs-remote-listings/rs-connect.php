@@ -264,12 +264,12 @@ class RS_Connect
 
     public function get_programs($vars = null)
     {
-        return $this->remote_get($this->get_url_to_mbm() . '/wp-json/events/?' . $vars . rand());
+        return (array) $this->remote_get($this->get_url_to_mbm() . '/wp-json/events/?' . $vars . rand());
     }
 
     public function get_teachers($vars = null)
     {
-        return $this->remote_get($this->get_url_to_mbm() . '/wp-json/teachers/?' . $vars . rand());
+        return (array) $this->remote_get($this->get_url_to_mbm() . '/wp-json/teachers/?' . $vars . rand());
     }
 
     public function get_teacher($id)
