@@ -3,7 +3,7 @@
 /*
 Plugin Name: Retreat Booking Guru Connect
 Description: Connect to Retreat Booking Guru to show program listings on your site and link to registration forms.
-Version: 1.6.0
+Version: 1.6.1
 Author: Retreat Guru
 Author URI: http://retreat.guru/booking
 */

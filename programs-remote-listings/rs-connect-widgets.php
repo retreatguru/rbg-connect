@@ -45,7 +45,7 @@ if ( ! class_exists( 'RS_Connect_Widget' ) ) {
             if ($category) {
                 $vars .= 'category=' . $category . '&';
             }
-            $rs_the_programs = array_reverse($RS_Connect->get_programs($vars));
+            $rs_the_programs = array_reverse((array)$RS_Connect->get_programs($vars));
 
             $count = 0;
             echo $before_widget;
