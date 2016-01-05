@@ -3,7 +3,7 @@
 /*
 Plugin Name: Retreat Booking Guru Connect
 Description: Connect to Retreat Booking Guru to show program listings on your site and link to registration forms.
-Version: 1.7.0
+Version: 1.7.2
 Author: Retreat Guru
 Author URI: http://retreat.guru/booking
 */
@@ -311,9 +311,10 @@ class RS_Connect
             return $this->get_api_cache($url);
         }
 
-        // ensure api calls are not cached
-        $rand_url = add_query_arg(array('rs-rand' => rand()), $url);
-        $response = wp_remote_get($rand_url, array('timeout' => 4));
+        // ensure api calls are cached each hour
+//        $versioned_url = add_query_arg(array('rs-rand' => rand()), $url);
+        $versioned_url = add_query_arg(array('rs-ver' => date('ymdH')), $url);
+        $response = wp_remote_get($versioned_url, array('timeout' => 20)); // long timeout during linode issue
 
         if (is_wp_error($response) || 200 != wp_remote_retrieve_response_code($response)) {
             $rs_api_status = 'down';

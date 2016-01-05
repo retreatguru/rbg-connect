@@ -35,6 +35,12 @@ email support@retreat.guru if you need help. Or send us a messing while logged i
 
 == Changelog ==
 
+= 1.7.2 =
+* alternate speed up: versioning by day, not rand
+
+= 1.7.1 =
+* add missing files
+
 = 1.7.0 =
 * add caching to improve performance in case of data center issues
 
