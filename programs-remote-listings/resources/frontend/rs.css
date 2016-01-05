@@ -19,8 +19,6 @@
     position: relative;
 }
 
-.rs-program-title { padding:20px 0 0; }
-
 .single-program .entry-content {
     float:left; width:100%;
 }
@@ -152,4 +150,5 @@ div.hasDatepicker { float: left; margin-right: 20px; }
 @media only screen and (max-width: 520px)
 {
     .single-program .rs-program-meta { width:100% !important; }
+    .rs-program-title { padding:20px 0 0; }
 }
