@@ -35,6 +35,9 @@ email support@retreat.guru if you need help. Or send us a messing while logged i
 
 == Changelog ==
 
+= 1.7.4 =
+* put back random versioning now that hosting upgrade complete
+
 = 1.7.2 =
 * alternate speed up: versioning by day, not rand
 

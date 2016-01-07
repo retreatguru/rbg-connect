@@ -3,7 +3,7 @@
 /*
 Plugin Name: Retreat Booking Guru Connect
 Description: Connect to Retreat Booking Guru to show program listings on your site and link to registration forms.
-Version: 1.7.2
+Version: 1.7.4
 Author: Retreat Guru
 Author URI: http://retreat.guru/booking
 */
@@ -312,9 +312,12 @@ class RS_Connect
         }
 
         // ensure api calls are cached each hour
-//        $versioned_url = add_query_arg(array('rs-rand' => rand()), $url);
-        $versioned_url = add_query_arg(array('rs-ver' => date('ymdH')), $url);
-        $response = wp_remote_get($versioned_url, array('timeout' => 20)); // long timeout during linode issue
+        $versioned_url = add_query_arg(array('rs-rand' => rand()), $url);
+//        $versioned_url = add_query_arg(array('rs-ver' => date('ymdH')), $url); // old hourly method
+        $args = array(
+            'timeout' => 5,
+            );
+        $response = wp_remote_get($versioned_url, $args);
 
         if (is_wp_error($response) || 200 != wp_remote_retrieve_response_code($response)) {
             $rs_api_status = 'down';
@@ -328,10 +331,12 @@ class RS_Connect
         return $body;
     }
 
-    // save api data in case RBG is down later, if the value is the same, wp won't update it
+    // occasionally save api data in case RBG is down later, if the value is the same, wp won't update it
     public function save_api_cache($url, $body)
     {
-        update_option($this->api_cache_slug($url), serialize($body));
+        if (99 === rand(0, 99)) {
+            update_option($this->api_cache_slug($url), serialize($body));
+        }
     }
 
     public function get_api_cache($url)
