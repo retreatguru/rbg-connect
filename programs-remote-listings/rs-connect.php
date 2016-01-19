@@ -24,7 +24,7 @@ class RS_Connect
         $this->https = 'https://';
 
         // local testing
-        if (isset($_SERVER['SERVER_NAME']) && 'programs-remote.dev' == $_SERVER['SERVER_NAME']) {
+        if (isset($_SERVER['SERVER_NAME']) && 'programs-remote.dev' == $_SERVER['SERVER_NAME'] || defined("RG_TESTING") || RG_TESTING == true ) {
             $this->mbm_domain = 'programs.dev';
             $this->https = 'http://';
         }
@@ -415,7 +415,13 @@ class RS_Connect
         $options = get_option('rs_settings');
         $sub_domain = ! empty($options['rs_domain']) ? $options['rs_domain'] : 'demo';
 
-        return $this->https . $sub_domain . "." . $this->mbm_domain;
+        if ( defined("RG_TESTING") && RG_TESTING == true ) {
+            $url = $this->https . $this->mbm_domain;
+        } else {
+            $url = $this->https . $sub_domain . "." . $this->mbm_domain;
+        }
+
+        return $url;
     }
 
     function admin_programs_page()
