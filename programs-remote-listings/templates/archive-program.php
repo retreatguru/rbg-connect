@@ -18,14 +18,19 @@ $programs = array_reverse($RS_Connect->get_programs($rs_api_vars));
 <?php
 
 if (! empty($programs)) {
-foreach($programs as $program): ?>
+foreach($programs as $program):
+    if (! isset($options['rs_template']['image_size']) || $options['rs_template']['image_size'] == 'medium') {
+        $program_image_link = $program->photo_details->medium->url;
+    } else {
+        $program_image_link = $program->photo_details->thumbnail->url;
+    }
 
-    <?php $details_url = $program->alternate_url ? $program->alternate_url : get_site_url().'/'.$RS_Connect->style.'/'.$program->ID.'/'.$program->slug; ?>
+    $details_url = $program->alternate_url ? $program->alternate_url : get_site_url().'/'.$RS_Connect->style.'/'.$program->ID.'/'.$program->slug; ?>
 
     <div class="rs-program rs-group">
 
         <?php if ( $program->photo_details ) : ?>
-            <div class="rs-program-thumbnail"><a href="<?php echo $details_url; ?>"><img src="<?php echo $program->photo_details->thumbnail->url; ?>"></a></div>
+            <div class="rs-program-thumbnail"><a href="<?php echo $details_url; ?>"><img src="<?php echo $program_image_link; ?>"></a></div>
         <?php endif; ?>
 
         <?php if ( $program->title ) : ?>

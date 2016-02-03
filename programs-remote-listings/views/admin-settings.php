@@ -36,12 +36,35 @@
                 </td>
             </tr>
             <tr>
+                <th scope="row">Image thumbnails</th>
+                <td>
+                    <fieldset>
+                        <select name="rs_settings[rs_template][image_size]">
+                            <option value="thumbnail" <?php if (isset($options['rs_template']['image_size']) && $options['rs_template']['image_size'] == 'thumbnail') { echo "selected"; } ?>>Small - Square Cropped</option>
+                            <option value="medium" <?php if (! isset($options['rs_template']['image_size']) || $options['rs_template']['image_size'] == 'medium') { echo "selected"; } ?>>Medium - Uncropped</option>
+                        </select>
+                    </fieldset>
+                </td>
+            </tr>
+            <tr>
                 <th scope="row">Register Now Button Color</th>
                 <td>
                     <fieldset>
                         <label>
                             #<input name="rs_settings[rs_template][register_now]" type="text" id="rs_settings[rs_template][register_now]"
                                     value="<?php echo (isset($options['rs_template']['register_now']) && $options['rs_template']['register_now'] != '') ? $options['rs_template']['register_now'] : ''; ?>"/>
+                        </label>
+                    </fieldset>
+                </td>
+            </tr>
+            <tr>
+                <th scope="row">Hide contact button</th>
+                <td>
+                    <fieldset>
+                        <label>
+                            <input name="rs_settings[rs_template][hide_contact_button]" type="checkbox" value="1"
+                                <?php if (isset($options['rs_template']['hide_contact_button'])) { echo "checked"; } ?>
+                                />
                         </label>
                     </fieldset>
                 </td>

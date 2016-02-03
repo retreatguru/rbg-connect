@@ -360,7 +360,7 @@ class RS_Connect
 
         if (isset($options['rs_template']['register_now'])) {
             $inline_styles .= '
-            .rs-register-link a {
+            .rs-register-link a, .rs-button {
             border-color: #' . $options['rs_template']['register_now'] . ';
             color: #' . $options['rs_template']['register_now'] . '!important ;
             }';

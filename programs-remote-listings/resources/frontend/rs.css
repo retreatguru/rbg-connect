@@ -11,7 +11,7 @@
 .rs-program.minor, .rs-programs-widget.minor { display: none; }
 .rs-program-thumbnail, .rs-teacher-thumbnail { float: left; margin-right: 15px; clear: left; margin-bottom: 5px;}
 .rs-program-title, .rs-program-teacher, .rs-teacher-title { line-height: 1.2; clear: none; }
-.rs-program-photo { float: right; margin-bottom: 20px;}
+.rs-program-photo { margin-bottom: 20px; width:100%;}
 .rs-teacher-photo { float: left; margin-right: 20px; margin-bottom: 5px; }
 .rs-teacher-bio { clear: left; }
 
@@ -38,7 +38,7 @@
 /*registration link */
 .rs-regsitration-wrap { margin: 0 0 20px; /*white-space: nowrap; */}
 
-.rs-register-link a, #submit-registration, .rs-big-button {
+.rs-register-link a, #submit-registration, .rs-button {
     /*height: 2em;*/
     font-weight: bold;
     padding: 12px 18px 10px;
@@ -55,6 +55,14 @@
 .rs-register-link a:hover, #submit-registration:hover, .rs-big-button:hover {
     border-color: #333;
 }
+
+.rs-meta-content-container a.rs-button {
+    width: 100%;
+    float: left;
+    margin:10px 0;
+    text-align: center;
+}
+
 .rs-program-categories { clear: both; }
 
 /* registration form */
