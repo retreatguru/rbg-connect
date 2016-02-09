@@ -52,7 +52,7 @@ if (isset($options['rs_template']['before'])) echo $options['rs_template']['befo
                             <div class="rs-program-custom-wrap"><?php echo $rs_the_program->custom; ?></div>
                         <?php endif; ?>
 
-                        <?php if ( $rs_the_program->email && ! isset($options['rs_template']['hide_contact_button'])) : ?>
+                        <?php if ( $rs_the_program->email && empty($options['rs_template']['hide_contact_button'])) : ?>
                         <a href="mailto:<?php echo $rs_the_program->email; ?>?subject=An inquiry about <?php echo $rs_the_program->title; ?>" class="rs-button">Email us about program</a>
                         <?php endif; ?>
                     </div>

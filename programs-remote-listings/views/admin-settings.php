@@ -40,8 +40,9 @@
                 <td>
                     <fieldset>
                         <select name="rs_settings[rs_template][image_size]">
-                            <option value="thumbnail" <?php if (isset($options['rs_template']['image_size']) && $options['rs_template']['image_size'] == 'thumbnail') { echo "selected"; } ?>>Small - Square Cropped</option>
-                            <option value="medium" <?php if (! isset($options['rs_template']['image_size']) || $options['rs_template']['image_size'] == 'medium') { echo "selected"; } ?>>Medium - Uncropped</option>
+                            <?php $image_size = ! empty( $options['rs_template']['image_size'] ) ? $options['rs_template']['image_size'] : 'medium'; ?>
+                            <option value="thumbnail" <?php selected($image_size, 'thumbnail') ?>>Small - Square Cropped</option>
+                            <option value="medium" <?php selected($image_size, 'medium') ?>>Medium - Uncropped</option>
                         </select>
                     </fieldset>
                 </td>
