@@ -41,6 +41,10 @@ foreach($programs as $program):
             <div class="rs-program-location"><?php echo $program->location; ?></div>
         <?php endif; ?>
 
+        <?php if ( $program->address) : ?>
+            <div class="rs-program-address"><?php echo $program->address; ?></div>
+        <?php endif; ?>
+
         <?php if ( $program->text) : ?>
             <div class="rs-program-excerpt"><?php echo wp_trim_words($program->text, 100); ?></div>
         <?php endif; ?>
