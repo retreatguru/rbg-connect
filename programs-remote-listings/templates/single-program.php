@@ -60,6 +60,9 @@ if (isset($options['rs_template']['before'])) echo $options['rs_template']['befo
                         <?php if ( $rs_the_program->email && empty($options['rs_template']['hide_contact_button'])) : ?>
                         <a href="mailto:<?php echo $rs_the_program->email; ?>?subject=An inquiry about <?php echo $rs_the_program->title; ?>" class="rs-button">Email us about program</a>
                         <?php endif; ?>
+
+                        <div class="rs-regsitration-wrap"><?php echo $rs_the_program->registration_action; ?></div>
+
                     </div>
                 </div>
 
