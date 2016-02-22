@@ -44,7 +44,7 @@ if (isset($options['rs_template']['before'])) echo $options['rs_template']['befo
 
                         <?php // Address ?>
                         <?php if ( $rs_the_program->address ) : ?>
-                            <p class="rs-program-address"><span class="rs-program-label">Location:</span> <?php echo $rs_the_program->address; ?></p>
+                            <p class="rs-program-address"><span class="rs-program-label">Address:</span> <?php echo $rs_the_program->address; ?></p>
                         <?php endif; ?>
 
                         <?php // Contact details ?>
