@@ -1,5 +1,5 @@
 jQuery(document).ready(function($) {
-// toggle program info link
+	// toggle program info link
     $('.rs-program-message-link').click(function (e) {
         e.preventDefault();
 
