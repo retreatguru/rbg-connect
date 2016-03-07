@@ -1,16 +1,18 @@
 <?php
 global $RS_Connect;
+$options = get_option('rs_settings');
 if (is_array($shortcode_atts)) extract($shortcode_atts);
 if (! empty($rs_the_programs)) {
 
-    foreach($rs_the_programs as $program): ?>
-
-        <?php $details_url = $program->alternate_url ? $program->alternate_url : get_site_url().'/'.$RS_Connect->style.'/'.$program->ID.'/'.$program->slug; ?>
+    foreach($rs_the_programs as $program):
+        $image_size = ! empty($options['rs_template']['image_size']) ? $options['rs_template']['image_size'] : 'medium';
+        $program_image_url = $program->photo_details->{$image_size}->url;
+        $details_url = $program->alternate_url ? $program->alternate_url : get_site_url().'/'.$RS_Connect->style.'/'.$program->ID.'/'.$program->slug; ?>
 
         <div class="rs-program rs-group">
 
             <?php if ( $program->photo_details && empty($hide_photo) ) : ?>
-                <div class="rs-program-thumbnail"><a href="<?php echo $details_url; ?>"><img src="<?php echo $program->photo_details->thumbnail->url; ?>"></a></div>
+                <div class="rs-program-thumbnail"><a href="<?php echo $details_url; ?>"><img src="<?php echo $program_image_url; ?>"></a></div>
             <?php endif; ?>
 
             <?php if ( $program->title && empty($hide_title) ) : ?>
