@@ -59,13 +59,15 @@ if ( ! class_exists( 'RS_Connect_Widget' ) ) {
                 if ($rs_the_programs) {
                     foreach ($rs_the_programs as $program) {
                         if ($count < $number) {
+                            $image_size = ! empty($options['rs_template']['image_size']) ? $options['rs_template']['image_size'] : 'medium';
+                            $program_image_url = $program->photo_details->{$image_size}->url;
                             $details_url = $program->alternate_url ? $program->alternate_url : get_site_url().'/'.$RS_Connect->style.'/'.$program->ID.'/'.$program->slug;
                             ?>
                             <li>
                                 <?php if ($show_thumbnail && $program->photo_details) : ?>
                                     <div class="rs-program-thumbnail">
                                         <a href="<?php echo $details_url; ?>"><img
-                                                src="<?php echo $program->photo_details->thumbnail->url; ?>"
+                                                src="<?php echo $program_image_url; ?>"
                                                 width="<?php echo $image_w; ?>" height="<?php echo $image_h; ?>"></a>
                                     </div>
                                 <?php endif; ?>

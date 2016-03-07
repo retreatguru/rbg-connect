@@ -39,7 +39,7 @@
                 <th scope="row">Google Analytics</th>
                 <td>
                     <fieldset>
-                        <label><input type="checkbox" name="rs_settings[google_analytics_enable]" value="1" <?php echo checked($options['google_analytics_enable'], '1'); ?>>
+                        <label><input type="checkbox" name="rs_settings[google_analytics_enable]" value="1" <?php echo (isset($options['google_analytics_enable'])) ? checked($options['google_analytics_enable'], '1') : ''; ?>>
                             Enable Google Analytics tracking (and e-commerce)</label><br>
                         <small>Enabling this will allow you to track users from your site to the Retreat Booking Guru registration form and registration completion page. In order to track how much was spent you need to enable E-commerce Tracking in your Google Analytics admin settings.</small>
                     </fieldset>
