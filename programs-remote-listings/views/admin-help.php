@@ -29,7 +29,7 @@
 
         <p><code>[rs_programs table show_date show_register_link]</code></p>
 
-        <p><code>[rs_programs table show_date show_availability show_teachers show_title show_location show_price_details show_more_link show_register_link]</code></p>
+        <p><code>[rs_programs table show_date show_availability show_availability_words show_teachers show_title show_location show_price_details show_more_link show_register_link]</code></p>
 
         <p>Program extra display fields can be accesses using <code>extra_display_field="My Title"</code> where "My Title" is the exact title of the extra display field as set when editing the program.</p>
 
