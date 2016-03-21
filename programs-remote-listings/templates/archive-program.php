@@ -20,12 +20,12 @@ $programs = array_reverse($RS_Connect->get_programs($rs_api_vars));
 if (! empty($programs)) {
 foreach($programs as $program):
     $image_size = ! empty($options['rs_template']['image_size']) ? $options['rs_template']['image_size'] : 'medium';
-    $program_image_url = $program->photo_details->{$image_size}->url;
     $details_url = $program->alternate_url ? $program->alternate_url : get_site_url().'/'.$RS_Connect->style.'/'.$program->ID.'/'.$program->slug; ?>
 
     <div class="rs-program rs-group">
 
-        <?php if ( $program->photo_details ) : ?>
+        <?php if (! empty($program->photo_details->{$image_size}->url) ) : ?>
+            <?php  $program_image_url = $program->photo_details->{$image_size}->url; ?>
             <div class="rs-program-thumbnail"><a href="<?php echo $details_url; ?>"><img src="<?php echo $program_image_url; ?>"></a></div>
         <?php endif; ?>
 
@@ -46,7 +46,7 @@ foreach($programs as $program):
         <?php endif; ?>
 
         <?php if ( $program->text) : ?>
-            <div class="rs-program-excerpt"><?php echo wp_trim_words($program->text, 100); ?></div>
+            <div class="rs-program-excerpt"><?php echo $RS_Connect->excerpt($program->text); ?></div>
         <?php endif; ?>
 
         <?php do_action('rs_after_archive_program'); ?>

@@ -28,7 +28,7 @@ if (! empty($rs_the_programs)) {
             <?php endif; ?>
 
             <?php if ( $program->text && empty($hide_text) ) : ?>
-                <div class="rs-program-excerpt"><?php echo wp_trim_words($program->text, 100); ?></div>
+                <div class="rs-program-excerpt"><?php echo $RS_Connect->excerpt($program->text); ?></div>
             <?php endif; ?>
 
             <?php if (! empty($show_register_link) ) : ?>

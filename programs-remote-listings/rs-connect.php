@@ -22,6 +22,7 @@ class RS_Connect
         // Base domain to connect with (do not include http://)
         $this->mbm_domain = 'secure.retreat.guru';
         $this->https = 'https://';
+        $this->options = get_option('rs_settings');
 
         // local testing
         if (isset($_SERVER['SERVER_NAME']) && 'programs-remote.dev' == $_SERVER['SERVER_NAME']) {
@@ -29,10 +30,8 @@ class RS_Connect
             $this->https = 'http://';
         }
 
-        $options = get_option('rs_settings');
-
-        if (isset($options['style'])) {
-            $this->style = $options['style'];
+        if (isset($this->options['style'])) {
+            $this->style = $this->options['style'];
         } else {
             $this->style = 'program';
         }
@@ -352,11 +351,9 @@ class RS_Connect
 
     function rs_enqueue_items()
     {
-        $options = get_option('rs_settings');
-
         wp_enqueue_script('rs-js', plugins_url('/resources/frontend/rs.js', __FILE__), array('jquery'), '20160224');
 
-        if (!empty($options['google_analytics_enable'])) {
+        if (!empty($this->options['google_analytics_enable'])) {
             wp_enqueue_script('rs-ga-js', plugins_url('/resources/frontend/rs_ga.js', __FILE__), array('jquery'), '20160224');
         }
 
@@ -364,16 +361,16 @@ class RS_Connect
 
         $inline_styles = '';
 
-        if (isset($options['rs_template']['register_now'])) {
+        if (isset($this->options['rs_template']['register_now'])) {
             $inline_styles .= '
             .rs-register-link a, .rs-button {
-            border-color: #' . $options['rs_template']['register_now'] . ';
-            color: #' . $options['rs_template']['register_now'] . '!important ;
+            border-color: #' . $this->options['rs_template']['register_now'] . ';
+            color: #' . $this->options['rs_template']['register_now'] . '!important ;
             }';
         }
 
-        if (isset($options['rs_template']['css'])) {
-            $inline_styles .= $options['rs_template']['css'];
+        if (isset($this->options['rs_template']['css'])) {
+            $inline_styles .= $this->options['rs_template']['css'];
         }
         wp_add_inline_style('rs-f', $inline_styles);
     }
@@ -399,8 +396,7 @@ class RS_Connect
 
     function configured()
     {
-        $options = get_option('rs_settings');
-        if (empty($options['rs_domain'])) return false;
+        if (empty($this->options['rs_domain'])) return false;
 
         return true;
     }
@@ -418,8 +414,7 @@ class RS_Connect
 
     function get_url_to_mbm()
     {
-        $options = get_option('rs_settings');
-        $sub_domain = ! empty($options['rs_domain']) ? $options['rs_domain'] : 'demo';
+        $sub_domain = ! empty($this->options['rs_domain']) ? $this->options['rs_domain'] : 'demo';
 
         return $this->https . $sub_domain . "." . $this->mbm_domain;
     }
@@ -434,6 +429,13 @@ class RS_Connect
         $this->rs_flush_rewrite_rules();
 
         include($this->plugin_dir . '/views/admin-settings.php');
+    }
+
+    function excerpt($description)
+    {
+        $limit = ! empty($this->options['rs_template']['limit_description']) ? $this->options['rs_template']['limit_description'] : 100;
+
+        return wp_trim_words($description, $limit);
     }
 
 }

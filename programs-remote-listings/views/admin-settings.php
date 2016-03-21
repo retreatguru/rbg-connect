@@ -69,6 +69,18 @@
                 </td>
             </tr>
             <tr>
+                <th scope="row">Excerpt length</th>
+                <td>
+                    <fieldset>
+                        <p>Set a word limit for teacher and program descriptions on your listings.</p>
+                        <label>
+                            <input name="rs_settings[rs_template][limit_description]" type="text" id="rs_settings[rs_template][limit_description]" style="width:70px;"
+                                    value="<?php echo (isset($options['rs_template']['limit_description']) && $options['rs_template']['limit_description'] != '') ? $options['rs_template']['limit_description'] : '100'; ?>"/> words
+                        </label>
+                    </fieldset>
+                </td>
+            </tr>
+            <tr>
                 <th scope="row">Hide contact button</th>
                 <td>
                     <fieldset>
