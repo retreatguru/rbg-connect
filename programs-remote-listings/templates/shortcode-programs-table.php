@@ -1,12 +1,15 @@
 <?php
 global $RS_Connect;
+global $shortcode_atts;
+global $rs_the_programs;
 if (is_array($shortcode_atts)) extract($shortcode_atts);
+$programs_page_title = $RS_Connect->get_programs_page()->post_title;
 ?>
 <table class="pure-table rs-program rs-group shortcode table">
     <thead>
     <tr>
         <?php if (! empty($show_date)){ ?><th class="rs-dates">Dates</th><?php } ?>
-        <?php if (! empty($show_title)){ ?><th class="rs-title"><?php _e( ucfirst($RS_Connect->style) ); ?></th><?php } ?>
+        <?php if (! empty($show_title)){ ?><th class="rs-title"><?php _e( $programs_page_title ) ?></th><?php } ?>
         <?php if (! empty($extra_display_field)){ ?><th class="rs-custom-field"><?php echo $extra_display_field; ?></th><?php } ?>
         <?php if (! empty($show_teachers)){ ?><th class="rs-teachers">Hosts</th><?php } ?>
         <?php if (! empty($show_location)){ ?><th class="rs-location">Location</th><?php } ?>
@@ -87,7 +90,7 @@ if (is_array($shortcode_atts)) extract($shortcode_atts);
 
             <?php if (! empty($show_more_link)) : ?>
                 <td class="rs-show-more-link">
-                    <?php $details_url = $program->alternate_url ? $program->alternate_url : get_site_url().'/'.$RS_Connect->style.'/'.$program->ID.'/'.$program->slug; ?>
+                    <?php $details_url = $program->alternate_url ? $program->alternate_url : $RS_Connect->get_base_page_url('programs') . $program->ID.'/'.$program->slug; ?>
                     <?php echo '<a href="'.$details_url.'">View Details</a>'; ?>
                 </td>
             <?php endif; ?>

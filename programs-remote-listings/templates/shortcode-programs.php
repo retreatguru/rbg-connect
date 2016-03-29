@@ -1,6 +1,5 @@
 <?php
 global $RS_Connect;
-// Maybe we set and get these as class properties
 global $shortcode_atts;
 global $rs_the_programs;
 $options = get_option('rs_settings');
