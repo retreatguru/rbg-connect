@@ -1,7 +1,5 @@
 <?php class RS_Connect_Api {
 
-    // Convert to non static class
-
     public static function get_program($id)
     {
         return self::remote_get('events/' . $id);
@@ -26,14 +24,17 @@
     {
         $options = get_option('rs_settings');
 
+        $base_domain = 'secure.retreat.guru';
+        $http = 'https://';
+
         if (isset($_SERVER['SERVER_NAME']) && 'programs-remote.dev' == $_SERVER['SERVER_NAME']) {
-            $mbm_domain = 'programs.dev';
+            $base_domain = 'programs.dev';
             $http = 'http://';
         }
 
         $sub_domain = !empty($options['rs_domain']) ? $options['rs_domain'] : 'demo';
 
-        return $http . $sub_domain . "." . $mbm_domain;
+        return $http . $sub_domain . "." . $base_domain;
     }
 
     /**

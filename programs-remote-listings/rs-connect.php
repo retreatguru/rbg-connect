@@ -17,8 +17,6 @@ class RS_Connect
 
     protected $options = null;
     protected $program = null;
-    protected $https = 'http://';
-    protected $mbm_domain = 'programs.dev';
     protected $style = 'program';
 
     public function __construct()

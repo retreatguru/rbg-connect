@@ -14,7 +14,7 @@
                         <label><?php $rs_domain = (! empty($options['rs_domain']) && $options['rs_domain'] != '') ? $options['rs_domain'] : ''; ?>
                             https:// <input name="rs_settings[rs_domain]" type="text" id="rs_domain"
                                             value="<?php echo $rs_domain; ?>"/>
-                            .<?php echo $this->mbm_domain; ?> <br/>
+                            .secure.retreat.guru<br/>
                         </label> <?php if(empty($rs_domain)) { echo "<span style='color:red;'>Required</span>"; } ?>
                     </fieldset>
                 </td>
