@@ -262,8 +262,8 @@ class RS_Connect
     // Receive a request from secure.retreat.guru to load a program page.
     function receive_preview_request()
     {
-        if (! $this->configured()) { echo 'Please setup the booking plugin before using this feature'; exit(); }
         if (isset( $_REQUEST['program'] )  ) {
+            if (! $this->configured()) { echo 'Please setup the booking plugin before using this feature'; exit(); }
             $url = $this->get_page_url('programs') . '/' . $_REQUEST['program'];
             wp_redirect($url);
             exit();
