@@ -49,8 +49,8 @@ dependencies:
 
     # activate essential plugins
     - php wp-cli.phar plugin activate programs-remote-listings
-    - php wp-cli.phar post create --post_type=page --post_title='Events'
-    - php wp-cli.phar post create --post_type=page --post_title='Teachers'
+    - php wp-cli.phar post create --post_type=page --post_title='Events' --post_status=published
+    - php wp-cli.phar post create --post_type=page --post_title='Teachers' --post_status=published
     - php wp-cli.phar rewrite structure '/%postname%/' --hard
 
 test:
