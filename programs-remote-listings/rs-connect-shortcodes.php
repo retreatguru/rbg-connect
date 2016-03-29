@@ -1,12 +1,12 @@
 <?php
 
-class RS_Connect_Shortcodes extends RS_Connect {
+class RS_Connect_Shortcodes {
     function __construct() {
         add_shortcode('rs_programs', array($this, 'shortcode_programs'));
         add_shortcode('rs_program', array($this, 'shortcode_program'));
+        add_shortcode('rs_register_button', array($this, 'shortcode_register_button'));
         add_shortcode('rs_teachers', array($this, 'shortcode_teachers'));
         add_shortcode('rs_teacher', array($this, 'shortcode_teacher'));
-        //add_shortcode('rs_register_button', array($this, 'shortcode_register_button')); todo: add this back
     }
 
     function shortcode_program($atts)
@@ -48,7 +48,20 @@ class RS_Connect_Shortcodes extends RS_Connect {
             $rs_the_programs = array_slice($rs_the_programs, 0, $atts['limit']);
         }
 
-        return $this->include_shortcode_template('shortcode-programs.php');
+        return $this->include_shortcode_template($template);
+    }
+
+    function shortcode_register_button($atts)
+    {
+        global $shortcode_atts;
+
+        if (!isset($shortcode_atts['id'])) {
+            return 'Error: You must specify a program ID in your shortcode<br/>e.g. [rs_register_button <strong>id="45"</strong>]';
+        }
+        // todo: Build link here to customize the link title instead of pulling it dynamically or maybe just search and replace string
+        $program = RS_Connect_Api::get_program($atts['id']);
+
+        return $program->registration_action;
     }
 
     function shortcode_teachers($atts)
@@ -62,7 +75,7 @@ class RS_Connect_Shortcodes extends RS_Connect {
 
         $template = 'shortcode-teachers.php';
 
-        $rs_the_teachers = $this->get_teachers();
+        $rs_the_teachers = RS_Connect_Api::get_teachers();
         if (!is_array($rs_the_teachers)) {
             return '';
         }
@@ -74,7 +87,7 @@ class RS_Connect_Shortcodes extends RS_Connect {
     {
         global $rs_the_teacher;
         global $shortcode_atts;
-        $rs_the_teacher = $this->get_teacher($atts['id']);
+        $rs_the_teacher = RS_Connect_Api::get_teacher($atts['id']);
         $shortcode_atts = $this->normalize_empty_atts($atts);
 
         return $this->include_shortcode_template('shortcode-teachers-single.php');
@@ -110,4 +123,4 @@ class RS_Connect_Shortcodes extends RS_Connect {
     }
 }
 
-$RS_Connect_Shortcodes = new RS_Connect_Shortcodes();
+new RS_Connect_Shortcodes();

@@ -14,7 +14,7 @@ class RS_Upgrade
     public static function init()
     {
         $rs_db_version = get_option('rs_db_version');
-        if(!empty($rs_db_version)) { self::$current_db_version = $rs_db_version;}
+        if(!empty($rs_db_version)) { self::$current_db_version = $rs_db_version; }
         self::upgrade();
     }
 
@@ -48,11 +48,11 @@ class RS_Upgrade
             return;
         }
 
-        // Only run this for existing installs
+        // Only run this upgrade for existing installs
         $options = get_option('rs_settings');
         if(empty($options) || empty($options['style'])) { return; }
 
-        // Create the program page based on their style choice (could be 'events', 'programs', 'workshops', etc.)
+        // Create a program page based on their style choice ('events', 'programs', 'workshops')
         $retreat_style = $options['style'];
         $new_programs_page = array(
             'post_type' => 'page',
@@ -62,7 +62,7 @@ class RS_Upgrade
         );
         $programs_page = wp_insert_post( $new_programs_page );
 
-        // Set program page
+        // Set this as the program page
         $options['page']['programs'] = $programs_page;
 
         // Create a teacher page
@@ -74,7 +74,7 @@ class RS_Upgrade
         );
         $teachers_page = wp_insert_post( $new_teachers_page );
 
-        // Set teacher page
+        // Set this as the teacher page
         $options['page']['teachers'] = $teachers_page;
 
         update_option('rs_settings', $options);

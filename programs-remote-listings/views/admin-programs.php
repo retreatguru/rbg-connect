@@ -1,5 +1,5 @@
 <?php
-$rs_programs = $this->get_programs();
+$rs_programs = RS_Connect_Api::get_programs();
 ?>
 
 <table class="wp-list-table widefat fixed posts">
@@ -16,7 +16,7 @@ $rs_programs = $this->get_programs();
         <?php $details_url = $program->alternate_url ? $program->alternate_url : get_site_url().'/'.$this->style.'/'.$program->ID.'/'.$program->slug; ?>
         <tr>
             <td>
-                <a href="<?php echo $this->get_url_to_mbm(); ?>/wp-admin/post.php?action=edit&post=<?php echo $program->ID; ?>"><?php echo $program->title; ?></a>
+                <a href="<?php echo RS_Connect_Api::get_base_url(); ?>/wp-admin/post.php?action=edit&post=<?php echo $program->ID; ?>"><?php echo $program->title; ?></a>
                 - <a href="<?php echo $details_url; ?>">view</a></td>
             <td><?php echo $program->date; ?></td>
             <td><?php echo ucfirst($program->registration_status); ?></td>

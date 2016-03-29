@@ -11,7 +11,7 @@ modules:
         - AcceptanceHelper
     config:
         PhpBrowser:
-            url: 'http://programsconnect.dev'
+            url: 'http://programs-remote.dev'
 env:
     ci:
         modules:

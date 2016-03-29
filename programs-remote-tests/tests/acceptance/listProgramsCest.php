@@ -13,10 +13,8 @@ class listProgramsCest
 
     public function listPrograms(AcceptanceTester $I)
     {
-        $I->amOnPage('/programs/');
-        $I->see('Donation Payment Program');
-        $I->see('Example Program');
+        $I->amOnPage('/events/');
+        $I->see('Multi Person Lodging');
         //todo: you can't click into a program due to permalinks not being setup properly in circle.yml
-
     }
 }

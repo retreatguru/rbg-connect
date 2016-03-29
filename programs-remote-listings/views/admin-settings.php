@@ -5,18 +5,17 @@
     <form action="options.php" method="post"><?php
         settings_fields('rs_settings');
         do_settings_sections(__FILE__);
-
         $options = get_option('rs_settings'); ?>
         <table class="form-table">
             <tr>
                 <th scope="row">Subdomain</th>
                 <td>
                     <fieldset>
-                        <label>
+                        <label><?php $rs_domain = (! empty($options['rs_domain']) && $options['rs_domain'] != '') ? $options['rs_domain'] : ''; ?>
                             https:// <input name="rs_settings[rs_domain]" type="text" id="rs_domain"
-                                            value="<?php echo (isset($options['rs_domain']) && $options['rs_domain'] != '') ? $options['rs_domain'] : ''; ?>"/>
+                                            value="<?php echo $rs_domain; ?>"/>
                             .<?php echo $this->mbm_domain; ?> <br/>
-                        </label>
+                        </label> <?php if(empty($rs_domain)) { echo "<span style='color:red;'>Required</span>"; } ?>
                     </fieldset>
                 </td>
             </tr>
@@ -25,6 +24,7 @@
                 <td>
                     <fieldset>
                         <select name="rs_settings[page][programs]">
+                            <option value="">-- Select --</option>
                             <?php
                             $args = array(
                                 'sort_order' => 'asc',
@@ -39,7 +39,7 @@
                                 echo "<option value='{$page->ID}'" . selected($selected_page, $page->ID) . "> {$page->post_title}</option>";
                             }
                             ?>
-                        </select>
+                        </select> <?php if(empty($selected_page)) { echo "<span style='color:red;'>Required</span>"; } ?>
                     </fieldset>
                 </td>
             </tr>
@@ -48,6 +48,7 @@
                 <td>
                     <fieldset>
                         <select name="rs_settings[page][teachers]">
+                            <option value="">-- Select --</option>
                             <?php
                             $args = array(
                                 'sort_order' => 'asc',
@@ -62,7 +63,7 @@
                                 echo "<option value='{$page->ID}'" . selected($selected_page, $page->ID) . "> {$page->post_title}</option>";
                             }
                             ?>
-                        </select>
+                        </select> <?php if(empty($selected_page)) { echo "<span style='color:red;'>Required</span>"; } ?>
                     </fieldset>
                 </td>
             </tr>
