@@ -40,7 +40,7 @@ class RS_Upgrade
     }
 
     /**
-     * We use this to create default pages for existing customers and then set them as the page containers for our program and teacher pages.
+     * This creates default pages for existing customers and then sets them as the page containers for our program and teacher pages.
      */
     private static function upgrade_1()
     {

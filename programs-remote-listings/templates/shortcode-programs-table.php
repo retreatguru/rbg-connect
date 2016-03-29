@@ -90,7 +90,7 @@ $programs_page_title = $RS_Connect->get_programs_page()->post_title;
 
             <?php if (! empty($show_more_link)) : ?>
                 <td class="rs-show-more-link">
-                    <?php $details_url = $program->alternate_url ? $program->alternate_url : $RS_Connect->get_base_page_url('programs') . $program->ID.'/'.$program->slug; ?>
+                    <?php $details_url = $program->alternate_url ? $program->alternate_url : $RS_Connect->get_page_url('programs') . $program->ID.'/'.$program->slug; ?>
                     <?php echo '<a href="'.$details_url.'">View Details</a>'; ?>
                 </td>
             <?php endif; ?>

@@ -3,7 +3,7 @@
 /*
 Plugin Name: Retreat Booking Guru Connect
 Description: Connect to Retreat Booking Guru to show program listings on your site and link to registration forms.
-Version: 1.8.3
+Version: 1.9.0
 Author: Retreat Guru
 Author URI: http://retreat.guru/booking
 */
@@ -28,8 +28,8 @@ class RS_Connect
         add_filter('init', array($this, 'setup_rewrites'));
 
         add_filter('the_content', array($this, 'insert_shortcode'));
-        add_action('wp_head', array($this, 'set_meta'));
-        add_filter('pre_get_document_title', array($this, 'set_title'));
+        add_action('wp_head', array($this, 'set_program_meta'));
+        add_filter('pre_get_document_title', array($this, 'set_program_title'));
 
         add_action('admin_menu', array($this, 'admin_add_menu_items'));
         add_action('admin_init', array($this, 'admin_register_settings'));
@@ -38,7 +38,8 @@ class RS_Connect
         add_filter('query_vars', array($this, 'register_query_var'));
         add_action('wp_enqueue_scripts', array($this, 'enqueue_items'));
 
-        register_activation_hook(__FILE__, array($this, 'activate_or_upgrade'));
+        add_action( 'template_redirect', array($this, 'receive_preview_request') );
+        register_activation_hook(__FILE__, array($this, 'on_activate_upgrade'));
     }
 
     function includes()
@@ -70,27 +71,34 @@ class RS_Connect
 
     function use_shortcode($shortcode)
     {
+        // Load a specific program or teacher
         if (! empty(get_query_var($shortcode))) {
             $program_id = get_query_var($shortcode);
             return "[{$shortcode} id='{$program_id}']";
         }
 
+        // Load a category of programs
         if (! empty(get_query_var('category'))) {
             $category_slug = get_query_var('category');
             return "[{$shortcode}s category='{$category_slug}']";
         }
 
+        // Return either a list of programs or teachers
         return "[{$shortcode}s]";
     }
 
-    function set_meta() // todo: improve
+    function set_program_meta()
     {
-        if (isset($this->program->text)) {
-            return '<meta property="og:description" content="' . wp_trim_words($this->program->text, 100, '...') . '" />';
+        if (get_query_var('rs_program')) {
+            $program_id = get_query_var('rs_program');
+            $this->program = RS_Connect_Api::get_program($program_id);
+            if (! empty($this->program->text)) {
+                echo '<meta property="og:description" content="' . wp_trim_words($this->program->text, 100, '...') . '" />';
+            }
         }
     }
 
-    function set_title($title = null)
+    function set_program_title($title = null)
     {
         if (get_query_var('rs_program')) {
             $program_id = get_query_var('rs_program');
@@ -125,7 +133,7 @@ class RS_Connect
         return $page;
     }
 
-    function get_base_page_url($type)
+    function get_page_url($type)
     {
         $entity_base = $this->get_page($type);
 
@@ -251,7 +259,18 @@ class RS_Connect
         return true;
     }
 
-    function activate_or_upgrade()
+    // Receive a request from secure.retreat.guru to load a program page.
+    function receive_preview_request()
+    {
+        if (! $this->configured()) { echo 'Please setup the booking plugin before using this feature'; exit(); }
+        if (isset( $_REQUEST['program'] )  ) {
+            $url = $this->get_page_url('programs') . '/' . $_REQUEST['program'];
+            wp_redirect($url);
+            exit();
+        }
+    }
+
+    function on_activate_upgrade()
     {
         global $wp_rewrite;
         $wp_rewrite->flush_rules();
