@@ -51,7 +51,6 @@ dependencies:
     - php wp-cli.phar plugin activate programs-remote-listings
     - php wp-cli.phar post create --post_type=page --post_title='Events'
     - php wp-cli.phar post create --post_type=page --post_title='Teachers'
-    - php wp-cli.phar option update rs_settings '{ "rs_domain": "tests", "pages": { "programs": "events", "teachers": "teachers" } }' --format=json
     - php wp-cli.phar rewrite structure '/%postname%/' --hard
 
 test:

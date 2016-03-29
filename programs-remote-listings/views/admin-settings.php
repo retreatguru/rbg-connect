@@ -23,7 +23,7 @@
                 <th scope="row">Programs Page</th>
                 <td>
                     <fieldset>
-                        <select name="rs_settings[page][programs]">
+                        <select id="page-programs" name="rs_settings[page][programs]">
                             <option value="">-- Select --</option>
                             <?php
                             $args = array(
@@ -36,7 +36,7 @@
 
                             $selected_page = ! empty( $options['page']['programs'] ) ? $options['page']['programs'] : '';
                             foreach($pages as $page) {
-                                echo "<option value='{$page->ID}'" . selected($selected_page, $page->ID) . "> {$page->post_title}</option>";
+                                echo "<option value='{$page->ID}'" . selected($selected_page, $page->ID, 0) . "> {$page->post_title}</option>";
                             }
                             ?>
                         </select> <?php if(empty($selected_page)) { echo "<span style='color:red;'>Required</span>"; } ?>
@@ -47,7 +47,7 @@
                 <th scope="row">Teachers Page</th>
                 <td>
                     <fieldset>
-                        <select name="rs_settings[page][teachers]">
+                        <select id="page-teachers" name="rs_settings[page][teachers]">
                             <option value="">-- Select --</option>
                             <?php
                             $args = array(
@@ -60,7 +60,7 @@
 
                             $selected_page = ! empty( $options['page']['teachers'] ) ? $options['page']['teachers'] : '';
                             foreach($pages as $page) {
-                                echo "<option value='{$page->ID}'" . selected($selected_page, $page->ID) . "> {$page->post_title}</option>";
+                                echo "<option value='{$page->ID}'" . selected($selected_page, $page->ID, 0) . "> {$page->post_title}</option>";
                             }
                             ?>
                         </select> <?php if(empty($selected_page)) { echo "<span style='color:red;'>Required</span>"; } ?>
