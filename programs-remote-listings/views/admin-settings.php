@@ -21,17 +21,48 @@
                 </td>
             </tr>
             <tr>
-                <th scope="row">Label</th>
+                <th scope="row">Programs Page</th>
                 <td>
                     <fieldset>
-                        What kind of experience do you offer?<br/>
-                        <small>This provides the correct url structure and page titles</small><br/>
-                        <input type="radio" name="rs_settings[style]" value="program" <?php if ($options['style'] == 'program' || ! isset($options['style'])) { echo "checked"; } ?>>Programs<br>
-                        <input type="radio" name="rs_settings[style]" value="event" <?php if ($options['style'] == 'event') { echo "checked"; } ?>>Events<br>
-                        <input type="radio" name="rs_settings[style]" value="retreat" <?php if ($options['style'] == 'retreat') { echo "checked"; } ?>>Retreats<br>
-                        <input type="radio" name="rs_settings[style]" value="workshop" <?php if ($options['style'] == 'workshop') { echo "checked"; } ?>>Workshops<br>
-                        <input type="radio" name="rs_settings[style]" value="trip" <?php if ($options['style'] == 'trip') { echo "checked"; } ?>>Trips<br>
-                        <input type="radio" name="rs_settings[style]" value="tour" <?php if ($options['style'] == 'tour') { echo "checked"; } ?>>Tours
+                        <select name="rs_settings[page][programs]">
+                            <?php
+                            $args = array(
+                                'sort_order' => 'asc',
+                                'sort_column' => 'post_title',
+                                'post_type' => 'page',
+                                'post_status' => 'publish,private,draft'
+                            );
+                            $pages = get_pages($args);
+
+                            $selected_page = ! empty( $options['page']['programs'] ) ? $options['page']['programs'] : '';
+                            foreach($pages as $page) {
+                                echo "<option value='{$page->ID}'" . selected($selected_page, $page->ID) . "> {$page->post_title}</option>";
+                            }
+                            ?>
+                        </select>
+                    </fieldset>
+                </td>
+            </tr>
+            <tr>
+                <th scope="row">Teachers Page</th>
+                <td>
+                    <fieldset>
+                        <select name="rs_settings[page][teachers]">
+                            <?php
+                            $args = array(
+                                'sort_order' => 'asc',
+                                'sort_column' => 'post_title',
+                                'post_type' => 'page',
+                                'post_status' => 'publish,private'
+                            );
+                            $pages = get_pages($args);
+
+                            $selected_page = ! empty( $options['page']['teachers'] ) ? $options['page']['teachers'] : '';
+                            foreach($pages as $page) {
+                                echo "<option value='{$page->ID}'" . selected($selected_page, $page->ID) . "> {$page->post_title}</option>";
+                            }
+                            ?>
+                        </select>
                     </fieldset>
                 </td>
             </tr>
@@ -93,6 +124,17 @@
                 </td>
             </tr>
             <tr>
+                <th scope="row">Style Adjustments</th>
+                <td>
+                    <fieldset>
+                        Customize or add CSS site styles below<br/>
+                        <label>
+                                    <textarea name="rs_settings[rs_template][css]" type="text" style="width:700px; height:200px;" id="rs_settings[rs_template][css]"><?php if (isset($options['rs_template']['css'])) echo trim($options['rs_template']['css']); ?>
+                                    </textarea><br/>
+                    </fieldset>
+                </td>
+            </tr>
+            <tr style="display:none;">
                 <th scope="row">Before theme & after</th>
                 <td>
                     <fieldset>
@@ -105,17 +147,6 @@
                                     <textarea name="rs_settings[rs_template][after]" type="text" style="width:700px;height:100px;" id="rs_settings[rs_template][after]"><?php if (isset($options['rs_template']['after'])) echo $options['rs_template']['after']; ?>
                                     </textarea>
                         </label>
-                    </fieldset>
-                </td>
-            </tr>
-            <tr>
-                <th scope="row">Style Adjustments</th>
-                <td>
-                    <fieldset>
-                        Customize or add CSS site styles below<br/>
-                        <label>
-                                    <textarea name="rs_settings[rs_template][css]" type="text" style="width:700px; height:200px;" id="rs_settings[rs_template][css]"><?php if (isset($options['rs_template']['css'])) echo trim($options['rs_template']['css']); ?>
-                                    </textarea><br/>
                     </fieldset>
                 </td>
             </tr>

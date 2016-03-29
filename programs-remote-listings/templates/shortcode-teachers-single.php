@@ -1,13 +1,12 @@
 <?php
-/**
- * The Template for Single Programs.
- */
 global $RS_Connect;
-get_header();
+global $rs_the_teacher;
+global $shortcode_atts;
 $options = get_option('rs_settings');
-if (isset($options['rs_template']['before'])) echo $options['rs_template']['before']; ?>
+?>
 
-<?php global $rs_the_teacher; ?>
+<?php
+if (is_array($shortcode_atts)) extract($shortcode_atts); ?>
 
 <article class="page type-page status-publish entry hentry single-teacher">
     <header class="entry-header">
@@ -43,7 +42,3 @@ if (isset($options['rs_template']['before'])) echo $options['rs_template']['befo
     </div>
 
 </article>
-
-<?php if (isset($options['rs_template']['after'])) echo $options['rs_template']['after']; ?>
-
-<?php get_footer(); ?>
