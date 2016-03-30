@@ -53,6 +53,9 @@ dependencies:
     # Seed initial pages for events and teachers
     - php wp-cli.phar post create --post_type=page --post_title='Events' --post_status=publish
     - php wp-cli.phar post create --post_type=page --post_title='Teachers' --post_status=publish
+    # Seed another pair of pages for testing
+    - php wp-cli.phar post create --post_type=page --post_title='Retreats' --post_status=publish
+    - php wp-cli.phar post create --post_type=page --post_title='Gurus' --post_status=publish
 
     # Seed shortcode pages for testing
     - php wp-cli.phar post create --post_type=page --post_title='Shortcode Event List' --post_status=publish --post_content="[rs_programs category='plant-medicine']"

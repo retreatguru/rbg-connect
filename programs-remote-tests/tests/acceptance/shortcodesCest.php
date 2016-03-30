@@ -8,6 +8,7 @@ class shortcodesCest
         $I->amOnPage('/shortcode-event-list');
         $I->see('Example Program');
     }
+
     public function listEventsTable(AcceptanceTester $I)
     {
         $I->amOnPage('/shortcode-event-list-table');
@@ -16,6 +17,7 @@ class shortcodesCest
         $I->see('Events');
         $I->see('Dates');
     }
+
     public function listTeachers(AcceptanceTester $I)
     {
         $I->amOnPage('/shortcode-teachers');
