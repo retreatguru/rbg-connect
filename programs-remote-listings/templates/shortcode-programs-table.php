@@ -97,9 +97,7 @@ $programs_page_title = $RS_Connect->get_programs_page()->post_title;
 
             <?php if (! empty($show_availability)) : ?>
                 <td class="rs-availability">
-                    <?php if ( ! empty($program->registration_spaces_available) ) : ?>
                         <?php echo $program->registration_spaces_available; ?>
-                    <?php endif; ?>
                 </td>
             <?php endif; ?>
 

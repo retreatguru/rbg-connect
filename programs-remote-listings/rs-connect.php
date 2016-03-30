@@ -8,13 +8,8 @@ Author: Retreat Guru
 Author URI: http://retreat.guru/booking
 */
 
-/**
- * Class RS_Connect
- */
 class RS_Connect
 {
-    // todo: stop creating urls via . use add_query_args() or other abstracted method
-
     protected $options = null;
     protected $program = null;
     protected $style = 'program';
@@ -51,6 +46,34 @@ class RS_Connect
         if ($this->configured()) {
             include("{$this->plugin_dir}rs-connect-widgets.php");
         }
+    }
+
+    function setup_rewrites()
+    {
+        if (! $this->configured()) { return; }
+
+        // Programs
+        $programs_page = $this->get_page('programs');
+        $programs_page_slug = $programs_page->post_name;
+        add_rewrite_rule($programs_page_slug . '/([^/]*)/?', 'index.php?page_id=' . $programs_page->ID . '&rs_program=$matches[1]', 'top');
+        add_rewrite_rule($programs_page_slug . '/([^/]*)/([^/]*)/?', 'index.php?page_id=' . $programs_page->ID . '&rs_program=$matches[1]', 'top');
+        add_rewrite_rule($programs_page_slug . '/category/([^/]*)/?', 'index.php?page_id=' . $programs_page->ID . '&category=$matches[1]', 'top');
+
+        // Teachers
+        $teachers_page = $this->get_page('teachers');
+        $teachers_page_slug = $teachers_page->post_name;
+        add_rewrite_rule($teachers_page_slug . '/([^/]*)/([^/]*)/?', 'index.php?page_id=' . $teachers_page->ID . '&rs_teacher=$matches[1]', 'top');
+        add_rewrite_rule($teachers_page_slug . '/category/([^/]*)/?', 'index.php?page_id=' . $teachers_page->ID . '&category=$matches[1]', 'top');
+
+        // Legacy Rules: We migrate existing installs: This is useful if the new teacher / program slug is somehow different than the old one.
+        add_rewrite_rule($this->style . 's/?$', 'index.php?page_id=' . $programs_page->ID, 'top');
+        add_rewrite_rule($this->style . 's/category/([^/]*)/?', 'index.php?page_id=' . $programs_page->ID . '&category=$matches[1]', 'top');
+        add_rewrite_rule($this->style . '/([^/]*)/?', 'index.php?page_id=' . $programs_page->ID . '&rs_program=$matches[1]', 'top');
+        add_rewrite_rule($this->style . '/([^/]*)/([^/]*)/?', 'index.php?page_id=' . $programs_page->ID . '&rs_program=$matches[1]', 'top');
+
+        add_rewrite_rule('teachers/?$', 'index.php?page_id=' . $teachers_page->ID, 'top');
+        add_rewrite_rule('teachers/category/([^/]*)/?', 'index.php?page_id=' . $teachers_page->ID . '&category=$matches[1]', 'top');
+        add_rewrite_rule('teacher/([^/]*)/([^/]*)/?', 'index.php?page_id=' . $teachers_page->ID . '&rs_teacher=$matches[1]', 'top');
     }
 
     function insert_shortcode($content)
@@ -133,6 +156,10 @@ class RS_Connect
         return $page;
     }
 
+    /**
+     * @param $type - Either programs or teachers
+     * @return false|string
+     */
     function get_page_url($type)
     {
         $entity_base = $this->get_page($type);
@@ -182,34 +209,6 @@ class RS_Connect
         $limit = ! empty($this->options['rs_template']['limit_description']) ? $this->options['rs_template']['limit_description'] : 100;
 
         return wp_trim_words($description, $limit);
-    }
-
-    function setup_rewrites()
-    {
-        if (! $this->configured()) { return; } // todo: If this isn't set, we need to prompt the user to set this.
-
-        // Programs
-        $programs_page = $this->get_page('programs');
-        $programs_page_slug = $programs_page->post_name;
-        add_rewrite_rule($programs_page_slug . '/([^/]*)/?', 'index.php?page_id=' . $programs_page->ID . '&rs_program=$matches[1]', 'top');
-        add_rewrite_rule($programs_page_slug . '/([^/]*)/([^/]*)/?', 'index.php?page_id=' . $programs_page->ID . '&rs_program=$matches[1]', 'top');
-        add_rewrite_rule($programs_page_slug . '/category/([^/]*)/?', 'index.php?page_id=' . $programs_page->ID . '&category=$matches[1]', 'top');
-
-        // Teachers
-        $teachers_page = $this->get_page('teachers');
-        $teachers_page_slug = $teachers_page->post_name;
-        add_rewrite_rule($teachers_page_slug . '/([^/]*)/([^/]*)/?', 'index.php?page_id=' . $teachers_page->ID . '&rs_teacher=$matches[1]', 'top');
-        add_rewrite_rule($teachers_page_slug . '/category/([^/]*)/?', 'index.php?page_id=' . $teachers_page->ID . '&category=$matches[1]', 'top');
-
-        // Legacy Rules: Only useful if the new teacher / program slug is different than the old one.
-        add_rewrite_rule($this->style . 's/?$', 'index.php?page_id=' . $programs_page->ID, 'top');
-        add_rewrite_rule($this->style . 's/category/([^/]*)/?', 'index.php?page_id=' . $programs_page->ID . '&category=$matches[1]', 'top');
-        add_rewrite_rule($this->style . '/([^/]*)/?', 'index.php?page_id=' . $programs_page->ID . '&rs_program=$matches[1]', 'top');
-        add_rewrite_rule($this->style . '/([^/]*)/([^/]*)/?', 'index.php?page_id=' . $programs_page->ID . '&rs_program=$matches[1]', 'top');
-
-        add_rewrite_rule('teachers/?$', 'index.php?page_id=' . $teachers_page->ID, 'top');
-        add_rewrite_rule('teachers/category/([^/]*)/?', 'index.php?page_id=' . $teachers_page->ID . '&category=$matches[1]', 'top');
-        add_rewrite_rule('teacher/([^/]*)/([^/]*)/?', 'index.php?page_id=' . $teachers_page->ID . '&rs_teacher=$matches[1]', 'top');
     }
 
     function register_query_var($vars)
