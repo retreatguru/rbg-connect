@@ -29,9 +29,12 @@ if (is_array($shortcode_atts)) extract($shortcode_atts); ?>
                 <h3 style="margin-top: 30px;">Events with <?php echo $rs_the_teacher->name; ?></h3>
 
                 <?php foreach($rs_the_teacher->programs as $program) : ?>
+                    <?php $program_url = $RS_Connect->get_page_url('programs') . $program->ID.'/'.$program->slug; ?>
                     <div class="program" style="float:left; clear:left;">
-                        <a href="<?php echo get_site_url(); ?>/<?php echo $RS_Connect->style; ?>/<?php echo $program->ID; ?>/<?php echo $program->slug; ?>"><img src="<?php echo $program->photo_details->thumbnail->url; ?>" style="float:left; margin:5px 15px 15px 0;"></a>
-                        <strong><a href="<?php echo get_site_url(); ?>/<?php echo $RS_Connect->style; ?>/<?php echo $program->ID; ?>/<?php echo $program->slug; ?>"><?php echo $program->post_title; ?></a></strong><br/>
+                        <?php if(! empty($program->photo_details->thumbnail->url)) : ?>
+                        <a href="<?php echo $program_url; ?>"><img src="<?php echo $program->photo_details->thumbnail->url; ?>" style="float:left; margin:5px 15px 15px 0;"></a>
+                        <?php endif; ?>
+                        <strong><a href="<?php echo $program_url; ?>"><?php echo $program->post_title; ?></a></strong><br/>
                         <?php echo date('F d, Y', $program->start); ?>
                         <p><?php echo wp_trim_words( $program->post_content, 100, '...' ); ?></p>
                     </div>

@@ -92,14 +92,15 @@ if (is_array($shortcode_atts)) extract($shortcode_atts); ?>
 
         <h3>Teachers</h3>
         <?php foreach($rs_the_program->teacher_details->teacher_objects as $teacher) : ?>
+        <?php $teacher_url = $RS_Connect->get_page_url('teachers') . $teacher->ID.'/'.$teacher->slug; ?>
         <div class="teacher" style="clear:left; position:relative;">
             <div style="float:left; width:<?php echo $teacher->photo_details->thumbnail->width; ?>px; margin-right:20px;">
-                <a href="<?php echo get_site_url(); ?>/teacher/<?php echo $teacher->ID; ?>/<?php echo $teacher->post_name; ?>"><img src="<?php echo $teacher->photo_details->thumbnail->url; ?>" style="float:left; margin:5px 20px 10px 0;"></a>
+                <a href="<?php echo $teacher_url; ?>" style="float:left; margin:5px 20px 10px 0;"></a>
             </div>
             <div style="overflow:hidden;">
-                <a href="<?php echo get_site_url(); ?>/teacher/<?php echo $teacher->ID; ?>/<?php echo $teacher->post_name; ?>"><strong><?php echo $teacher->post_title; ?></strong></a><br/>
+                <a href="<?php echo $teacher_url; ?>"><strong><?php echo $teacher->post_title; ?></strong></a><br/>
                 <?php echo $RS_Connect->excerpt($teacher->post_content); ?>
-                <br/><a href="<?php echo get_site_url(); ?>/teacher/<?php echo $teacher->ID; ?>/<?php echo $teacher->post_name; ?>">Learn more about <?php echo $teacher->post_title; ?></a>
+                <br/><a href="<?php echo $teacher_url; ?>">Learn more about <?php echo $teacher->post_title; ?></a>
             </div>
         </div>
     </div>
