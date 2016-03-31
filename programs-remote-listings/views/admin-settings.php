@@ -22,6 +22,7 @@
             <tr>
                 <th scope="row">Programs Page</th>
                 <td>
+                    <p>Choose an existing page on your site to host your programs. This page will list all your programs and be the base location for loading individual programs and categories.</p>
                     <fieldset>
                         <select id="page-programs" name="rs_settings[page][programs]">
                             <option value="">-- Select --</option>
@@ -46,6 +47,7 @@
             <tr>
                 <th scope="row">Teachers Page</th>
                 <td>
+                    <p>Choose an existing page on your site to host your teachers. This page will list your teachers and be the base location for loading individual teachers.</p>
                     <fieldset>
                         <select id="page-teachers" name="rs_settings[page][teachers]">
                             <option value="">-- Select --</option>

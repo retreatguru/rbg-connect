@@ -12,7 +12,6 @@ class RS_Connect
 {
     protected $options = null;
     protected $program = null;
-    protected $style = 'program';
 
     public function __construct()
     {
@@ -57,25 +56,39 @@ class RS_Connect
         // Programs
         $programs_page = $this->get_page('programs');
         $programs_page_slug = $programs_page->post_name;
+        add_rewrite_rule($programs_page_slug.'/category/([^/]*)/?', 'index.php?page_id='.$programs_page->ID.'&rs_category=$matches[1]', 'top');
         add_rewrite_rule($programs_page_slug.'/([^/]*)/?', 'index.php?page_id='.$programs_page->ID.'&rs_program=$matches[1]', 'top');
         add_rewrite_rule($programs_page_slug.'/([^/]*)/([^/]*)/?', 'index.php?page_id='.$programs_page->ID.'&rs_program=$matches[1]', 'top');
-        add_rewrite_rule($programs_page_slug.'/category/([^/]*)/?', 'index.php?page_id='.$programs_page->ID.'&category=$matches[1]', 'top');
 
         // Teachers
         $teachers_page = $this->get_page('teachers');
         $teachers_page_slug = $teachers_page->post_name;
+        add_rewrite_rule($teachers_page_slug.'/category/([^/]*)/?', 'index.php?page_id='.$teachers_page->ID.'&rs_category=$matches[1]', 'top');
         add_rewrite_rule($teachers_page_slug.'/([^/]*)/([^/]*)/?', 'index.php?page_id='.$teachers_page->ID.'&rs_teacher=$matches[1]', 'top');
-        add_rewrite_rule($teachers_page_slug.'/category/([^/]*)/?', 'index.php?page_id='.$teachers_page->ID.'&category=$matches[1]', 'top');
 
         // Legacy Rules: We migrate existing installs: This is useful if the new teacher / program slug is somehow different than the old one.
+        if (empty($this->options['style'])) {
+            return;
+        }
         add_rewrite_rule($this->style.'s/?$', 'index.php?page_id='.$programs_page->ID, 'top');
-        add_rewrite_rule($this->style.'s/category/([^/]*)/?', 'index.php?page_id='.$programs_page->ID.'&category=$matches[1]', 'top');
+        add_rewrite_rule($this->style.'s/category/([^/]*)/?', 'index.php?page_id='.$programs_page->ID.'&rs_category=$matches[1]', 'top');
         add_rewrite_rule($this->style.'/([^/]*)/?', 'index.php?page_id='.$programs_page->ID.'&rs_program=$matches[1]', 'top');
         add_rewrite_rule($this->style.'/([^/]*)/([^/]*)/?', 'index.php?page_id='.$programs_page->ID.'&rs_program=$matches[1]', 'top');
 
         add_rewrite_rule('teachers/?$', 'index.php?page_id='.$teachers_page->ID, 'top');
-        add_rewrite_rule('teachers/category/([^/]*)/?', 'index.php?page_id='.$teachers_page->ID.'&category=$matches[1]', 'top');
+        add_rewrite_rule('teachers/rs_category/([^/]*)/?', 'index.php?page_id='.$teachers_page->ID.'&rs_category=$matches[1]', 'top');
         add_rewrite_rule('teacher/([^/]*)/([^/]*)/?', 'index.php?page_id='.$teachers_page->ID.'&rs_teacher=$matches[1]', 'top');
+    }
+
+    public function register_query_var($vars)
+    {
+        $vars[] = 'rs_programs';
+        $vars[] = 'rs_program';
+        $vars[] = 'rs_teachers';
+        $vars[] = 'rs_teacher';
+        $vars[] = 'rs_category';
+
+        return $vars;
     }
 
     public function insert_shortcode($content)
@@ -106,14 +119,14 @@ class RS_Connect
         }
 
         // Load a category of programs
-        if (! empty(get_query_var('category'))) {
-            $category_slug = get_query_var('category');
+        if (! empty(get_query_var('rs_category'))) {
+            $category_slug = get_query_var('rs_category');
 
             return "[{$shortcode}s category='{$category_slug}']";
         }
 
-        // Return either a list of programs or teachers
-        return "[{$shortcode}s]";
+        // Return either a list of programs or teachers and the default content on this page.
+        return $GLOBALS['post']->post_content."<br/>[{$shortcode}s]";
     }
 
     public function set_program_meta()
@@ -222,17 +235,6 @@ class RS_Connect
         $limit = ! empty($this->options['rs_template']['limit_description']) ? $this->options['rs_template']['limit_description'] : 100;
 
         return wp_trim_words($description, $limit);
-    }
-
-    public function register_query_var($vars)
-    {
-        $vars[] = 'rs_programs';
-        $vars[] = 'rs_program';
-        $vars[] = 'rs_teachers';
-        $vars[] = 'rs_teacher';
-        $vars[] = 'category';
-
-        return $vars;
     }
 
     public function enqueue_items()
