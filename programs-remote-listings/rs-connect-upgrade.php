@@ -1,6 +1,6 @@
 <?php
 
-class RS_Upgrade
+class RS_Upgrade_Remote
 {
     // Database version. Increment after making changes to the database structure
     private static $db_version = 1;
@@ -13,7 +13,7 @@ class RS_Upgrade
      */
     public static function init()
     {
-        $rs_db_version = get_option('rs_db_version');
+        $rs_db_version = get_option('rs_remote_db_version');
         if(! empty($rs_db_version)) { self::$current_db_version = $rs_db_version; }
         self::upgrade();
     }
@@ -24,7 +24,7 @@ class RS_Upgrade
 
       self::upgrade_1();
 
-      update_option('rs_db_version', self::$db_version);
+      update_option('rs_remote_db_version', self::$db_version);
     }
 
     /**
@@ -49,7 +49,7 @@ class RS_Upgrade
         }
 
         // Only run this upgrade for existing installs
-        $options = get_option('rs_settings');
+        $options = get_option('rs_remote_settings');
         if (empty($options) || empty($options['style'])) {
             return;
         }
@@ -79,7 +79,7 @@ class RS_Upgrade
         // Set this as the teacher page
         $options['page']['teachers'] = $teachers_page;
 
-        update_option('rs_settings', $options);
+        update_option('rs_remote_settings', $options);
     }
 
     /**

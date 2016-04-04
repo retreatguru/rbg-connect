@@ -2,7 +2,7 @@
 global $RS_Connect;
 global $rs_the_teachers;
 global $shortcode_atts;
-$options = get_option('rs_settings');
+$options = get_option('rs_remote_settings');
 if (is_array($shortcode_atts)) extract($shortcode_atts);
 if (! empty($rs_the_teachers)) {
     foreach ($rs_the_teachers as $teacher) :

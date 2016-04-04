@@ -3,7 +3,7 @@ global $RS_Connect;
 // Maybe we set and get these as class properties
 global $shortcode_atts;
 global $rs_the_program;
-$options = get_option('rs_settings');
+$options = get_option('rs_remote_settings');
 ?>
 
 <?php

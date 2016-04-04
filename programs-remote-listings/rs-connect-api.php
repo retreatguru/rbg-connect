@@ -23,7 +23,7 @@ class RS_Connect_Api {
 
     public static function get_base_url()
     {
-        $options = get_option('rs_settings');
+        $options = get_option('rs_remote_settings');
 
         $base_domain = 'secure.retreat.guru';
         $http = 'https://';

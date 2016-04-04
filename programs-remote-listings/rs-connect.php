@@ -15,7 +15,7 @@ class RS_Connect
 
     public function __construct()
     {
-        $this->options = get_option('rs_settings');
+        $this->options = get_option('rs_remote_settings');
         $this->plugin_dir = plugin_dir_path(__FILE__);
         $this->includes();
 
@@ -200,7 +200,7 @@ class RS_Connect
 
     public function admin_register_settings()
     {
-        register_setting('rs_settings', 'rs_settings');
+        register_setting('rs_remote_settings', 'rs_remote_settings');
     }
 
     public function admin_setup_notice()
@@ -289,9 +289,9 @@ class RS_Connect
 
     public function on_activate_upgrade()
     {
-        global $wp_rewrite;
-        $wp_rewrite->flush_rules();
-        RS_Upgrade::init();
+        //global $wp_rewrite;
+        //$wp_rewrite->flush_rules();
+        //RS_Upgrade_Remote::init();
     }
 }
 

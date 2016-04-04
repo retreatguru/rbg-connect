@@ -59,7 +59,7 @@ if (! class_exists('RS_Connect_Widget')) {
                 if ($rs_the_programs) {
                     foreach ($rs_the_programs as $program) {
                         if ($count < $number) {
-                            $options = get_option('rs_settings');
+                            $options = get_option('rs_remote_settings');
                             $image_size = ! empty($options['rs_template']['image_size']) ? $options['rs_template']['image_size'] : 'medium';
                             $program_image_url = $program->photo_details->{$image_size}->url;
                             $details_url = $program->alternate_url ? $program->alternate_url : get_site_url().'/'.$RS_Connect->style.'/'.$program->ID.'/'.$program->slug;

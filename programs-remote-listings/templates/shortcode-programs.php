@@ -2,7 +2,7 @@
 global $RS_Connect;
 global $shortcode_atts;
 global $rs_the_programs;
-$options = get_option('rs_settings');
+$options = get_option('rs_remote_settings');
 if (is_array($shortcode_atts)) extract($shortcode_atts);
 if (! empty($rs_the_programs)) {
 

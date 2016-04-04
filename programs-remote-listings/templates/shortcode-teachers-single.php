@@ -2,7 +2,7 @@
 global $RS_Connect;
 global $rs_the_teacher;
 global $shortcode_atts;
-$options = get_option('rs_settings');
+$options = get_option('rs_remote_settings');
 ?>
 
 <?php
