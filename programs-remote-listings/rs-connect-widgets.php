@@ -45,7 +45,8 @@ if (! class_exists('RS_Connect_Widget')) {
             if ($category) {
                 $vars .= 'category='.$category;
             }
-            $rs_the_programs = array_reverse((array) $RS_Connect->get_programs($vars));
+            $rs_the_programs = array_reverse((array)  RS_Connect_Api::get_programs($vars));
+
 
             $count = 0;
             echo $before_widget;
@@ -62,7 +63,7 @@ if (! class_exists('RS_Connect_Widget')) {
                             $options = get_option('rs_remote_settings');
                             $image_size = ! empty($options['rs_template']['image_size']) ? $options['rs_template']['image_size'] : 'medium';
                             $program_image_url = $program->photo_details->{$image_size}->url;
-                            $details_url = $program->alternate_url ? $program->alternate_url : get_site_url().'/'.$RS_Connect->style.'/'.$program->ID.'/'.$program->slug;
+                            $details_url = $program->alternate_url ? $program->alternate_url : $RS_Connect->get_page_url('programs') . $program->ID.'/'.$program->slug;
                             ?>
                             <li>
                                 <?php if ($show_thumbnail && $program->photo_details) : ?>
@@ -93,7 +94,7 @@ if (! class_exists('RS_Connect_Widget')) {
                     }
                 }
 
-            if ($view_all)  echo '<p><a href="'.get_site_url().'/'.$RS_Connect->style.'s/'.'">'.$view_all.'</a></p>';
+            if ($view_all)  echo '<p><a href="'.$RS_Connect->get_page_url('programs').'"">'.$view_all.'</a></p>';
 
             ?>
             </ul>
