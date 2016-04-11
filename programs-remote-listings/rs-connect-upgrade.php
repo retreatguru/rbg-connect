@@ -49,7 +49,7 @@ class RS_Upgrade_Remote
         }
 
         // Only run this upgrade for existing installs
-        $options = get_option('rs_remote_settings');
+        $options = get_option('rs_settings');
         if (empty($options) || empty($options['style'])) {
             return;
         }

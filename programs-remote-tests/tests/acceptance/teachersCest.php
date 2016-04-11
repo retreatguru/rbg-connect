@@ -14,4 +14,10 @@ class teachersCest
         $I->click('Yogi Bear Test');
         $I->see('A yogi is a practitioner of yoga.');
     }
+    public function viewTeacherViaProgram(AcceptanceTester $I)
+    {
+        $I->amOnPage('/events/');
+        $I->click('Program w/ Teachers');
+        $I->click('Yogi Bear Test');
+    }
 }

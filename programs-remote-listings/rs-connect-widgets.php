@@ -62,11 +62,11 @@ if (! class_exists('RS_Connect_Widget')) {
                         if ($count < $number) {
                             $options = get_option('rs_remote_settings');
                             $image_size = ! empty($options['rs_template']['image_size']) ? $options['rs_template']['image_size'] : 'medium';
-                            $program_image_url = $program->photo_details->{$image_size}->url;
                             $details_url = $program->alternate_url ? $program->alternate_url : $RS_Connect->get_page_url('programs') . $program->ID.'/'.$program->slug;
                             ?>
                             <li>
                                 <?php if ($show_thumbnail && $program->photo_details) : ?>
+                                    <?php $program_image_url = $program->photo_details->{$image_size}->url; ?>
                                     <div class="rs-program-thumbnail">
                                         <a href="<?php echo $details_url; ?>"><img
                                                 src="<?php echo $program_image_url; ?>"

@@ -17,4 +17,10 @@ class programsCest
         $I->click('Multi Person Lodging');
         $I->see('REGISTER NOW');
     }
+
+    public function viewProgramCategory(AcceptanceTester $I)
+    {
+        $I->amOnPage('/events/category/plant-medicine');
+        $I->see('Example Program');
+    }
 }
