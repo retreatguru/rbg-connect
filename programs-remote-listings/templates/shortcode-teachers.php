@@ -6,7 +6,7 @@ $options = get_option('rs_remote_settings');
 if (is_array($shortcode_atts)) extract($shortcode_atts);
 if (! empty($rs_the_teachers)) {
     foreach ($rs_the_teachers as $teacher) :
-        $details_url = $RS_Connect->get_page_url('teachers') . $teacher->ID.'/'.$teacher->slug; ?>
+        $details_url = $RS_Connect->get_page_url('teachers').$teacher->ID.'/'.$teacher->slug; ?>
         <div class="rs-teacher rs-group">
             <div class="teacher type-teacher status-publish has-post-thumbnail hentry rs-teacher rs-group">
                 <?php if (isset($teacher->photo_details->thumbnail)) { ?>

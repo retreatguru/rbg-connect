@@ -20,23 +20,23 @@ if (is_array($shortcode_atts)) extract($shortcode_atts); ?>
                 <img src="<?php echo $rs_the_teacher->photo_details->medium->url; ?>" class="alignleft" style="padding:0 20px 20px 0px; float: left;">
             <?php endif; ?>
 
-            <?php if ( $rs_the_teacher->text ) : ?>
+            <?php if ($rs_the_teacher->text) : ?>
                 <div class="rs-teacher-custom-wrap"><?php echo $rs_the_teacher->text_full; ?></div>
             <?php endif; ?>
         </div>
         <div class="rs-teacher-programs" style="clear: left; margin:20px;">
-            <?php if ( ! empty($rs_the_teacher->programs)) : ?>
+            <?php if (! empty($rs_the_teacher->programs)) : ?>
                 <h3 style="margin-top: 30px;">Events with <?php echo $rs_the_teacher->name; ?></h3>
 
                 <?php foreach($rs_the_teacher->programs as $program) : ?>
-                    <?php $program_url = $RS_Connect->get_page_url('programs') . $program->ID.'/'.$program->slug; ?>
+                    <?php $program_url = $RS_Connect->get_page_url('programs').$program->ID.'/'.$program->slug; ?>
                     <div class="program" style="float:left; clear:left;">
                         <?php if(! empty($program->photo_details->thumbnail->url)) : ?>
                         <a href="<?php echo $program_url; ?>"><img src="<?php echo $program->photo_details->thumbnail->url; ?>" style="float:left; margin:5px 15px 15px 0;"></a>
                         <?php endif; ?>
                         <strong><a href="<?php echo $program_url; ?>"><?php echo $program->post_title; ?></a></strong><br/>
                         <?php echo date('F d, Y', $program->start); ?>
-                        <p><?php echo wp_trim_words( $program->post_content, 100, '...' ); ?></p>
+                        <p><?php echo wp_trim_words($program->post_content, 100, '...'); ?></p>
                     </div>
                 <?php endforeach; ?>
             <?php endif; ?>

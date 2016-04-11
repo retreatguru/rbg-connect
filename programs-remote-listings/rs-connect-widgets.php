@@ -3,17 +3,17 @@
 if (! class_exists('RS_Connect_Widget')) {
     class RS_Connect_Widget extends WP_Widget {
         public function __construct() {
-            $widget_ops = ['classname' => 'RS_Connect_Widget', 'description' => __('Displays a list of programs')];
+            $widget_ops = array('classname' => 'RS_Connect_Widget', 'description' => __('Displays a list of programs'));
             parent::__construct('rs_programs', __('Programs'), $widget_ops);
             $this->alt_option_name = 'widget_retreat_site_programs_option';
 
-            add_action('save_post', [$this, 'flush_widget_cache']);
-            add_action('deleted_post', [$this, 'flush_widget_cache']);
-            add_action('switch_theme', [$this, 'flush_widget_cache']);
+            add_action('save_post', array($this, 'flush_widget_cache'));
+            add_action('deleted_post', array($this, 'flush_widget_cache'));
+            add_action('switch_theme', array($this, 'flush_widget_cache'));
         }
 
         public function defaults() {
-            $defaults = [
+            $defaults = array(
                 'title'          => __('Programs'),
                 'number'         => 3,
                 'category'       => '',
@@ -27,7 +27,7 @@ if (! class_exists('RS_Connect_Widget')) {
                 'view_all'       => __('View all programs &raquo;'),
                 'show_teacher'   => true,
                 'featured_only'  => false,
-            ];
+            );
 
             return $defaults;
         }
@@ -45,8 +45,7 @@ if (! class_exists('RS_Connect_Widget')) {
             if ($category) {
                 $vars .= 'category='.$category;
             }
-            $rs_the_programs = array_reverse((array)  RS_Connect_Api::get_programs($vars));
-
+            $rs_the_programs = array_reverse((array) RS_Connect_Api::get_programs($vars));
 
             $count = 0;
             echo $before_widget;
@@ -62,7 +61,7 @@ if (! class_exists('RS_Connect_Widget')) {
                         if ($count < $number) {
                             $options = get_option('rs_remote_settings');
                             $image_size = ! empty($options['rs_template']['image_size']) ? $options['rs_template']['image_size'] : 'medium';
-                            $details_url = $program->alternate_url ? $program->alternate_url : $RS_Connect->get_page_url('programs') . $program->ID.'/'.$program->slug;
+                            $details_url = $program->alternate_url ? $program->alternate_url : $RS_Connect->get_page_url('programs').$program->ID.'/'.$program->slug;
                             ?>
                             <li>
                                 <?php if ($show_thumbnail && $program->photo_details) : ?>

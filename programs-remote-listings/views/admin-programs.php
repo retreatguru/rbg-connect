@@ -12,7 +12,7 @@ $rs_programs = RS_Connect_Api::get_programs();
     </thead>
 
     <tbody>
-    <?php foreach ((array)$rs_programs as $program): ?>
+    <?php foreach ((array) $rs_programs as $program): ?>
         <?php $details_url = $program->alternate_url ? $program->alternate_url : get_site_url().'/'.$this->style.'/'.$program->ID.'/'.$program->slug; ?>
         <tr>
             <td>

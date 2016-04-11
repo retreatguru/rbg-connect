@@ -31,13 +31,13 @@
                                 'sort_order' => 'asc',
                                 'sort_column' => 'post_title',
                                 'post_type' => 'page',
-                                'post_status' => 'publish,private,draft'
+                                'post_status' => 'publish,private,draft',
                             );
                             $pages = get_pages($args);
 
-                            $selected_page = ! empty( $options['page']['programs'] ) ? $options['page']['programs'] : '';
+                            $selected_page = ! empty($options['page']['programs']) ? $options['page']['programs'] : '';
                             foreach($pages as $page) {
-                                echo "<option value='{$page->ID}'" . selected($selected_page, $page->ID, 0) . "> {$page->post_title}</option>";
+                                echo "<option value='{$page->ID}'".selected($selected_page, $page->ID, 0)."> {$page->post_title}</option>";
                             }
                             ?>
                         </select> <?php if(empty($selected_page)) { echo "<span style='color:red;'>Required</span>"; } ?>
@@ -56,13 +56,13 @@
                                 'sort_order' => 'asc',
                                 'sort_column' => 'post_title',
                                 'post_type' => 'page',
-                                'post_status' => 'publish,private'
+                                'post_status' => 'publish,private',
                             );
                             $pages = get_pages($args);
 
-                            $selected_page = ! empty( $options['page']['teachers'] ) ? $options['page']['teachers'] : '';
+                            $selected_page = ! empty($options['page']['teachers']) ? $options['page']['teachers'] : '';
                             foreach($pages as $page) {
-                                echo "<option value='{$page->ID}'" . selected($selected_page, $page->ID, 0) . "> {$page->post_title}</option>";
+                                echo "<option value='{$page->ID}'".selected($selected_page, $page->ID, 0)."> {$page->post_title}</option>";
                             }
                             ?>
                         </select> <?php if(empty($selected_page)) { echo "<span style='color:red;'>Required</span>"; } ?>
@@ -84,7 +84,7 @@
                 <td>
                     <fieldset>
                         <select name="rs_remote_settings[rs_template][image_size]">
-                            <?php $image_size = ! empty( $options['rs_template']['image_size'] ) ? $options['rs_template']['image_size'] : 'medium'; ?>
+                            <?php $image_size = ! empty($options['rs_template']['image_size']) ? $options['rs_template']['image_size'] : 'medium'; ?>
                             <option value="thumbnail" <?php selected($image_size, 'thumbnail') ?>>Small - Square Cropped</option>
                             <option value="medium" <?php selected($image_size, 'medium') ?>>Medium - Uncropped</option>
                         </select>
@@ -120,7 +120,7 @@
                     <fieldset>
                         <label>
                             <input name="rs_remote_settings[rs_template][hide_contact_button]" type="checkbox" value="1"
-                                <?php if (isset($options['rs_template']['hide_contact_button'])) { echo "checked"; } ?>
+                                <?php if (isset($options['rs_template']['hide_contact_button'])) { echo 'checked'; } ?>
                                 />
                         </label>
                     </fieldset>

@@ -19,21 +19,21 @@ class RS_Connect
         $this->plugin_dir = plugin_dir_path(__FILE__);
         $this->includes();
 
-        add_filter('init', [$this, 'setup_rewrites']);
+        add_filter('init', array($this, 'setup_rewrites'));
 
-        add_filter('the_content', [$this, 'insert_shortcode']);
-        add_action('wp_head', [$this, 'set_program_meta']);
-        add_filter('pre_get_document_title', [$this, 'set_program_title']);
+        add_filter('the_content', array($this, 'insert_shortcode'));
+        add_action('wp_head', array($this, 'set_program_meta'));
+        add_filter('pre_get_document_title', array($this, 'set_program_title'));
 
-        add_action('admin_menu', [$this, 'admin_add_menu_items']);
-        add_action('admin_init', [$this, 'admin_register_settings']);
-        add_action('admin_notices', [$this, 'admin_setup_notice']);
+        add_action('admin_menu', array($this, 'admin_add_menu_items'));
+        add_action('admin_init', array($this, 'admin_register_settings'));
+        add_action('admin_notices', array($this, 'admin_setup_notice'));
 
-        add_filter('query_vars', [$this, 'register_query_var']);
-        add_action('wp_enqueue_scripts', [$this, 'enqueue_items']);
+        add_filter('query_vars', array($this, 'register_query_var'));
+        add_action('wp_enqueue_scripts', array($this, 'enqueue_items'));
 
-        add_action('template_redirect', [$this, 'receive_preview_request']);
-        register_activation_hook(__FILE__, [$this, 'on_activate_upgrade']);
+        add_action('template_redirect', array($this, 'receive_preview_request'));
+        register_activation_hook(__FILE__, array($this, 'on_activate_upgrade'));
     }
 
     public function includes()
@@ -56,28 +56,38 @@ class RS_Connect
         // Programs
         $programs_page = $this->get_page('programs');
         $programs_page_slug = $programs_page->post_name;
-        add_rewrite_rule($programs_page_slug.'/category/([^/]*)/?', 'index.php?page_id='.$programs_page->ID.'&rs_category=$matches[1]', 'top');
-        add_rewrite_rule($programs_page_slug.'/([^/]*)/?', 'index.php?page_id='.$programs_page->ID.'&rs_program=$matches[1]', 'top');
-        add_rewrite_rule($programs_page_slug.'/([^/]*)/([^/]*)/?', 'index.php?page_id='.$programs_page->ID.'&rs_program=$matches[1]', 'top');
+        add_rewrite_rule($programs_page_slug.'/category/([^/]*)/?',
+            'index.php?page_id='.$programs_page->ID.'&rs_category=$matches[1]', 'top');
+        add_rewrite_rule($programs_page_slug.'/([^/]*)/?',
+            'index.php?page_id='.$programs_page->ID.'&rs_program=$matches[1]', 'top');
+        add_rewrite_rule($programs_page_slug.'/([^/]*)/([^/]*)/?',
+            'index.php?page_id='.$programs_page->ID.'&rs_program=$matches[1]', 'top');
 
         // Teachers
         $teachers_page = $this->get_page('teachers');
         $teachers_page_slug = $teachers_page->post_name;
-        add_rewrite_rule($teachers_page_slug.'/category/([^/]*)/?', 'index.php?page_id='.$teachers_page->ID.'&rs_category=$matches[1]', 'top');
-        add_rewrite_rule($teachers_page_slug.'/([^/]*)/([^/]*)/?', 'index.php?page_id='.$teachers_page->ID.'&rs_teacher=$matches[1]', 'top');
+        add_rewrite_rule($teachers_page_slug.'/category/([^/]*)/?',
+            'index.php?page_id='.$teachers_page->ID.'&rs_category=$matches[1]', 'top');
+        add_rewrite_rule($teachers_page_slug.'/([^/]*)/([^/]*)/?',
+            'index.php?page_id='.$teachers_page->ID.'&rs_teacher=$matches[1]', 'top');
 
         // Legacy Rules: We migrate existing installs: This is useful if the new teacher / program slug is somehow different than the old one.
         if (empty($this->options['style'])) {
             return;
         }
         add_rewrite_rule($this->style.'s/?$', 'index.php?page_id='.$programs_page->ID, 'top');
-        add_rewrite_rule($this->style.'s/category/([^/]*)/?', 'index.php?page_id='.$programs_page->ID.'&rs_category=$matches[1]', 'top');
-        add_rewrite_rule($this->style.'/([^/]*)/?', 'index.php?page_id='.$programs_page->ID.'&rs_program=$matches[1]', 'top');
-        add_rewrite_rule($this->style.'/([^/]*)/([^/]*)/?', 'index.php?page_id='.$programs_page->ID.'&rs_program=$matches[1]', 'top');
+        add_rewrite_rule($this->style.'s/category/([^/]*)/?',
+            'index.php?page_id='.$programs_page->ID.'&rs_category=$matches[1]', 'top');
+        add_rewrite_rule($this->style.'/([^/]*)/?',
+            'index.php?page_id='.$programs_page->ID.'&rs_program=$matches[1]', 'top');
+        add_rewrite_rule($this->style.'/([^/]*)/([^/]*)/?',
+            'index.php?page_id='.$programs_page->ID.'&rs_program=$matches[1]', 'top');
 
         add_rewrite_rule('teachers/?$', 'index.php?page_id='.$teachers_page->ID, 'top');
-        add_rewrite_rule('teachers/rs_category/([^/]*)/?', 'index.php?page_id='.$teachers_page->ID.'&rs_category=$matches[1]', 'top');
-        add_rewrite_rule('teacher/([^/]*)/([^/]*)/?', 'index.php?page_id='.$teachers_page->ID.'&rs_teacher=$matches[1]', 'top');
+        add_rewrite_rule('teachers/rs_category/([^/]*)/?',
+            'index.php?page_id='.$teachers_page->ID.'&rs_category=$matches[1]', 'top');
+        add_rewrite_rule('teacher/([^/]*)/([^/]*)/?',
+            'index.php?page_id='.$teachers_page->ID.'&rs_teacher=$matches[1]', 'top');
     }
 
     public function register_query_var($vars)
@@ -135,7 +145,8 @@ class RS_Connect
             $program_id = get_query_var('rs_program');
             $this->program = RS_Connect_Api::get_program($program_id);
             if (! empty($this->program->text)) {
-                echo '<meta property="og:description" content="'.wp_trim_words($this->program->text, 100, '...').'" />';
+                echo '<meta property="og:description" content="'.wp_trim_words($this->program->text, 100,
+                        '...').'" />';
             }
         }
     }
@@ -193,9 +204,12 @@ class RS_Connect
 
     public function admin_add_menu_items()
     {
-        add_menu_page('Retreat Booking Guru', 'Retreat Booking Guru', 'manage_options', 'booking-manager.php', [$this, 'admin_programs_page'], 'dashicons-calendar-alt');
-        add_submenu_page('booking-manager.php', 'Program & Help', 'Program & Help', 'manage_options', 'booking-manager.php', [$this, 'admin_programs_page']);
-        add_submenu_page('booking-manager.php', 'Retreat Guru Settings', 'Retreat Guru Settings', 'manage_options', 'options-mbm', [$this, 'admin_settings_page']);
+        add_menu_page('Retreat Booking Guru', 'Retreat Booking Guru', 'manage_options', 'booking-manager.php',
+            array($this, 'admin_programs_page'), 'dashicons-calendar-alt');
+        add_submenu_page('booking-manager.php', 'Program & Help', 'Program & Help', 'manage_options',
+            'booking-manager.php', array($this, 'admin_programs_page'));
+        add_submenu_page('booking-manager.php', 'Retreat Guru Settings', 'Retreat Guru Settings', 'manage_options',
+            'options-mbm', array($this, 'admin_settings_page'));
     }
 
     public function admin_register_settings()
@@ -211,7 +225,7 @@ class RS_Connect
         ?>
         <div class="error">
             <p>Please setup Retreat Booking Guru.<a href="<?php echo admin_url('admin.php?page=options-mbm');
-        ?>">Click Here</a></p>
+                ?>">Click Here</a></p>
         </div>
         <?php
 
@@ -239,10 +253,10 @@ class RS_Connect
 
     public function enqueue_items()
     {
-        wp_enqueue_script('rs-js', plugins_url('/resources/frontend/rs.js', __FILE__), ['jquery'], '20160224');
+        wp_enqueue_script('rs-js', plugins_url('/resources/frontend/rs.js', __FILE__), array('jquery'), '20160224');
 
         if (! empty($this->options['google_analytics_enable'])) {
-            wp_enqueue_script('rs-ga-js', plugins_url('/resources/frontend/rs_ga.js', __FILE__), ['jquery'],
+            wp_enqueue_script('rs-ga-js', plugins_url('/resources/frontend/rs_ga.js', __FILE__), array('jquery'),
                 '20160224');
         }
 

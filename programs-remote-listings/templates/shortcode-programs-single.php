@@ -19,7 +19,7 @@ if (is_array($shortcode_atts)) extract($shortcode_atts); ?>
 
         <div class="rs-program-meta">
 
-            <?php  if ( $rs_the_program->photo_details ) : ?>
+            <?php  if ($rs_the_program->photo_details) : ?>
                 <div class="rs-program-photo">
                     <img src="<?php echo $rs_the_program->photo_details->large->url; ?>" width="100%">
                 </div>
@@ -28,36 +28,36 @@ if (is_array($shortcode_atts)) extract($shortcode_atts); ?>
             <div class="rs-meta-content-container">
 
                 <?php // Pricing ?>
-                <?php if ( $rs_the_program->price_details ) : ?>
+                <?php if ($rs_the_program->price_details) : ?>
                     <div class="rs-program-price"><?php echo $rs_the_program->price_details ?></div>
                 <?php endif; ?>
 
                 <?php // Datetime details ?>
-                <?php if ( $rs_the_program->date_time ) : ?>
+                <?php if ($rs_the_program->date_time) : ?>
                     <p class="rs-program-datetime"><span class="rs-program-label">Date &amp; Time Details:</span> <?php echo $rs_the_program->date_time; ?></p>
                 <?php endif; ?>
 
                 <?php // Location ?>
-                <?php if ( $rs_the_program->location ) : ?>
+                <?php if ($rs_the_program->location) : ?>
                     <p class="rs-program-location"><span class="rs-program-label">Location:</span> <?php echo $rs_the_program->location; ?></p>
                 <?php endif; ?>
 
                 <?php // Address ?>
-                <?php if ( $rs_the_program->address ) : ?>
+                <?php if ($rs_the_program->address) : ?>
                     <p class="rs-program-address"><span class="rs-program-label">Address:</span> <?php echo $rs_the_program->address; ?></p>
                 <?php endif; ?>
 
                 <?php // Contact details ?>
-                <?php if ( $rs_the_program->contact ) : ?>
+                <?php if ($rs_the_program->contact) : ?>
                     <p class="rs-program-contact"><?php echo $rs_the_program->contact ?></p>
                 <?php endif; ?>
 
                 <?php // Custom fields ?>
-                <?php if ( $rs_the_program->custom ) : ?>
+                <?php if ($rs_the_program->custom) : ?>
                     <div class="rs-program-custom-wrap"><?php echo $rs_the_program->custom; ?></div>
                 <?php endif; ?>
 
-                <?php if ( $rs_the_program->email && empty($options['rs_template']['hide_contact_button'])) : ?>
+                <?php if ($rs_the_program->email && empty($options['rs_template']['hide_contact_button'])) : ?>
                     <a href="mailto:<?php echo $rs_the_program->email; ?>?subject=An inquiry about <?php echo $rs_the_program->title; ?>" class="rs-button">Email us about program</a>
                 <?php endif; ?>
 
@@ -70,29 +70,29 @@ if (is_array($shortcode_atts)) extract($shortcode_atts); ?>
 
         <?php // Program Details ?>
         <div class="rs-program-content">
-            <?php if ( $rs_the_program->text ) : ?>
+            <?php if ($rs_the_program->text) : ?>
                 <div class="rs-program-custom-wrap"><?php echo $rs_the_program->text_full; ?></div>
             <?php endif; ?>
         </div>
 
         <?php // Category(ies) ?>
-        <?php $program_cats = class_exists( 'RS_Enhanced_Plugin') ? rs_has_program_categories() : null; ?>
-        <?php if ( $program_cats ) : ?>
+        <?php $program_cats = class_exists('RS_Enhanced_Plugin') ? rs_has_program_categories() : null; ?>
+        <?php if ($program_cats) : ?>
             <p class="rs-program-categories">
-                <span class="rs-program-label"><?php echo _n( 'Category', 'Categories', count( $program_cats ) ) ?>:</span>
-                <?php echo get_the_term_list( 0, 'program_category', '', ', ' ); ?>
+                <span class="rs-program-label"><?php echo _n('Category', 'Categories', count($program_cats)) ?>:</span>
+                <?php echo get_the_term_list(0, 'program_category', '', ', '); ?>
             </p>
         <?php endif; ?>
 
-        <?php if ( $rs_the_program->additional_info ) : ?>
+        <?php if ($rs_the_program->additional_info) : ?>
             <div class="rs-program-additional-info"><?php echo $rs_the_program->additional_info; ?></div>
         <?php endif; ?>
 
-        <?php if ( $rs_the_program->teacher_details->teacher_objects ) : ?>
+        <?php if ($rs_the_program->teacher_details->teacher_objects) : ?>
 
         <h3>Teachers</h3>
         <?php foreach($rs_the_program->teacher_details->teacher_objects as $teacher) : ?>
-        <?php $teacher_url = $RS_Connect->get_page_url('teachers') . $teacher->ID.'/'.$teacher->slug; ?>
+        <?php $teacher_url = $RS_Connect->get_page_url('teachers').$teacher->ID.'/'.$teacher->slug; ?>
         <div class="teacher" style="clear:left; position:relative;">
             <?php if (isset($teacher->photo_details->thumbnail)) {  ?>
             <div style="float:left; width:<?php echo $teacher->photo_details->thumbnail->width; ?>px; margin-right:20px;">

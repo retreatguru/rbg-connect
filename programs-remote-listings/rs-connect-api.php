@@ -57,11 +57,11 @@ class RS_Connect_Api {
         }
 
         // ensure api calls are cached each hour
-        $versioned_url = add_query_arg(['rs-rand' => rand()], $url);
+        $versioned_url = add_query_arg(array('rs-rand' => rand()), $url);
 //        $versioned_url = add_query_arg(array('rs-ver' => date('ymdH')), $url); // old hourly method
-        $args = [
+        $args = array(
             'timeout' => 5,
-        ];
+        );
         $response = wp_remote_get($versioned_url, $args);
 
         if (is_wp_error($response) || 200 != wp_remote_retrieve_response_code($response)) {

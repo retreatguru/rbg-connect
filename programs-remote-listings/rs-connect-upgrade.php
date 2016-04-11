@@ -56,24 +56,24 @@ class RS_Upgrade_Remote
 
         // Create a program page based on their style choice ('events', 'programs', 'workshops')
         $retreat_style = $options['style'];
-        $new_programs_page = [
+        $new_programs_page = array(
             'post_type' => 'page',
             'post_title' => ucfirst($retreat_style.'s'), // Ugly: we're matching the existing title
             'post_name' => $retreat_style.'s',
             'post_status'   => 'publish',
-        ];
+        );
         $programs_page = wp_insert_post($new_programs_page);
 
         // Set this as the program page
         $options['page']['programs'] = $programs_page;
 
         // Create a teacher page
-        $new_teachers_page = [
+        $new_teachers_page = array(
             'post_type' => 'page',
             'post_title' => 'Teachers',
             'post_name' => 'teachers',
             'post_status'   => 'publish',
-        ];
+        );
         $teachers_page = wp_insert_post($new_teachers_page);
 
         // Set this as the teacher page
