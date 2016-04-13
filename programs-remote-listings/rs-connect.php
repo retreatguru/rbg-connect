@@ -22,6 +22,8 @@ class RS_Connect
         add_filter('init', array($this, 'setup_rewrites'));
 
         add_filter('the_content', array($this, 'insert_shortcode'));
+        add_filter('the_title', array($this, 'replace_title'));
+
         add_action('wp_head', array($this, 'set_program_meta'));
         add_filter('pre_get_document_title', array($this, 'set_program_title'));
 
@@ -122,14 +124,14 @@ class RS_Connect
     public function use_shortcode($shortcode)
     {
         // Load a specific program or teacher
-        if (! empty(get_query_var($shortcode))) {
+        if (get_query_var($shortcode)) {
             $program_id = get_query_var($shortcode);
 
             return "[{$shortcode} id='{$program_id}']";
         }
 
         // Load a category of programs
-        if (! empty(get_query_var('rs_category'))) {
+        if (get_query_var('rs_category')) {
             $category_slug = get_query_var('rs_category');
 
             return "[{$shortcode}s category='{$category_slug}']";
@@ -137,6 +139,14 @@ class RS_Connect
 
         // Return either a list of programs or teachers and the default content on this page.
         return $GLOBALS['post']->post_content."<br/>[{$shortcode}s]";
+    }
+
+    public function replace_title($title) {
+        if (get_query_var('rs_program') || get_query_var('rs_teacher')) {
+            return '';
+        }
+
+        return $title;
     }
 
     public function set_program_meta()
@@ -280,7 +290,7 @@ class RS_Connect
 
     public function configured()
     {
-        if (empty($this->options['rs_domain']) || empty($this->get_programs_page()) || empty($this->get_teachers_page())) {
+        if (empty($this->options['rs_domain']) || ! $this->get_programs_page() || ! $this->get_teachers_page()) {
             return false;
         }
 
