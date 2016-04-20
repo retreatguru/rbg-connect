@@ -2,11 +2,11 @@
 
 class RS_Connect_Shortcodes {
     public function __construct() {
-        add_shortcode('rs_programs', [$this, 'shortcode_programs']);
-        add_shortcode('rs_program', [$this, 'shortcode_program']);
-        add_shortcode('rs_register_button', [$this, 'shortcode_register_button']);
-        add_shortcode('rs_teachers', [$this, 'shortcode_teachers']);
-        add_shortcode('rs_teacher', [$this, 'shortcode_teacher']);
+        add_shortcode('rs_programs', array($this, 'shortcode_programs'));
+        add_shortcode('rs_program', array($this, 'shortcode_program'));
+        add_shortcode('rs_register_button', array($this, 'shortcode_register_button'));
+        add_shortcode('rs_teachers', array($this, 'shortcode_teachers'));
+        add_shortcode('rs_teacher', array($this, 'shortcode_teacher'));
     }
 
     public function shortcode_programs($atts)
@@ -110,7 +110,7 @@ class RS_Connect_Shortcodes {
     public function normalize_empty_atts($atts)
     {
         if (! $atts) {
-            return [];
+            return array();
         }
 
         foreach ($atts as $attribute => $value) {

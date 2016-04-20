@@ -22,7 +22,6 @@ class RS_Connect
         add_filter('init', array($this, 'setup_rewrites'));
 
         add_filter('the_content', array($this, 'insert_shortcode'));
-        add_filter('the_title', array($this, 'replace_title'));
 
         add_action('wp_head', array($this, 'set_program_meta'));
         add_filter('pre_get_document_title', array($this, 'set_program_title'));
@@ -139,14 +138,6 @@ class RS_Connect
 
         // Return either a list of programs or teachers and the default content on this page.
         return $GLOBALS['post']->post_content."<br/>[{$shortcode}s]";
-    }
-
-    public function replace_title($title) {
-        if (get_query_var('rs_program') || get_query_var('rs_teacher')) {
-            return '';
-        }
-
-        return $title;
     }
 
     public function set_program_meta()
