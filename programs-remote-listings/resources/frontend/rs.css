@@ -161,3 +161,6 @@ div.hasDatepicker { float: left; margin-right: 20px; }
     .single-program .rs-program-meta { width:100% !important; }
     .rs-program-title { padding:20px 0 0; }
 }
+
+body.rs-programs-single h1.entry-title,
+body.rs-teachers-single h1.entry-title { display:none; }

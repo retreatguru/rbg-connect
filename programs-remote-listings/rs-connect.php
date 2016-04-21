@@ -33,6 +33,7 @@ class RS_Connect
         add_filter('query_vars', array($this, 'register_query_var'));
         add_action('wp_enqueue_scripts', array($this, 'enqueue_items'));
 
+        add_filter('body_class', array($this, 'body_classes'));
         add_action('template_redirect', array($this, 'receive_preview_request'));
         register_activation_hook(__FILE__, array($this, 'on_activate_upgrade'));
     }
@@ -286,6 +287,29 @@ class RS_Connect
         }
 
         return true;
+    }
+
+    function body_classes($classes)
+    {
+        $current_page = $GLOBALS['post']->post_name;
+
+        if ($current_page == $this->get_programs_page()->post_name) {
+            if (get_query_var('rs_program')) {
+                $classes[] = 'rs-programs-single';
+            } else {
+                $classes[] = 'rs-programs';
+            }
+        }
+
+        if ($current_page == $this->get_teachers_page()->post_name) {
+            if (get_query_var('rs_teacher')) {
+                $classes[] = 'rs-teachers-single';
+            } else {
+                $classes[] = 'rs-teachers';
+            }
+        }
+
+        return $classes;
     }
 
     // Receive a request from secure.retreat.guru to load a program page.
