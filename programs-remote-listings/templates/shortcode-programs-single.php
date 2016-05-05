@@ -95,7 +95,8 @@ if (is_array($shortcode_atts)) extract($shortcode_atts); ?>
 
         <?php if ($rs_the_program->teacher_details->teacher_objects) : ?>
 
-        <h3>Teachers</h3>
+        <h2 class="rs-teachers-title"><?php echo _n( 'Teacher', 'Teachers', count($rs_the_program->teacher_details->teacher_objects) ) ?></h2>
+
         <?php foreach($rs_the_program->teacher_details->teacher_objects as $teacher) : ?>
         <?php $teacher_url = $RS_Connect->get_page_url('teachers').$teacher->ID.'/'.$teacher->slug; ?>
         <div class="teacher" style="clear:left; position:relative;">
