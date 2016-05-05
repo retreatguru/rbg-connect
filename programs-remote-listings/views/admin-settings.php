@@ -127,6 +127,17 @@
                 </td>
             </tr>
             <tr>
+                <th scope="row">Customize contact button text</th>
+                <td>
+                    <fieldset>
+                        <label>
+                            <input name="rs_remote_settings[rs_template][contact_button_text]" type="text" id="rs_remote_settings[rs_template][contact_button_text]" placeholder="Email us about program"
+                                    value="<?php echo (isset($options['rs_template']['contact_button_text']) && $options['rs_template']['contact_button_text'] != '') ? $options['rs_template']['contact_button_text'] : ''; ?>"/>
+                        </label>
+                    </fieldset>
+                </td>
+            </tr>
+            <tr>
                 <th scope="row">Style Adjustments</th>
                 <td>
                     <fieldset>

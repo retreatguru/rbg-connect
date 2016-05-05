@@ -58,7 +58,12 @@ if (is_array($shortcode_atts)) extract($shortcode_atts); ?>
                 <?php endif; ?>
 
                 <?php if ($rs_the_program->email && empty($options['rs_template']['hide_contact_button'])) : ?>
-                    <a href="mailto:<?php echo $rs_the_program->email; ?>?subject=An inquiry about <?php echo $rs_the_program->title; ?>" class="rs-button">Email us about program</a>
+                    <?php if (! empty($options['rs_template']['contact_button_text'])) {
+                        $contact_button_text = $options['rs_template']['contact_button_text'];
+                    } else {
+                        $contact_button_text = 'Email us about program';
+                    } ?>
+                    <a href="mailto:<?php echo $rs_the_program->email; ?>?subject=An inquiry about <?php echo $rs_the_program->title; ?>" class="rs-button"><?php echo $contact_button_text; ?></a>
                 <?php endif; ?>
 
                 <div class="rs-regsitration-wrap"><?php echo $rs_the_program->registration_action; ?></div>
