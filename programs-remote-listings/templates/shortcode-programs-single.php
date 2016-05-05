@@ -100,10 +100,10 @@ if (is_array($shortcode_atts)) extract($shortcode_atts); ?>
         <?php foreach($rs_the_program->teacher_details->teacher_objects as $teacher) : ?>
         <?php $teacher_url = $RS_Connect->get_page_url('teachers').$teacher->ID.'/'.$teacher->slug; ?>
         <div class="teacher" style="clear:left; position:relative;">
-            <?php if (isset($teacher->photo_details->thumbnail)) {  ?>
+            <?php if (isset($teacher->photo_details->medium)) {  ?>
             <div style="float:left; width:<?php echo $teacher->photo_details->thumbnail->width; ?>px; margin-right:20px;">
                 <a href="<?php echo $teacher_url; ?>" style="float:left; margin:5px 20px 10px 0;">
-                    <img src="<?php echo $teacher->photo_details->thumbnail->url; ?>" style="float:left; margin:5px 20px 10px 0;">
+                    <img src="<?php echo $teacher->photo_details->medium->url; ?>" style="float:left; margin:5px 20px 10px 0;">
                 </a>
             </div>
             <?php } ?>
