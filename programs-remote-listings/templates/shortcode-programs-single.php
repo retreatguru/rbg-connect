@@ -13,12 +13,7 @@ if (is_array($shortcode_atts)) extract($shortcode_atts); ?>
 
     <div class="entry-content">
 
-        <h1 class="rs-program-title"><?php echo $rs_the_program->title; ?></h1>
-
-        <p class="rs-program-date"><?php echo $rs_the_program->date; ?></p>
-
         <div class="rs-program-meta">
-
             <?php  if ($rs_the_program->photo_details) : ?>
                 <div class="rs-program-photo">
                     <img src="<?php echo $rs_the_program->photo_details->large->url; ?>" width="100%">
@@ -26,7 +21,6 @@ if (is_array($shortcode_atts)) extract($shortcode_atts); ?>
             <?php endif; ?>
 
             <div class="rs-meta-content-container">
-
                 <?php // Pricing ?>
                 <?php if ($rs_the_program->price_details) : ?>
                     <div class="rs-program-price"><?php echo $rs_the_program->price_details ?></div>
@@ -67,9 +61,12 @@ if (is_array($shortcode_atts)) extract($shortcode_atts); ?>
                 <?php endif; ?>
 
                 <div class="rs-regsitration-wrap"><?php echo $rs_the_program->registration_action; ?></div>
-
             </div>
         </div>
+
+        <h1 class="rs-program-title"><?php echo $rs_the_program->title; ?></h1>
+        
+        <p class="rs-program-date"><?php echo $rs_the_program->date; ?></p>
 
         <div class="rs-regsitration-wrap"><?php echo $rs_the_program->registration_action; ?></div>
 
@@ -94,20 +91,20 @@ if (is_array($shortcode_atts)) extract($shortcode_atts); ?>
         <?php endif; ?>
 
         <?php if ($rs_the_program->teacher_details->teacher_objects) : ?>
-
+        <div class="rs-teachers-container">
         <h2 class="rs-teachers-title"><?php echo _n( 'Teacher', 'Teachers', count($rs_the_program->teacher_details->teacher_objects) ) ?></h2>
 
         <?php foreach($rs_the_program->teacher_details->teacher_objects as $teacher) : ?>
         <?php $teacher_url = $RS_Connect->get_page_url('teachers').$teacher->ID.'/'.$teacher->slug; ?>
         <div class="teacher" style="clear:left; position:relative;">
             <?php if (isset($teacher->photo_details->medium)) {  ?>
-            <div style="float:left; width:<?php echo $teacher->photo_details->thumbnail->width; ?>px; margin-right:20px;">
+            <div style="float:left; width:<?php echo $teacher->photo_details->medium->width; ?>px; margin-right:20px;">
                 <a href="<?php echo $teacher_url; ?>" style="float:left; margin:5px 20px 10px 0;">
                     <img src="<?php echo $teacher->photo_details->medium->url; ?>" style="float:left; margin:5px 20px 10px 0;">
                 </a>
             </div>
             <?php } ?>
-            <div style="overflow:hidden;">
+            <div class="rs-teachers-content" style="overflow:hidden;">
                 <a href="<?php echo $teacher_url; ?>"><strong><?php echo $teacher->post_title; ?></strong></a><br/>
                 <?php echo $RS_Connect->excerpt($teacher->post_content); ?>
                 <br/><a href="<?php echo $teacher_url; ?>">Learn more about <?php echo $teacher->post_title; ?></a>
@@ -115,7 +112,7 @@ if (is_array($shortcode_atts)) extract($shortcode_atts); ?>
         </div>
     </div>
     <?php endforeach; ?>
-
+    </div>
     <?php endif; ?>
 
     <div style="clear:both;"></div>
