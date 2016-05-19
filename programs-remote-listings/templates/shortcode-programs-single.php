@@ -65,7 +65,9 @@ if (is_array($shortcode_atts)) extract($shortcode_atts); ?>
         </div>
 
         <h1 class="rs-program-title"><?php echo $rs_the_program->title; ?></h1>
-        
+        <?php if(! empty($rs_the_program->teacher_details)) { ?>
+        <h2 class="rs-program-teacher"><?php echo $rs_the_program->teacher_details->teacher_list; ?></h2>
+        <?php } ?>
         <p class="rs-program-date"><?php echo $rs_the_program->date; ?></p>
 
         <div class="rs-regsitration-wrap"><?php echo $rs_the_program->registration_action; ?></div>
