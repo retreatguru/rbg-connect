@@ -20,6 +20,10 @@ if (! empty($rs_the_programs)) {
                 <h2 class="rs-program-title"><a href="<?php echo $details_url; ?>"><?php echo $program->title; ?></a></h2>
             <?php endif; ?>
 
+            <?php if (! empty($program->teacher_details) && ! empty($program->teacher_details->teacher_list) && empty($hide_with_teachers)) : ?>
+                <h3 class="rs-program-with-teachers"><?php echo $program->teacher_details->teacher_list; ?></h3>
+            <?php endif; ?>
+
             <?php if ($program->date && empty($hide_date)) : ?>
                 <div class="rs-program-date"><?php echo $program->date; ?></div>
             <?php endif; ?>

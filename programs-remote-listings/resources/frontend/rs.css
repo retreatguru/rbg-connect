@@ -10,11 +10,12 @@
 /*.rs-program.important { border-top: 2px solid #ffd; padding-top: 8px; background-image: -webkit-linear-gradient(#ffd, #fff); background-image: -moz-linear-gradient(#ffe1bd, #fef9ef); }*/
 .rs-program.minor, .rs-programs-widget.minor { display: none; }
 .rs-program-thumbnail, .rs-teacher-thumbnail { float: left; margin-right: 15px; clear: left; margin-bottom: 5px;}
-.rs-program-title, .rs-program-teacher, .rs-teacher-title { line-height: 1.2; clear: none; }
+.rs-program-title, .rs-program-teacher, .rs-teacher-title, .rs-program-with-teachers { line-height: 1.2; clear: none; }
+h2.rs-program-title { margin:0!important; }
 .rs-program-photo { margin-bottom: 20px; width:100%;}
 .rs-teacher-photo { float: left; margin-right: 20px; margin-bottom: 5px; }
 .rs-teacher-bio { clear: left; }
-
+.rs-program-with-teachers { margin:0 !important; padding:0 !important; }
 .single-program {
     position: relative;
 }
