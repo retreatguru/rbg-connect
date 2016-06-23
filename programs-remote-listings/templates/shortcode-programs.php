@@ -17,7 +17,7 @@ if (! empty($rs_the_programs)) {
             <?php endif; ?>
 
             <?php if ($program->title && empty($hide_title)) : ?>
-                <h2 class="rs-program-title"><a href="<?php echo $details_url; ?>"><?php echo $program->title; ?></a></h2>
+                <h3 class="rs-program-title"><a href="<?php echo $details_url; ?>"><?php echo $program->title; ?></a></h3>
             <?php endif; ?>
 
             <?php if (! empty($program->teacher_details) && ! empty($program->teacher_details->teacher_list) && empty($hide_with_teachers)) : ?>
