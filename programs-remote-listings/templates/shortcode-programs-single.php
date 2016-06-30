@@ -21,6 +21,11 @@ if (is_array($shortcode_atts)) extract($shortcode_atts); ?>
             <?php endif; ?>
 
             <div class="rs-meta-content-container">
+
+                <?php if ($rs_the_program->early_bird_discount && empty($hide_discount)) : ?>
+                    <div class="rs-program-early-bird-discount rs-highlight"><?php echo $rs_the_program->early_bird_discount; ?></div>
+                <?php endif; ?>
+
                 <?php // Pricing ?>
                 <?php if ($rs_the_program->price_details) : ?>
                     <div class="rs-program-price"><?php echo $rs_the_program->price_details ?></div>

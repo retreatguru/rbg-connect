@@ -40,7 +40,9 @@ h2.rs-program-title { margin:0!important; }
     font-weight: bold;
 }
 .single-program .rs-program-early-bird-discount {
-    border: 1px solid #fff; /* color set dynamically based on theme highlight color */
+    border-width: 1px;
+    border-style: solid;;
+    /* color set dynamically based on theme highlight color */
     background-color: #fff;
     padding: 1.5rem;
     margin-top: 1rem;
