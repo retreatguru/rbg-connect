@@ -92,13 +92,13 @@
                 </td>
             </tr>
             <tr>
-                <th scope="row">Register Now Button Color</th>
+                <th scope="row">Highlight Color</th>
                 <td>
                     <fieldset>
                         <label>
                             #<input name="rs_remote_settings[rs_template][register_now]" type="text" id="rs_remote_settings[rs_template][register_now]"
                                     value="<?php echo (isset($options['rs_template']['register_now']) && $options['rs_template']['register_now'] != '') ? $options['rs_template']['register_now'] : ''; ?>"/>
-                        </label>
+                        </label> Used for Register Now button and early bird discounts
                     </fieldset>
                 </td>
             </tr>

@@ -32,6 +32,10 @@ if (! empty($rs_the_programs)) {
                 <div class="rs-program-location"><?php echo $program->location; ?></div>
             <?php endif; ?>
 
+            <?php if ($program->early_bird_discount && empty($hide_discount)) : ?>
+                <div class="rs-program-early-bird-discount rs-highlight"><?php echo $program->early_bird_discount; ?></div>
+            <?php endif; ?>
+
             <?php if ($program->text && empty($hide_text)) : ?>
                 <div class="rs-program-excerpt"><?php echo $RS_Connect->excerpt($program->text); ?></div>
             <?php endif; ?>

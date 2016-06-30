@@ -35,6 +35,12 @@ email support@retreat.guru if you need help. Or send us a messing while logged i
 
 == Changelog ==
 
+= 1.9.1 =
+* Added early bird discount
+
+= 1.9.0 =
+* Plugin re-write
+
 = 1.8.0 =
 * Enable Google Analytics tracking and ecommerce tracking
 

@@ -3,7 +3,7 @@
 /*
 Plugin Name: Retreat Booking Guru Connect
 Description: Connect to Retreat Booking Guru to show program listings on your site and link to registration forms.
-Version: 1.9.0
+Version: 1.9.1
 Author: Retreat Guru
 Author URI: http://retreat.guru/booking
 */
@@ -268,7 +268,7 @@ class RS_Connect
 
         if (isset($this->options['rs_template']['register_now'])) {
             $inline_styles .= '
-            .rs-register-link a, .rs-button {
+            .rs-register-link a, .rs-button, .rs-highlight {
             border-color: #'.$this->options['rs_template']['register_now'].';
             color: #'.$this->options['rs_template']['register_now'].'!important ;
             }';

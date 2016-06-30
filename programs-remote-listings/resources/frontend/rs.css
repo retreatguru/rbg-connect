@@ -36,6 +36,17 @@ h2.rs-program-title { margin:0!important; }
 
 .rs-meta-content-container { margin:20px 20px; }
 
+.rs-program-early-bird-discount {
+    font-weight: bold;
+}
+.single-program .rs-program-early-bird-discount {
+    border: 1px solid #fff; /* color set dynamically based on theme highlight color */
+    background-color: #fff;
+    padding: 1.5rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
 /*registration link */
 .rs-regsitration-wrap { margin: 0 0 20px; /*white-space: nowrap; */}
 
