@@ -9,6 +9,9 @@ class RS_Connect_Shortcodes {
         add_shortcode('rs_teacher', array($this, 'shortcode_teacher'));
     }
 
+    // todo: we should not be using globals at all here. rather pass vars to the template
+    // todo: poor way to create a url. using add_query_args() here or in RS_Connect_Api is better
+    // todo: we should be reversing array and limiting results via api
     public function shortcode_programs($atts)
     {
         global $rs_the_programs;
@@ -16,15 +19,17 @@ class RS_Connect_Shortcodes {
 
         $shortcode_atts = $this->normalize_empty_atts($atts);
 
-        $vars = null;
+        $vars = 'fields=_program_base_,_program_registration_';
 
-        if (isset($atts['category'])) {
-            $vars .= 'category='.$atts['category'];
+        if (empty($shortcode_atts['table'])) {
+            $template = 'shortcode-programs.php';
+        } else {
+            $vars .= ',price_details,price_first,custom_fields';
+            $template = 'shortcode-programs-table.php';
         }
 
-        $template = 'shortcode-programs.php';
-        if (! empty($shortcode_atts['table'])) {
-            $template = 'shortcode-programs-table.php';
+        if (isset($atts['category'])) {
+            $vars .= '&category='.$atts['category'];
         }
 
         $rs_the_programs = RS_Connect_Api::get_programs($vars);
@@ -32,7 +37,7 @@ class RS_Connect_Shortcodes {
             return '';
         }
 
-        $rs_the_programs = array_reverse($rs_the_programs); // todo: We should probably do this to our api directly (newest first)
+        $rs_the_programs = array_reverse($rs_the_programs);
 
         if (isset($atts['limit'])) {
             $rs_the_programs = array_slice($rs_the_programs, 0, $atts['limit']);
@@ -66,16 +71,14 @@ class RS_Connect_Shortcodes {
 
     public function shortcode_teachers($atts)
     {
-
         global $rs_the_teachers;
         global $shortcode_atts;
         $shortcode_atts = $this->normalize_empty_atts($atts);
 
-        $vars = null;
+        $vars = 'fields=_teacher_base_';
 
-        $template = 'shortcode-teachers.php';
-
-        $rs_the_teachers = RS_Connect_Api::get_teachers();
+        $rs_the_teachers = RS_Connect_Api::get_teachers($vars);
+        
         if (! is_array($rs_the_teachers)) {
             return '';
         }

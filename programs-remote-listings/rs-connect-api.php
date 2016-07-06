@@ -1,24 +1,25 @@
 <?php
 
-class RS_Connect_Api {
+class RS_Connect_Api
+{
     public static function get_program($id)
     {
-        return self::remote_get('events/'.$id);
+        return self::remote_get('events/'.$id.'?'.self::version());
     }
 
     public static function get_programs($vars = null)
     {
-        return self::remote_get('events/?'.$vars);
+        return self::remote_get('events/?'.$vars.'&'.self::version());
     }
 
     public static function get_teachers($vars = null)
     {
-        return self::remote_get('teachers/?'.$vars);
+        return self::remote_get('teachers/?'.$vars.'&'.self::version());
     }
 
     public static function get_teacher($id)
     {
-        return self::remote_get('teachers/'.$id);
+        return self::remote_get('teachers/'.$id.'?'.self::version());
     }
 
     public static function get_base_url()
@@ -56,11 +57,10 @@ class RS_Connect_Api {
             return self::get_api_cache($url);
         }
 
-        // ensure api calls are cached each hour
+        // ensure api calls are cached
         $versioned_url = add_query_arg(array('rs-rand' => rand()), $url);
-//        $versioned_url = add_query_arg(array('rs-ver' => date('ymdH')), $url); // old hourly method
         $args = array(
-            'timeout' => 5,
+            'timeout' => 7,
         );
         $response = wp_remote_get($versioned_url, $args);
 
@@ -80,7 +80,7 @@ class RS_Connect_Api {
     // occasionally save api data in case RBG is down later, if the value is the same, wp won't update it
     public static function save_api_cache($url, $body)
     {
-        if (99 === rand(0, 99)) {
+        if (200 === rand(0, 200)) {
             update_option(self::api_cache_slug($url), serialize($body));
         }
     }
@@ -93,5 +93,10 @@ class RS_Connect_Api {
     public static function api_cache_slug($url)
     {
         return 'rs_api_cache_'.preg_replace('/[^a-zA-Z0-9_-]/', '', $url);
+    }
+
+    public static function version()
+    {
+        return 'ver='.RS_Connect::$plugin_version;
     }
 }
