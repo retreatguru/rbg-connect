@@ -53,8 +53,8 @@ $programs_page_title = $RS_Connect->get_programs_page()->post_title;
 
             <?php if (! empty($show_teachers)) : ?>
                 <td class="rs-teachers">
-                    <?php if (! empty($program->teacher_details->teacher_list)) : ?>
-                        <?php echo $program->teacher_details->teacher_list; ?>
+                    <?php if (! empty($program->teacher_list)) : ?>
+                        <?php echo $program->teacher_list; ?>
                     <?php endif; ?>
                 </td>
             <?php endif; ?>
