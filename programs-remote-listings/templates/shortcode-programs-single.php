@@ -70,32 +70,21 @@ if (is_array($shortcode_atts)) extract($shortcode_atts); ?>
         </div>
 
         <h1 class="rs-program-title"><?php echo $rs_the_program->title; ?></h1>
-        <?php if(! empty($rs_the_program->teacher_details)) { ?>
-        <h2 class="rs-program-teacher"><?php echo $rs_the_program->teacher_details->teacher_list; ?></h2>
-        <?php } ?>
+        
+        <?php if (! empty($rs_the_program->teacher_list)) : ?>
+            <h2 class="rs-program-teacher"><?php echo $rs_the_program->teacher_list; ?></h2>
+        <?php endif; ?>
+        
         <p class="rs-program-date"><?php echo $rs_the_program->date; ?></p>
 
         <div class="rs-regsitration-wrap"><?php echo $rs_the_program->registration_action; ?></div>
 
         <?php // Program Details ?>
         <div class="rs-program-content">
-            <?php if ($rs_the_program->text) : ?>
+            <?php if ($rs_the_program->text_full) : ?>
                 <div class="rs-program-custom-wrap"><?php echo $rs_the_program->text_full; ?></div>
             <?php endif; ?>
         </div>
-
-        <?php // Category(ies) ?>
-        <?php $program_cats = class_exists('RS_Enhanced_Plugin') ? rs_has_program_categories() : null; ?>
-        <?php if ($program_cats) : ?>
-            <p class="rs-program-categories">
-                <span class="rs-program-label"><?php echo _n('Category', 'Categories', count($program_cats)) ?>:</span>
-                <?php echo get_the_term_list(0, 'program_category', '', ', '); ?>
-            </p>
-        <?php endif; ?>
-
-        <?php if ($rs_the_program->additional_info) : ?>
-            <div class="rs-program-additional-info"><?php echo $rs_the_program->additional_info; ?></div>
-        <?php endif; ?>
 
         <?php if ($rs_the_program->teacher_details->teacher_objects) : ?>
             <div class="rs-teachers-container">
@@ -115,10 +104,9 @@ if (is_array($shortcode_atts)) extract($shortcode_atts); ?>
                             </div>
                         <?php } ?>
                         <div class="rs-teachers-content" style="overflow:hidden;">
-                            <a href="<?php echo $teacher_url; ?>"><strong><?php echo $teacher->post_title; ?></strong></a><br/>
-                            <?php echo $RS_Connect->excerpt($teacher->post_content); ?>
-                            <br/><a href="<?php echo $teacher_url; ?>">Learn more
-                                about <?php echo $teacher->post_title; ?></a>
+                            <a href="<?php echo $teacher_url; ?>"><strong><?php echo $teacher->name; ?></strong></a><br/>
+                            <?php echo $RS_Connect->excerpt($teacher->text); ?>
+                            <br/><a href="<?php echo $teacher_url; ?>">Learn more about <?php echo $teacher->name; ?></a>
                         </div>
                     </div>
                 <?php endforeach; ?>

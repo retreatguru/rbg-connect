@@ -10,6 +10,7 @@ if (! empty($rs_the_programs)) {
         $image_size = ! empty($options['rs_template']['image_size']) ? $options['rs_template']['image_size'] : 'medium';
         $details_url = $program->alternate_url ? $program->alternate_url : $RS_Connect->get_page_url('programs').$program->ID.'/'.$program->slug; ?>
 
+        <?php // todo: the program categories should be appended with rs-program-category- ?>
         <div class="rs-program rs-group <?php foreach($program->categories as $category) {echo $category->slug . " ";} ?>">
             <?php if ($program->photo_details && empty($hide_photo)) : ?>
                 <?php $program_image_url = $program->photo_details->{$image_size}->url; ?>
@@ -20,8 +21,8 @@ if (! empty($rs_the_programs)) {
                 <h3 class="rs-program-title"><a href="<?php echo $details_url; ?>"><?php echo $program->title; ?></a></h3>
             <?php endif; ?>
 
-            <?php if (! empty($program->teacher_details) && ! empty($program->teacher_details->teacher_list) && empty($hide_with_teachers)) : ?>
-                <h3 class="rs-program-with-teachers"><?php echo $program->teacher_details->teacher_list; ?></h3>
+            <?php if ($program->teacher_list && empty($hide_with_teachers)) : ?>
+                <h3 class="rs-program-with-teachers"><?php echo $program->teacher_list; ?></h3>
             <?php endif; ?>
 
             <?php if ($program->date && empty($hide_date)) : ?>
@@ -41,6 +42,10 @@ if (! empty($rs_the_programs)) {
             <?php endif; ?>
 
             <?php if (! empty($show_register_link)) : ?>
+                <?php
+                // todo: this is messy. why check for bookable and then also for action. and why insert 'closed' we should get most everything here from api
+                // todo: identical logic is also duplicated in table view
+                ?>
                 <?php if ($program->registration_wait_list): ?>
                     <a href="<?php echo $program->registration_link; ?>" target="_blank">Join waiting list</a>
                 <?php elseif ($program->registration_bookable): ?>
