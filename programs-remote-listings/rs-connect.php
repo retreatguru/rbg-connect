@@ -206,11 +206,11 @@ class RS_Connect
 
     public function admin_add_menu_items()
     {
-        add_menu_page('Booking Guru', 'Booking Guru', 'manage_options', 'booking-manager.php',
+        add_menu_page('Retreat Booking Guru', 'Retreat Booking Guru', 'manage_options', 'booking-manager.php',
             array($this, 'admin_programs_page'), 'dashicons-calendar-alt');
-        add_submenu_page('booking-manager.php', 'Programs & Help', 'Programs & Help', 'manage_options',
+        add_submenu_page('booking-manager.php', 'Program & Help', 'Program & Help', 'manage_options',
             'booking-manager.php', array($this, 'admin_programs_page'));
-        add_submenu_page('booking-manager.php', 'Connect, Settings, Style', 'Connect, Settings, Style', 'manage_options',
+        add_submenu_page('booking-manager.php', 'Retreat Guru Settings', 'Retreat Guru Settings', 'manage_options',
             'options-mbm', array($this, 'admin_settings_page'));
     }
 
