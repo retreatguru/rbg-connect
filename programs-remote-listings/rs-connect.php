@@ -37,6 +37,8 @@ class RS_Connect
         add_filter('body_class', array($this, 'body_classes'));
         add_action('template_redirect', array($this, 'receive_preview_request'));
         register_activation_hook(__FILE__, array($this, 'on_activate_upgrade'));
+
+        add_action('init', array(RS_Upgrade_Remote::class, 'init'));
     }
 
     public function includes()
@@ -227,8 +229,8 @@ class RS_Connect
         }
         ?>
         <div class="error">
-            <p>Please setup Retreat Booking Guru.<a href="<?php echo admin_url('admin.php?page=options-mbm');
-                ?>">Click Here</a></p>
+            <p>Important: <a href="<?php echo admin_url('admin.php?page=options-mbm');
+                ?>">Setup Retreat Booking Guru</a></p>
         </div>
         <?php
 

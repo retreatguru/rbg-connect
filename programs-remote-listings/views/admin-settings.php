@@ -2,6 +2,10 @@
 <div class="wrap">
     <h2>Retreat Booking Guru Settings</h2>
 
+    <div class="updated">
+        <p>For Booking Guru support please contact us via email: <a href="mailto:support@retreat.guru">support@retreat.guru</a>, live chat at <a href="http://bookingsoftware.guru" target="_blank">bookingsoftware.guru</a>, or phone: 1-888-881-0404.</p>
+    </div>
+
     <form action="options.php" method="post"><?php
         settings_fields('rs_remote_settings');
         do_settings_sections(__FILE__);

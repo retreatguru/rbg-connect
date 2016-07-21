@@ -60,7 +60,7 @@ class RS_Connect_Api
         // ensure api calls are cached
         $versioned_url = add_query_arg(array('rs-rand' => rand()), $url);
         $args = array(
-            'timeout' => 7,
+            'timeout' => 10,
         );
         $response = wp_remote_get($versioned_url, $args);
 
