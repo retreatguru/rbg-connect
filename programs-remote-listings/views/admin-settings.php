@@ -170,6 +170,9 @@
             </tr>
             <tr>
                 <th scope="row"></th>
+                <?php if (isset($options['style'])) { ?>
+                    <input name="rs_remote_settings[style]" type="hidden" value="<?php echo $options['style']; ?>"/>
+                <?php } ?>
                 <td><input type="submit" style="font-size: 24px;" value="Save"/></td>
             </tr>
         </table>

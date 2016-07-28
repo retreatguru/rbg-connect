@@ -80,12 +80,12 @@ class RS_Connect
         if (empty($this->options['style'])) {
             return;
         }
-        add_rewrite_rule($this->style.'s/?$', 'index.php?page_id='.$programs_page->ID, 'top');
-        add_rewrite_rule($this->style.'s/category/([^/]*)/?',
+        add_rewrite_rule($this->options['style'].'s/?$', 'index.php?page_id='.$programs_page->ID, 'top');
+        add_rewrite_rule($this->options['style'].'s/category/([^/]*)/?',
             'index.php?page_id='.$programs_page->ID.'&rs_category=$matches[1]', 'top');
-        add_rewrite_rule($this->style.'/([^/]*)/?',
+        add_rewrite_rule($this->options['style'].'/([^/]*)/?',
             'index.php?page_id='.$programs_page->ID.'&rs_program=$matches[1]', 'top');
-        add_rewrite_rule($this->style.'/([^/]*)/([^/]*)/?',
+        add_rewrite_rule($this->options['style'].'/([^/]*)/([^/]*)/?',
             'index.php?page_id='.$programs_page->ID.'&rs_program=$matches[1]', 'top');
 
         add_rewrite_rule('teachers/?$', 'index.php?page_id='.$teachers_page->ID, 'top');
