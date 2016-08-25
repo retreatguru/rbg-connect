@@ -38,7 +38,7 @@ class RS_Connect
         add_action('template_redirect', array($this, 'receive_preview_request'));
         register_activation_hook(__FILE__, array($this, 'on_activate_upgrade'));
 
-        add_action('init', array(RS_Upgrade_Remote::class, 'init'));
+        add_action('init', array('RS_Upgrade_Remote', 'init'));
     }
 
     public function includes()
