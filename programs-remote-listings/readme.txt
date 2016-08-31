@@ -35,6 +35,18 @@ email support@retreat.guru if you need help. Or send us a messing while logged i
 
 == Changelog ==
 
+= 2.0.1 =
+* improve auto-upgrade script
+
+= 2.0.0 =
+* use improved API: only ask for fields needed. much faster.
+
+= 1.9.1 =
+* Added early bird discount
+
+= 1.9.0 =
+* Plugin re-write
+
 = 1.8.0 =
 * Enable Google Analytics tracking and ecommerce tracking
 

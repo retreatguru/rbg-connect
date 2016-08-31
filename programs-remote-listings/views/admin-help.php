@@ -16,7 +16,7 @@
         <h3>Hide certain properties like the program picture or description</h3>
         <p>If you'd like to simplify the programs list you can add the following attributes to remove certain elements.  Here is an example that would hide everything except the title:</p>
 
-        <p><code>[rs_programs hide_photo hide_date hide_location hide_text]</code></p>
+        <p><code>[rs_programs hide_photo hide_date hide_location hide_discount hide_text]</code></p>
 
 
         <h3>Add a link directly to the registration form</h3>

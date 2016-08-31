@@ -3,97 +3,166 @@
 /*
 Plugin Name: Retreat Booking Guru Connect
 Description: Connect to Retreat Booking Guru to show program listings on your site and link to registration forms.
-Version: 1.8.3
+Version: 2.0.1
 Author: Retreat Guru
 Author URI: http://retreat.guru/booking
 */
 
 class RS_Connect
 {
-
-    // todo: separate this plugin into front end and admin classes
-    // todo: stop creating urls via . use add_query_args() or other abstracted method
-    // todo: general clean up to make plugin better organized
-
-    public $program = null;
+    protected $options = null;
+    protected $program = null;
+    public static $plugin_version = 'wp2.0.1'; // todo: always update this with wp + the plugin Version set above
 
     public function __construct()
     {
-        // Base domain to connect with (do not include http://)
-        $this->mbm_domain = 'secure.retreat.guru';
-        $this->https = 'https://';
-        $this->options = get_option('rs_settings');
-
-        // local testing
-        if (isset($_SERVER['SERVER_NAME']) && 'programs-remote.dev' == $_SERVER['SERVER_NAME']) {
-            $this->mbm_domain = 'programs.dev';
-            $this->https = 'http://';
-        }
-
-        if (isset($this->options['style'])) {
-            $this->style = $this->options['style'];
-        } else {
-            $this->style = 'program';
-        }
-
+        $this->options = get_option('rs_remote_settings');
         $this->plugin_dir = plugin_dir_path(__FILE__);
         $this->includes();
 
-//        add_filter('admin_init', array($this, 'rs_flush_rewrite_rules')); // don't do this on every page
-        add_action('wp_head', array($this, 'rs_set_meta'));
-        add_filter('wp_title', array($this, 'rs_set_title'), 100);
+        add_filter('init', array($this, 'setup_rewrites'));
 
-        add_action('wp_enqueue_scripts', array($this, 'rs_enqueue_items'));
-        add_action('admin_menu', array($this, 'rs_admin_menu_items'));
-        add_action('admin_init', array($this, 'rs_register_settings'));
-        add_action('admin_notices', array($this, 'my_admin_notice'));
+        add_filter('the_content', array($this, 'insert_shortcode'));
 
-        add_shortcode('rs_programs', array($this, 'rs_shortcode_programs'));
-        add_shortcode('rs_register_button', array($this, 'rs_shortcode_register_button'));
+        add_action('wp_head', array($this, 'set_program_meta'));
+        add_filter('pre_get_document_title', array($this, 'set_program_title'));
 
-        add_action('init', array($this, 'setup_rewrite'));
+        add_action('admin_menu', array($this, 'admin_add_menu_items'));
+        add_action('admin_init', array($this, 'admin_register_settings'));
+        add_action('admin_notices', array($this, 'admin_setup_notice'));
+
         add_filter('query_vars', array($this, 'register_query_var'));
-        add_filter('template_include', array($this, 'template_include'), 100, 1);
+        add_action('wp_enqueue_scripts', array($this, 'enqueue_items'));
+
+        add_filter('body_class', array($this, 'body_classes'));
+        add_action('template_redirect', array($this, 'receive_preview_request'));
+        register_activation_hook(__FILE__, array($this, 'on_activate_upgrade'));
+
+        add_action('init', array('RS_Upgrade_Remote', 'init'));
     }
 
-    function setup_rewrite()
+    public function includes()
     {
-        // Programs todo: switch to ?rs_program instead of ?program
-        add_rewrite_rule($this->style . 's/?$', 'index.php?programs=true', 'top');
-        add_rewrite_rule($this->style . 's/category/([^/]*)/?', 'index.php?programs=true&category=$matches[1]', 'top');
-        add_rewrite_rule($this->style . '/([^/]*)/?', 'index.php?programs=true&program=$matches[1]', 'top');
-        add_rewrite_rule($this->style . '/([^/]*)/([^/]*)/?', 'index.php?programs=true&program=$matches[1]', 'top');
+        require "{$this->plugin_dir}rs-connect-shortcodes.php";
+        require "{$this->plugin_dir}rs-connect-api.php";
+        require "{$this->plugin_dir}rs-connect-upgrade.php";
+
+        if ($this->configured()) {
+            include "{$this->plugin_dir}rs-connect-widgets.php";
+        }
+    }
+
+    public function setup_rewrites()
+    {
+        if (! $this->configured()) {
+            return;
+        }
+
+        // Programs
+        $programs_page = $this->get_page('programs');
+        $programs_page_slug = $programs_page->post_name;
+        add_rewrite_rule($programs_page_slug.'/category/([^/]*)/?',
+            'index.php?page_id='.$programs_page->ID.'&rs_category=$matches[1]', 'top');
+        add_rewrite_rule($programs_page_slug.'/([^/]*)/?',
+            'index.php?page_id='.$programs_page->ID.'&rs_program=$matches[1]', 'top');
+        add_rewrite_rule($programs_page_slug.'/([^/]*)/([^/]*)/?',
+            'index.php?page_id='.$programs_page->ID.'&rs_program=$matches[1]', 'top');
+
         // Teachers
-        add_rewrite_rule('teachers/?$', 'index.php?teachers=true', 'top');
-        add_rewrite_rule('teachers/category/([^/]*)/?', 'index.php?teachers=true&category=$matches[1]', 'top');
-        add_rewrite_rule('teacher/([^/]*)/([^/]*)/?', 'index.php?teachers=true&teacher=$matches[1]', 'top');
+        $teachers_page = $this->get_page('teachers');
+        $teachers_page_slug = $teachers_page->post_name;
+        add_rewrite_rule($teachers_page_slug.'/category/([^/]*)/?',
+            'index.php?page_id='.$teachers_page->ID.'&rs_category=$matches[1]', 'top');
+        add_rewrite_rule($teachers_page_slug.'/([^/]*)/([^/]*)/?',
+            'index.php?page_id='.$teachers_page->ID.'&rs_teacher=$matches[1]', 'top');
+
+        // Legacy Rules: We migrate existing installs: This is useful if the new teacher / program slug is somehow different than the old one.
+        if (empty($this->options['style'])) {
+            return;
+        }
+        add_rewrite_rule($this->options['style'].'s/?$', 'index.php?page_id='.$programs_page->ID, 'top');
+        add_rewrite_rule($this->options['style'].'s/category/([^/]*)/?',
+            'index.php?page_id='.$programs_page->ID.'&rs_category=$matches[1]', 'top');
+        add_rewrite_rule($this->options['style'].'/([^/]*)/?',
+            'index.php?page_id='.$programs_page->ID.'&rs_program=$matches[1]', 'top');
+        add_rewrite_rule($this->options['style'].'/([^/]*)/([^/]*)/?',
+            'index.php?page_id='.$programs_page->ID.'&rs_program=$matches[1]', 'top');
+
+        add_rewrite_rule('teachers/?$', 'index.php?page_id='.$teachers_page->ID, 'top');
+        add_rewrite_rule('teachers/rs_category/([^/]*)/?',
+            'index.php?page_id='.$teachers_page->ID.'&rs_category=$matches[1]', 'top');
+        add_rewrite_rule('teacher/([^/]*)/([^/]*)/?',
+            'index.php?page_id='.$teachers_page->ID.'&rs_teacher=$matches[1]', 'top');
     }
 
-    function register_query_var($vars)
+    public function register_query_var($vars)
     {
-        $vars[] = 'programs';
-        $vars[] = 'program';
-        $vars[] = 'teachers';
-        $vars[] = 'teacher';
-        $vars[] = 'category';
+        $vars[] = 'rs_programs';
+        $vars[] = 'rs_program';
+        $vars[] = 'rs_teachers';
+        $vars[] = 'rs_teacher';
+        $vars[] = 'rs_category';
 
         return $vars;
     }
 
-    function rs_set_title($title = null)
+    public function insert_shortcode($content)
     {
-        global $wp_query;
-
-        if (get_query_var('category')) {
-            $category = get_query_var('category') . " | ";
-        } else {
-            $category = '';
+        $current_page = $GLOBALS['post']->post_name;
+        if (! $this->configured()) {
+            return $content;
         }
 
-        if (get_query_var('program')) {
+        if ($current_page == $this->get_programs_page()->post_name) {
+            return $this->use_shortcode('rs_program');
+        }
 
+        if ($current_page == $this->get_teachers_page()->post_name) {
+            return $this->use_shortcode('rs_teacher');
+        }
+
+        return $content;
+    }
+
+    public function use_shortcode($shortcode)
+    {
+        // Load a specific program or teacher
+        if (get_query_var($shortcode)) {
+            $program_id = get_query_var($shortcode);
+
+            return "[{$shortcode} id='{$program_id}']";
+        }
+
+        // Load a category of programs
+        if (get_query_var('rs_category')) {
+            $category_slug = get_query_var('rs_category');
+
+            return "[{$shortcode}s category='{$category_slug}']";
+        }
+
+        // Return either a list of programs or teachers and the default content on this page.
+        return $GLOBALS['post']->post_content."<br/>[{$shortcode}s]";
+    }
+
+    public function set_program_meta()
+    {
+        if (get_query_var('rs_program')) {
+            $program_id = get_query_var('rs_program');
+            $this->program = RS_Connect_Api::get_program($program_id);
+            if (! empty($this->program->text)) {
+                echo '<meta property="og:description" content="'.wp_trim_words($this->program->text, 100,
+                        '...').'" />';
+            }
+        }
+    }
+
+    public function set_program_title($title = null)
+    {
+        if (get_query_var('rs_program')) {
+            $program_id = get_query_var('rs_program');
+            $this->program = RS_Connect_Api::get_program($program_id);
             if (isset($this->program->title)) {
-                $program_title = $this->program->title . " | " . get_bloginfo('name');
+                $program_title = $this->program->title.' | '.get_bloginfo('name');
             } else {
                 $program_title = get_bloginfo('name');
             }
@@ -101,260 +170,99 @@ class RS_Connect
             return $program_title;
         }
 
-        if (get_query_var('programs')) {
-            return ucfirst($this->style) . 's' . " | " . $category . get_bloginfo('name');
-        }
-
         return $title;
     }
 
-    function rs_set_meta()
+    public function get_programs_page()
     {
-        if (isset($this->program->text)) {
-            echo '<meta property="og:description" content="' . wp_trim_words($this->program->text, 100, '...') . '" />';
-        }
-
-        echo '<meta property="og:title" content="' . $this->rs_set_title() . '" />';
+        return $this->get_page('programs');
     }
 
-    function template_include($template)
+    public function get_teachers_page()
     {
-        global $wp_query; //Load $wp_query object
-        global $rs_api_vars;
-
-        // Support Yoast SEO
-        add_filter( 'wpseo_canonical', array($this, 'canonical_url' ));
-        add_filter( 'wpseo_title', array($this, 'rs_set_title' ));
-        add_filter( 'wpseo_metadesc', '__return_false' );
-
-        // Load program views
-        $programs = get_query_var('programs');
-        $program = get_query_var('program');
-        $category = get_query_var('category');
-
-        if ($programs) {
-            if ($program) {
-                $this->program = $this->get_program($program);
-                return $this->get_template_path('single-program.php');
-            }
-
-            if ($category) {
-                $rs_api_vars .= 'category=' . $category;
-            }
-
-            return $this->get_template_path('archive-program.php');
-        }
-
-        // Load teachers views
-        if (isset($wp_query->query_vars['teachers'])) {
-            if (isset($wp_query->query_vars['teacher'])) {
-                global $rs_the_teacher;
-                $rs_the_teacher = $this->get_teacher($wp_query->query_vars['teacher']);
-
-                return $this->get_template_path('single-teacher.php');
-            }
-
-            if ($wp_query->query_vars['category']) {
-                $rs_api_vars .= 'category=' . get_query_var('category');
-            }
-
-            return $this->get_template_path('archive-teacher.php');
-        }
-
-        return $template;
+        return $this->get_page('teachers');
     }
 
-    function canonical_url()
+    public function get_page($page)
     {
-        return $_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"];
-    }
-
-    function rs_load_template($template)
-    {
-        if ($overridden_template = locate_template($template)) {
-            load_template($overridden_template);
-        } else {
-            load_template(plugin_dir_path(__FILE__) . 'templates/' . $template);
-        }
-    }
-
-    function get_template_path($template)
-    {
-        if ($this->template_overridden($template)) {
-            return $this->template_overridden($template);
-        } else {
-            return plugin_dir_path(__FILE__) . 'templates/' . $template;
-        }
-    }
-
-    function template_overridden($template)
-    {
-        $path = locate_template($template);
-        if ($path) return $path;
-
-        return false;
-    }
-
-    function includes()
-    {
-        if ($this->configured()) {
-            include("{$this->plugin_dir}rs-connect-widgets.php");
-        }
-    }
-
-    function rs_shortcode_register_button($atts)
-    {
-        if (!isset($atts['id'])) {
-            return 'Error: You must specify a program ID in your shortcode<br/>e.g. [rs_register_button <strong>id="45"</strong>]';
-        }
-        // todo: Build link here to customize the link title instead of pulling it dynamically or maybe just search and replace string
-        $program = $this->get_program($atts['id']);
-        return $program->registration_action;
-    }
-
-    function rs_shortcode_programs($atts)
-    {
-        global $rs_the_programs;
-
-        $shortcode_atts = $this->normalize_empty_atts($atts);
-
-        $vars = null;
-
-        if (isset($atts['category'])) {
-            $vars .= 'category=' . $atts['category'];
+        if (empty($this->options['page']) || empty($this->options['page'][$page])) {
+            return false;
         }
 
-        $template = 'shortcode-programs.php';
-        if (!empty($shortcode_atts['table'])) {
-            $template = 'shortcode-programs-table.php';
-        }
+        $page_id = $this->options['page'][$page];
+        $page = get_post($page_id);
 
-        $rs_the_programs = $this->get_programs($vars);
-        if (!is_array($rs_the_programs)) {
-            return '';
-        }
-
-        $rs_the_programs = array_reverse($rs_the_programs);
-
-        if (isset($atts['limit'])) {
-            $rs_the_programs = array_slice($rs_the_programs, 0, $atts['limit']);
-        }
-
-        // the proper way to do it
-//        $shortcode_atts = shortcode_atts(array(
-//            'show_location' => false,
-//         ), $atts, 'rs_programs');
-
-        ob_start();
-        $overridden_template = locate_template('shortcode-programs.php');
-
-        if ($overridden_template) {
-            include($overridden_template);
-        } else {
-            include(plugin_dir_path(__FILE__) . 'templates/' . $template);
-        }
-
-        $ret = ob_get_clean();
-
-        return $ret;
-    }
-
-    function normalize_empty_atts($atts)
-    {
-        if (!$atts) {
-            return array();
-        }
-
-        foreach ($atts as $attribute => $value) {
-            if (is_int($attribute)) {
-                $atts[strtolower($value)] = true;
-                unset($atts[$attribute]);
-            }
-        }
-        return $atts;
-    }
-
-    public function get_program($id)
-    {
-        return $this->remote_get($this->get_url_to_mbm() . '/wp-json/events/' . $id);
-    }
-
-    public function get_programs($vars = null)
-    {
-        return $this->remote_get($this->get_url_to_mbm() . '/wp-json/events/?' . $vars);
-    }
-
-    public function get_teachers($vars = null)
-    {
-        return $this->remote_get($this->get_url_to_mbm() . '/wp-json/teachers/?' . $vars);
-    }
-
-    public function get_teacher($id)
-    {
-        return $this->remote_get($this->get_url_to_mbm() . '/wp-json/teachers/' . $id);
+        return $page;
     }
 
     /**
-     * If the RBG api is down, return cached data, otherwise get fresh from api and save data for later
-     * todo: better would be to always serve cached data, then reset cache when new data is available via remote post from RBG
+     * @param $type - Either programs or teachers
      *
-     * @param $url
-     * @return array|bool|mixed|object
+     * @return false|string
      */
-    private function remote_get($url)
+    public function get_page_url($type)
     {
-        global $rs_api_status;
+        $entity_base = $this->get_page($type);
 
-        if ( $rs_api_status == 'down') {
-            // if api is down then return cached version
-            return $this->get_api_cache($url);
+        return get_permalink($entity_base->ID);
+    }
+
+    public function admin_add_menu_items()
+    {
+        add_menu_page('Retreat Booking Guru', 'Retreat Booking Guru', 'manage_options', 'booking-manager.php',
+            array($this, 'admin_programs_page'), 'dashicons-calendar-alt');
+        add_submenu_page('booking-manager.php', 'Program & Help', 'Program & Help', 'manage_options',
+            'booking-manager.php', array($this, 'admin_programs_page'));
+        add_submenu_page('booking-manager.php', 'Retreat Guru Settings', 'Retreat Guru Settings', 'manage_options',
+            'options-mbm', array($this, 'admin_settings_page'));
+    }
+
+    public function admin_register_settings()
+    {
+        register_setting('rs_remote_settings', 'rs_remote_settings');
+    }
+
+    public function admin_setup_notice()
+    {
+        if ($this->configured()) {
+            return true;
         }
+        ?>
+        <div class="error">
+            <p>Important: <a href="<?php echo admin_url('admin.php?page=options-mbm');
+                ?>">Setup Retreat Booking Guru</a></p>
+        </div>
+        <?php
 
-        // ensure api calls are cached each hour
-        $versioned_url = add_query_arg(array('rs-rand' => rand()), $url);
-//        $versioned_url = add_query_arg(array('rs-ver' => date('ymdH')), $url); // old hourly method
-        $args = array(
-            'timeout' => 5,
-            );
-        $response = wp_remote_get($versioned_url, $args);
-
-        if (is_wp_error($response) || 200 != wp_remote_retrieve_response_code($response)) {
-            $rs_api_status = 'down';
-            return $this->get_api_cache($url);
-        }
-
-        $rs_api_status = 'good';
-        $body = json_decode(wp_remote_retrieve_body($response));
-        $this->save_api_cache($url, $body);
-
-        return $body;
     }
 
-    // occasionally save api data in case RBG is down later, if the value is the same, wp won't update it
-    public function save_api_cache($url, $body)
+    public function admin_programs_page()
     {
-        if (99 === rand(0, 99)) {
-            update_option($this->api_cache_slug($url), serialize($body));
-        }
+        include $this->plugin_dir.'/views/admin-main.php';
     }
 
-    public function get_api_cache($url)
+    public function admin_settings_page()
     {
-        return unserialize(get_option($this->api_cache_slug($url)));
+        global $wp_rewrite;
+        $wp_rewrite->flush_rules();
+
+        include $this->plugin_dir.'/views/admin-settings.php';
     }
 
-    public function api_cache_slug($url)
+    public function excerpt($description)
     {
-        return 'rs_api_cache_' . preg_replace('/[^a-zA-Z0-9_-]/', '',  $url);
+        $limit = ! empty($this->options['rs_template']['limit_description']) ? $this->options['rs_template']['limit_description'] : 100;
+
+        return wp_trim_words($description, $limit);
     }
 
-
-    function rs_enqueue_items()
+    public function enqueue_items()
     {
         wp_enqueue_script('rs-js', plugins_url('/resources/frontend/rs.js', __FILE__), array('jquery'), '20160224');
 
-        if (!empty($this->options['google_analytics_enable'])) {
-            wp_enqueue_script('rs-ga-js', plugins_url('/resources/frontend/rs_ga.js', __FILE__), array('jquery'), '20160224');
+        if (! empty($this->options['google_analytics_enable'])) {
+            wp_enqueue_script('rs-ga-js', plugins_url('/resources/frontend/rs_ga.js', __FILE__), array('jquery'),
+                '20160224');
         }
 
         wp_enqueue_style('rs-f', plugins_url('/resources/frontend/rs.css', __FILE__), null, '20151013a');
@@ -363,9 +271,9 @@ class RS_Connect
 
         if (isset($this->options['rs_template']['register_now'])) {
             $inline_styles .= '
-            .rs-register-link a, .rs-button {
-            border-color: #' . $this->options['rs_template']['register_now'] . ';
-            color: #' . $this->options['rs_template']['register_now'] . '!important ;
+            .rs-register-link a, .rs-button, .rs-highlight {
+            border-color: #'.$this->options['rs_template']['register_now'].';
+            color: #'.$this->options['rs_template']['register_now'].'!important ;
             }';
         }
 
@@ -375,69 +283,58 @@ class RS_Connect
         wp_add_inline_style('rs-f', $inline_styles);
     }
 
-    function rs_admin_menu_items()
+    public function configured()
     {
-        add_menu_page('Retreat Booking Guru', 'Retreat Booking Guru', 'manage_options', 'booking-manager.php', arraY(&$this, 'admin_programs_page'), 'dashicons-calendar-alt');
-        add_submenu_page('booking-manager.php', 'Program & Help', 'Program & Help', 'manage_options', 'booking-manager.php', array(&$this, 'admin_programs_page'));
-        add_submenu_page('booking-manager.php', 'Retreat Guru Settings', 'Retreat Guru Settings', 'manage_options', 'options-mbm', array(&$this, 'admin_settings_page'));
-//        add_submenu_page('booking-manager.php', 'Help', 'Help', 'manage_options', 'mbm-help', array(&$this, 'admin_mbm_help_page'));
-    }
-
-    function rs_flush_rewrite_rules()
-    {
-        global $wp_rewrite;
-        $wp_rewrite->flush_rules();
-    }
-
-    function rs_register_settings()
-    {
-        register_setting('rs_settings', 'rs_settings');
-    }
-
-    function configured()
-    {
-        if (empty($this->options['rs_domain'])) return false;
+        if (empty($this->options['rs_domain']) || ! $this->get_programs_page() || ! $this->get_teachers_page()) {
+            return false;
+        }
 
         return true;
     }
 
-    function my_admin_notice()
+    function body_classes($classes)
     {
-        if ($this->configured()) return true;
-        ?>
-        <div class="error">
-            <p>Please specify your Retreat Booking Guru subdomain.
-                    <a href="<?php echo admin_url('admin.php?page=options-mbm'); ?>">Click Here</a></p>
-        </div>
-    <?php
+        $current_page = $GLOBALS['post']->post_name;
+
+        if ($current_page == $this->get_programs_page()->post_name) {
+            if (get_query_var('rs_program')) {
+                $classes[] = 'rs-programs-single';
+            } else {
+                $classes[] = 'rs-programs';
+            }
+        }
+
+        if ($current_page == $this->get_teachers_page()->post_name) {
+            if (get_query_var('rs_teacher')) {
+                $classes[] = 'rs-teachers-single';
+            } else {
+                $classes[] = 'rs-teachers';
+            }
+        }
+
+        return $classes;
     }
 
-    function get_url_to_mbm()
+    // Receive a request from secure.retreat.guru to load a program page.
+    public function receive_preview_request()
     {
-        $sub_domain = ! empty($this->options['rs_domain']) ? $this->options['rs_domain'] : 'demo';
-
-        return $this->https . $sub_domain . "." . $this->mbm_domain;
+        if (isset($_REQUEST['program'])) {
+            if (! $this->configured()) {
+                echo 'Please setup the booking plugin before using this feature';
+                exit();
+            }
+            $url = $this->get_page_url('programs').'/'.$_REQUEST['program'];
+            wp_redirect($url);
+            exit();
+        }
     }
 
-    function admin_programs_page()
+    public function on_activate_upgrade()
     {
-        include($this->plugin_dir . '/views/admin-main.php');
+        //global $wp_rewrite;
+        //$wp_rewrite->flush_rules();
+        //RS_Upgrade_Remote::init();
     }
-
-    function admin_settings_page()
-    {
-        $this->rs_flush_rewrite_rules();
-
-        include($this->plugin_dir . '/views/admin-settings.php');
-    }
-
-    function excerpt($description)
-    {
-        $limit = ! empty($this->options['rs_template']['limit_description']) ? $this->options['rs_template']['limit_description'] : 100;
-
-        return wp_trim_words($description, $limit);
-    }
-
 }
 
 global $RS_Connect;
