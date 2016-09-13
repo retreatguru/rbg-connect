@@ -10,33 +10,27 @@ class AcceptanceHelper extends \Codeception\Module
     {
         $I->loginAdmin($I);
 
-        // Get page IDs
-        $I->amOnPage('/wp-admin/edit.php?post_type=page');
-        $I->click($programPage);
-        $event_id = $I->grabFromCurrentUrl('/post=(\d+)/');
-        $I->amOnPage('/wp-admin/edit.php?post_type=page');
-        $I->click($teacherPage);
-        $teacher_id = $I->grabFromCurrentUrl('/post=(\d+)/');
-
         // Save settings
         $I->amOnPage('/wp-admin/admin.php?page=options-mbm');
         $I->fillField('#rs_domain', 'tests');
-        $I->selectOption('#page-programs', $event_id);
-        $I->selectOption('#page-teachers', $teacher_id);
-
+        $I->selectOption('#page-programs', $programPage);
+        $I->selectOption('#page-teachers', $teacherPage);
         $I->click('Save');
 
         $I->seeOptionIsSelected('#page-programs', $programPage);
         $I->seeOptionIsSelected('#page-teachers', $teacherPage);
-
-        $I->click('Log Out');
     }
 
-    public function loginAdmin(\AcceptanceTester $I)
+    public function loginAdmin(\AcceptanceTester $I, $page = '/wp-login.php')
     {
-        $I->amOnPage('/wp-login.php');
-        $I->fillField('#user_login', 'admin');
-        $I->fillField('#user_pass', 'admin');
-        $I->click('Log In');
+        $I->amOnPage($page);
+        $url = $I->grabFromCurrentUrl();
+
+        // login only if they need to
+        if (strpos($url, 'wp-login.php')) {
+            $I->fillField('#user_login', 'admin');
+            $I->fillField('#user_pass', 'admin');
+            $I->click('#wp-submit');
+        }
     }
 }
