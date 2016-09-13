@@ -18,13 +18,13 @@ look in circle.yml and run all the wp-cli.phar commands there. This will setup t
     $ php wp-cli.phar post create --post_type=page --post_title='Events' --post_status=publish
     ...
 
+## Setup Test Dependancies
+
+Remote tests totally rely on the production server being in a certain state. 
+Go to https://tests.secure.retreat.guru/wp-admin/admin.php?page=rs-demo-tools and click "Clear database and reset for tests" 
+
 ## Running Tests
 
 Run tests with different levels of specificity:
 
     $ vendor/bin/codecept run acceptance
-
-## Gotchas
-
-Remote tests rely on http://tests.programs.dev to be setup properly. Visit http://tests.programs.dev/?rs_clear_database_and_seed=true to ensure it's reset.
-There is no test reset function (yet). The best way to get to a correct state is to delete all pages and then re-add the pages using wp-cli
