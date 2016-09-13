@@ -25,6 +25,10 @@ class AcceptanceHelper extends \Codeception\Module
         $I->selectOption('#page-teachers', $teacher_id);
 
         $I->click('Save');
+
+        $I->seeOptionIsSelected('#page-programs', $programPage);
+        $I->seeOptionIsSelected('#page-teachers', $teacherPage);
+
         $I->click('Log Out');
     }
 

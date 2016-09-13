@@ -1,7 +1,6 @@
 <?php
-use \AcceptanceTester;
 
-class configureCest
+class ConfigureCest
 {
     public function saveSettings(AcceptanceTester $I)
     {
