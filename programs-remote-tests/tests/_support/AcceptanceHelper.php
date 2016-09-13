@@ -19,7 +19,7 @@ class AcceptanceHelper extends \Codeception\Module
         $teacher_id = $I->grabFromCurrentUrl('/post=(\d+)/');
 
         // Save settings
-        $I->click('Retreat Guru Settings');
+        $I->amOnPage('/wp-admin/admin.php?page=options-mbm');
         $I->fillField('#rs_domain', 'tests');
         $I->selectOption('#page-programs', $event_id);
         $I->selectOption('#page-teachers', $teacher_id);
