@@ -6,12 +6,9 @@ namespace Codeception\Module;
 
 class AcceptanceHelper extends \Codeception\Module
 {
-    function changeDefaultPages($I, $programPage, $teacherPage)
+    function changeDefaultPages(\AcceptanceTester $I, $programPage, $teacherPage)
     {
-        $I->amOnPage('/wp-admin/');
-        $I->fillField('#user_login', 'admin');
-        $I->fillField('#user_pass', 'admin');
-        $I->click('Log In');
+        $I->loginAdmin($I);
 
         // Get page IDs
         $I->amOnPage('/wp-admin/edit.php?post_type=page');
@@ -29,5 +26,13 @@ class AcceptanceHelper extends \Codeception\Module
 
         $I->click('Save');
         $I->click('Log Out');
+    }
+
+    public function loginAdmin(\AcceptanceTester $I)
+    {
+        $I->amOnPage('/wp-admin/');
+        $I->fillField('#user_login', 'admin');
+        $I->fillField('#user_pass', 'admin');
+        $I->click('Log In');
     }
 }

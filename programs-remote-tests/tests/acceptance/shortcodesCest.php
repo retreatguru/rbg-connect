@@ -1,5 +1,4 @@
 <?php
-use \AcceptanceTester;
 
 class shortcodesCest
 {
@@ -22,5 +21,25 @@ class shortcodesCest
     {
         $I->amOnPage('/shortcode-teachers');
         $I->see('Yogi Bear Test');
+    }
+
+    public function ifShortCodeIsOnCorePageDontAutoAdd(AcceptanceTester $I)
+    {
+        $I->loginAdmin($I);
+        $I->amOnPage('/wp-admin/edit.php?post_type=page');
+        $I->click('Events');
+        $I->fillField('.wp-editor-area', '[rs_programs category="plant-medicine"]');
+        $I->click('#publish');
+
+        $I->wantTo('see that because we added our own custom shortcode above, the default shortcode output is not added.');
+        $I->amOnPage('/events');
+        $I->dontSee('Multi Person Lodging');
+        $I->see('Exhaustive Program');
+
+        // put back to normal
+        $I->amOnPage('/wp-admin/edit.php?post_type=page');
+        $I->click('Events');
+        $I->fillField('.wp-editor-area', '');
+        $I->click('#publish');
     }
 }
