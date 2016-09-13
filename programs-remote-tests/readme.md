@@ -26,5 +26,5 @@ Run tests with different levels of specificity:
 
 ## Gotchas
 
-Remote tests rely on http://dev.programs.dev to be setup properly. Visit http://dev.programs.dev/?rs_clear_database_and_seed=true to ensure it's reset.
+Remote tests rely on http://tests.programs.dev to be setup properly. Visit http://tests.programs.dev/?rs_clear_database_and_seed=true to ensure it's reset.
 There is no test reset function (yet). The best way to get to a correct state is to delete all pages and then re-add the pages using wp-cli

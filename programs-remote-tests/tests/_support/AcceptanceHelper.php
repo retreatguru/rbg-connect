@@ -34,7 +34,7 @@ class AcceptanceHelper extends \Codeception\Module
 
     public function loginAdmin(\AcceptanceTester $I)
     {
-        $I->amOnPage('/wp-admin/');
+        $I->amOnPage('/wp-login.php');
         $I->fillField('#user_login', 'admin');
         $I->fillField('#user_pass', 'admin');
         $I->click('Log In');
