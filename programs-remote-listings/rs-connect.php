@@ -108,40 +108,42 @@ class RS_Connect
 
     public function insert_shortcode($content)
     {
-        $current_page = $GLOBALS['post']->post_name;
-        if (! $this->configured()) {
-            return $content;
-        }
+        if ($this->configured()) {
+            $current_page = $GLOBALS['post']->post_name;
 
-        if ($current_page == $this->get_programs_page()->post_name) {
-            return $this->use_shortcode('rs_program');
-        }
+            if ($current_page == $this->get_programs_page()->post_name) {
+                $content .= '<br>'. $this->use_shortcode('rs_program', $content);
+            }
 
-        if ($current_page == $this->get_teachers_page()->post_name) {
-            return $this->use_shortcode('rs_teacher');
+            if ($current_page == $this->get_teachers_page()->post_name) {
+                $content .= '<br>'. $this->use_shortcode('rs_teacher', $content);
+            }
         }
 
         return $content;
     }
 
-    public function use_shortcode($shortcode)
+    public function use_shortcode($shortcode, $content)
     {
-        // Load a specific program or teacher
-        if (get_query_var($shortcode)) {
-            $program_id = get_query_var($shortcode);
+        // if the shortcode is already in the content, don't auto-add it
+        if (strpos($content, $shortcode)) {
+            return '';
+        }
 
+        // Load a specific program or teacher
+        $program_id = get_query_var($shortcode);
+        if ($program_id) {
             return "[{$shortcode} id='{$program_id}']";
         }
 
         // Load a category of programs
-        if (get_query_var('rs_category')) {
-            $category_slug = get_query_var('rs_category');
-
+        $category_slug = get_query_var('rs_category');
+        if ($category_slug) {
             return "[{$shortcode}s category='{$category_slug}']";
         }
 
         // Return either a list of programs or teachers and the default content on this page.
-        return $GLOBALS['post']->post_content."<br/>[{$shortcode}s]";
+        return "[{$shortcode}s]";
     }
 
     public function set_program_meta()
