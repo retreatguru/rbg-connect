@@ -5,6 +5,7 @@
 
 /* program display */
 .rs-program, .rs-teacher { margin-bottom: 25px;}
+.rs-teachers-container div.teacher { position: static !important;}
 .rs-program-list-intro { margin-bottom: 20px; }
 .rs-program-label { font-size: 85%; text-transform: uppercase; font-weight: bold; }
 /*.rs-program.important { border-top: 2px solid #ffd; padding-top: 8px; background-image: -webkit-linear-gradient(#ffd, #fff); background-image: -moz-linear-gradient(#ffe1bd, #fef9ef); }*/
@@ -66,7 +67,7 @@ h2.rs-program-title { margin:0!important; }
     /*background-color: #fff;*/
     border: 1px solid #e5e5e5;;
 }
-.rs-register-link a:hover, #submit-registration:hover, .rs-big-button:hover {
+.rs-register-link a:hover, #submit-registration:hover, .rs-big-button:hover, .rs-meta-content-container a.rs-button:hover {
     border-color: #333;
 }
 
