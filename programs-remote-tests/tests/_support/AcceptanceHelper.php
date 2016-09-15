@@ -6,28 +6,31 @@ namespace Codeception\Module;
 
 class AcceptanceHelper extends \Codeception\Module
 {
-    function changeDefaultPages($I, $programPage, $teacherPage)
+    function changeDefaultPages(\AcceptanceTester $I, $programPage, $teacherPage)
     {
-        $I->amOnPage('/wp-admin/');
-        $I->fillField('#user_login', 'admin');
-        $I->fillField('#user_pass', 'admin');
-        $I->click('Log In');
-
-        // Get page IDs
-        $I->amOnPage('/wp-admin/edit.php?post_type=page');
-        $I->click($programPage);
-        $event_id = $I->grabFromCurrentUrl('/post=(\d+)/');
-        $I->amOnPage('/wp-admin/edit.php?post_type=page');
-        $I->click($teacherPage);
-        $teacher_id = $I->grabFromCurrentUrl('/post=(\d+)/');
+        $I->loginAdmin($I);
 
         // Save settings
-        $I->click('Retreat Guru Settings');
+        $I->amOnPage('/wp-admin/admin.php?page=options-mbm');
         $I->fillField('#rs_domain', 'tests');
-        $I->selectOption('#page-programs', $event_id);
-        $I->selectOption('#page-teachers', $teacher_id);
-
+        $I->selectOption('#page-programs', $programPage);
+        $I->selectOption('#page-teachers', $teacherPage);
         $I->click('Save');
-        $I->click('Log Out');
+
+        $I->seeOptionIsSelected('#page-programs', $programPage);
+        $I->seeOptionIsSelected('#page-teachers', $teacherPage);
+    }
+
+    public function loginAdmin(\AcceptanceTester $I, $page = '/wp-login.php')
+    {
+        $I->amOnPage($page);
+        $url = $I->grabFromCurrentUrl();
+
+        // login only if they need to
+        if (strpos($url, 'wp-login.php')) {
+            $I->fillField('#user_login', 'admin');
+            $I->fillField('#user_pass', 'admin');
+            $I->click('#wp-submit');
+        }
     }
 }

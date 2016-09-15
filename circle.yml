@@ -65,11 +65,9 @@ dependencies:
 
 test:
   override:
-    # combine these once all working
     - cd wp-content/plugins/programs-remote-tests/ && php vendor/bin/codecept run --env ci --verbose
 
 general:
   artifacts:
     - "wp-content/plugins/programs-remote-tests/tests/_output"
     - "wp-content/debug.log"
-    - "wp-content/uploads" # rs-debug logs live here

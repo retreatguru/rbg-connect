@@ -41,7 +41,7 @@
 
                             $selected_page = ! empty($options['page']['programs']) ? $options['page']['programs'] : '';
                             foreach($pages as $page) {
-                                echo "<option value='{$page->ID}'".selected($selected_page, $page->ID, 0)."> {$page->post_title}</option>";
+                                echo "<option value='{$page->ID}'".selected($selected_page, $page->ID, 0).">{$page->post_title}</option>";
                             }
                             ?>
                         </select> <?php if(empty($selected_page)) { echo "<span style='color:red;'>Required</span>"; } ?>
@@ -66,7 +66,7 @@
 
                             $selected_page = ! empty($options['page']['teachers']) ? $options['page']['teachers'] : '';
                             foreach($pages as $page) {
-                                echo "<option value='{$page->ID}'".selected($selected_page, $page->ID, 0)."> {$page->post_title}</option>";
+                                echo "<option value='{$page->ID}'".selected($selected_page, $page->ID, 0).">{$page->post_title}</option>";
                             }
                             ?>
                         </select> <?php if(empty($selected_page)) { echo "<span style='color:red;'>Required</span>"; } ?>

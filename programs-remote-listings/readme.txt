@@ -3,7 +3,7 @@ Contributors: ryandury, dwenaus, benirving
 Donate link: http://retreat.guru/booking
 Tags: retreat, booking, events, registration, retreat guru
 Requires at least: 3.0
-Tested up to: 4.3
+Tested up to: 4.6.1
 Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -34,6 +34,9 @@ email support@retreat.guru if you need help. Or send us a messing while logged i
 1. coming soon.
 
 == Changelog ==
+
+= 2.0.2 =
+* if a shortcode exists on default page, the system does not add it again
 
 = 2.0.1 =
 * improve auto-upgrade script

@@ -1,3 +1,4 @@
 composer.phar
 vendor/
 tests/_output
+wp-cli.phar
