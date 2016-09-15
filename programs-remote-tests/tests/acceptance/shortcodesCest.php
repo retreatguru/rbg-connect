@@ -34,7 +34,11 @@ class shortcodesCest
         $I->wantTo('see that because we added our own custom shortcode above, the default shortcode output is not added.');
         $I->amOnPage('/events');
         $I->dontSee('Multi Person Lodging');
-        $I->see('Exhaustive Program');
+        $I->see('Example program');
+        $I->see('Exhaustive program');
+        $I->click('Exhaustive program', '.rs-program-title');
+        $I->dontSee('Example program');
+        $I->see('Register Now');
 
         // put back to normal
         $I->amOnPage('/wp-admin/edit.php?post_type=page');

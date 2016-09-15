@@ -112,11 +112,11 @@ class RS_Connect
             $current_page = $GLOBALS['post']->post_name;
 
             if ($current_page == $this->get_programs_page()->post_name) {
-                $content .= '<br>'. $this->use_shortcode('rs_program', $content);
+                return $this->use_shortcode('rs_program', $content);
             }
 
             if ($current_page == $this->get_teachers_page()->post_name) {
-                $content .= '<br>'. $this->use_shortcode('rs_teacher', $content);
+                return $this->use_shortcode('rs_teacher', $content);
             }
         }
 
@@ -125,11 +125,6 @@ class RS_Connect
 
     public function use_shortcode($shortcode, $content)
     {
-        // if the shortcode is already in the content, don't auto-add it
-        if (strpos($content, $shortcode)) {
-            return '';
-        }
-
         // Load a specific program or teacher
         $program_id = get_query_var($shortcode);
         if ($program_id) {
@@ -142,8 +137,13 @@ class RS_Connect
             return "[{$shortcode}s category='{$category_slug}']";
         }
 
-        // Return either a list of programs or teachers and the default content on this page.
-        return "[{$shortcode}s]";
+        // if the shortcode is already in the content, don't auto-add it
+        // Otherwise return either a list of programs or teachers plus default content on this page.
+        if (strpos($content, $shortcode)) {
+            return $content;
+        } else {
+            return "$content<br>[{$shortcode}s]";
+        }
     }
 
     public function set_program_meta()
