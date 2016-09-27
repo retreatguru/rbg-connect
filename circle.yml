@@ -1,13 +1,13 @@
 machine:
   php:
-    version: 5.3.3
+    version: 5.3.25
 
   hosts:
     programsremote.dev: 127.0.0.1
 
 dependencies:
   pre:
-    # store repo plugins for later move 
+    # store repo plugins for later move
     - mkdir ~/repo && mv * ~/repo
 
     # get wordpress and move
