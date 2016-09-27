@@ -63,6 +63,8 @@ dependencies:
     - php wp-cli.phar post create --post_type=page --post_title='Shortcode Teachers' --post_status=publish --post_content="[rs_teachers]"
     - php wp-cli.phar rewrite structure '/%postname%/' --hard
 
+    - cd wp-content/plugins/programs-remote-tests/ && php vendor/bin/codecept build
+
 test:
   override:
     - cd wp-content/plugins/programs-remote-tests/ && php vendor/bin/codecept run --env ci --verbose

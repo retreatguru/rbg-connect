@@ -131,6 +131,8 @@ class RS_Connect
             return "[{$shortcode} id='{$program_id}']";
         }
 
+        $x = ['will it fail'];
+
         // Load a category of programs
         $category_slug = get_query_var('rs_category');
         if ($category_slug) {
