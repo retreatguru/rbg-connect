@@ -7,7 +7,7 @@ machine:
 
 dependencies:
   pre:
-    # store repo plugins for later move
+    # store repo plugins for later move 
     - mkdir ~/repo && mv * ~/repo
 
     # get wordpress and move
