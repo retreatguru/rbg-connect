@@ -1,6 +1,6 @@
 machine:
   php:
-    version: 5.6.2
+    version: 5.6.14
 
   hosts:
     programsremote.dev: 127.0.0.1
@@ -63,9 +63,19 @@ dependencies:
     - php wp-cli.phar post create --post_type=page --post_title='Shortcode Teachers' --post_status=publish --post_content="[rs_teachers]"
     - php wp-cli.phar rewrite structure '/%postname%/' --hard
 
+    - cd wp-content/plugins/programs-remote-tests/ && php vendor/bin/codecept build
+
 test:
   override:
+    # run Codeception tests
     - cd wp-content/plugins/programs-remote-tests/ && php vendor/bin/codecept run --env ci --verbose
+
+    # ensure the code written is compatible with all versions of php. we skip php 5.4 because of an error
+    - cd wp-content/plugins/programs-remote-tests/ && ./vendor/bin/phpcs ../programs-remote-listings --standard=PHPCompatibility --runtime-set testVersion 5.2
+    - cd wp-content/plugins/programs-remote-tests/ && ./vendor/bin/phpcs ../programs-remote-listings --standard=PHPCompatibility --runtime-set testVersion 5.3
+    - cd wp-content/plugins/programs-remote-tests/ && ./vendor/bin/phpcs ../programs-remote-listings --standard=PHPCompatibility --runtime-set testVersion 5.5
+    - cd wp-content/plugins/programs-remote-tests/ && ./vendor/bin/phpcs ../programs-remote-listings --standard=PHPCompatibility --runtime-set testVersion 5.6
+    - cd wp-content/plugins/programs-remote-tests/ && ./vendor/bin/phpcs ../programs-remote-listings --standard=PHPCompatibility --runtime-set testVersion 7.0
 
 general:
   artifacts:
