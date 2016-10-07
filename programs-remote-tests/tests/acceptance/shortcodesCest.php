@@ -33,6 +33,50 @@ class shortcodesCest
         $I->see('Register Now', 'tbody tr:nth-child(1) .rs-show-register-link');
     }
 
+    public function eventListHideDescription(AcceptanceTester $I)
+    {
+        $I->amOnPage('/shortcode-event-list-hide-text/');
+
+        $I->see('Exhaustive Program');
+        $I->see('No Price Program');
+
+        $I->wantTo('Verify that I can\'t see description');
+        $I->dontSee('Mauris placerat eleifend leo. Quisque sit amet est et sapien ullamcorper pharetra');
+    }
+
+    public function eventListHideDate(AcceptanceTester $I)
+    {
+        $I->amOnPage('/shortcode-event-list-hide-location/');
+        $I->dontSee('Nelson');
+    }
+
+    public function eventsListTableLess(AcceptanceTester $I)
+    {
+        $I->amOnPage('/shortcode-event-list-table-less/');
+
+        $I->see('Dates', '.rs-program thead .rs-dates');
+        $I->see('Events', '.rs-program thead .rs-title');
+
+        $I->dontSee('Price from');
+        $I->dontSee('Details');
+        $I->dontSee('Available Spots');
+        $I->dontSee('Register');
+    }
+
+    public function eventListTableCategory(AcceptanceTester $I)
+    {
+        $I->amOnPage('/shortcode-event-table-list-by-category/');
+
+        $I->see('Exhaustive Program');
+        $I->see('Example Program');
+
+        $I->dontSee('Lodging Hotel Program');
+        $I->dontSee('Lodging Price Program');
+        $I->dontSee('Renter Program');
+        $I->dontSee('Multi Person Lodging');
+        $I->dontSee('Multi Person Tiered');
+    }
+
     public function listTeachers(AcceptanceTester $I)
     {
         $I->amOnPage('/shortcode-teachers');
