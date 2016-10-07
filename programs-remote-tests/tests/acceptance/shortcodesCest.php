@@ -65,7 +65,7 @@ class shortcodesCest
 
     public function eventListTableCategory(AcceptanceTester $I)
     {
-        $I->amOnPage('/shortcode-event-table-list-by-category/');
+        $I->amOnPage('/shortcode-event-list-table-by-category/');
 
         $I->see('Exhaustive Program');
         $I->see('Example Program');
