@@ -23,7 +23,7 @@ $programs_page_title = $RS_Connect->get_programs_page()->post_title;
     </thead>
     <tbody>
     <?php foreach($rs_the_programs as $program): ?>
-        <tr>
+        <tr class="rs-program-<?php echo $program->slug; ?>">
             <?php if (! empty($show_date)){ ?>
                 <td class="rs-dates">
                     <?php if (! empty($program->date)) : ?>
@@ -102,7 +102,7 @@ $programs_page_title = $RS_Connect->get_programs_page()->post_title;
             <?php endif; ?>
 
             <?php if (! empty($show_availability_words)) : ?>
-                <td class="rs-availability">
+                <td class="rs-availability-words">
                     <?php if (! empty($program->registration_spaces_available_words)) : ?>
                         <?php echo $program->registration_spaces_available_words; ?>
                     <?php endif; ?>

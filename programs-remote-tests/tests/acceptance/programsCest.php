@@ -26,9 +26,8 @@ class programsCest
         $I->wantTo('Verify that the teacher text shows up');
         $I->see('With Yogi Bear Test and Kumare Test');
 
-        // TODO: Uncomment this after next release
-//        $I->wantTo('Verify that the listing blurb shows up');
-//        $I->see('A shortened version of the program description!');
+        $I->wantTo('Verify that the listing blurb shows up');
+        $I->see('A shortened version of the program description!');
     }
 
     public function viewProgramCategoryViaURL(AcceptanceTester $I)

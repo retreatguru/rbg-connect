@@ -27,26 +27,26 @@ class shortcodesCest
         $I->see('Available Spots', '.rs-program thead .rs-availability');
         $I->see('Register', '.rs-program thead .rs-show-register-link');
 
-        $I->see('Flexible Dates', 'tbody tr:nth-child(1) .rs-dates');
-        $I->see('Lodging Hotel Program', 'tbody tr:nth-child(1) .rs-title');
-        $I->see('View Details', 'tbody tr:nth-child(1) .rs-show-more-link');
-        $I->see('Register Now', 'tbody tr:nth-child(1) .rs-show-register-link');
+        $I->wantTo('Verify the table content');
+        $I->see('Lodging Hotel Program', 'tbody tr:nth-child(1) .rs-title'); // ensure order
+        $I->see('Flexible Dates', '.rs-program-lodging-hotel-program .rs-dates');
+        $I->see('Lodging Hotel Program', '.rs-program-lodging-hotel-program .rs-title');
+        $I->see('View Details', '.rs-program-lodging-hotel-program .rs-show-more-link');
+        $I->see('Register Now', '.rs-program-lodging-hotel-program .rs-show-register-link');
+        $I->see('$800.00', '.rs-program-multi-person-tiered .rs-price-first');
+        $I->see('4', '.rs-program-multi-person-tiered .rs-availability');
+        $I->see('Open', '.rs-program-multi-person-tiered .rs-availability-words');
     }
 
-    public function eventListHideDescription(AcceptanceTester $I)
+    public function eventListHideDescriptionAndLocation(AcceptanceTester $I)
     {
-        $I->amOnPage('/shortcode-event-list-hide-text/');
+        $I->amOnPage('/shortcode-event-list-hide-stuff/');
 
         $I->see('Exhaustive Program');
         $I->see('No Price Program');
 
         $I->wantTo('Verify that I can\'t see description');
         $I->dontSee('Mauris placerat eleifend leo. Quisque sit amet est et sapien ullamcorper pharetra');
-    }
-
-    public function eventListHideDate(AcceptanceTester $I)
-    {
-        $I->amOnPage('/shortcode-event-list-hide-location/');
         $I->dontSee('Nelson');
     }
 
