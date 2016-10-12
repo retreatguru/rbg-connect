@@ -60,13 +60,12 @@ dependencies:
     # Seed shortcode pages for testing
     - php wp-cli.phar post create --post_type=page --post_title='Shortcode Event List' --post_status=publish --post_content="[rs_programs category='plant-medicine']"
     - php wp-cli.phar post create --post_type=page --post_title='Shortcode Event List Table' --post_status=publish --post_content="[rs_programs table show_title show_register_link show_date show_price_first show_more_link show_availability show_availability_words]"
-    - php wp-cli.phar post create --post_type=page --post_title='Shortcode Teachers' --post_status=publish --post_content="[rs_teachers]"
 
     # TODO make sure to add these to RBG-Vagrant vvv-init.sh for the remote side (BEN!)
     - php wp-cli.phar post create --post_type=page --post_title='Shortcode Event List Hide Stuff' --post_status=publish --post_content="[rs_programs hide_text hide_location]"
     - php wp-cli.phar post create --post_type=page --post_title='Shortcode Event List Table Less' --post_status=publish --post_content="[rs_programs table show_title show_date]"
     - php wp-cli.phar post create --post_type=page --post_title='Shortcode Event List Table by Category' --post_status=publish --post_content="[rs_programs table show_title show_date category='plant-medicine']"
-
+    - php wp-cli.phar post create --post_type=page --post_title='Shortcode Teachers' --post_status=publish --post_content="[rs_teachers category='awesome']"
     - php wp-cli.phar rewrite structure '/%postname%/' --hard
 
     - cd wp-content/plugins/programs-remote-tests/ && php vendor/bin/codecept build
