@@ -28,4 +28,6 @@ class teachersCest
         $I->see('Yogi Bear Test');
         $I->see('A yogi is a practitioner of yoga');
     }
+
+    // todo: test teacher category via url: ie. /teachers/category/awesome/
 }

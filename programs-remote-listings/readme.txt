@@ -35,6 +35,9 @@ email support@retreat.guru if you need help. Or send us a messing while logged i
 
 == Changelog ==
 
+= 2.0.3 =
+* add teacher shortcode categorization
+
 = 2.0.2 =
 * if a shortcode exists on default page, the system does not add it again
 

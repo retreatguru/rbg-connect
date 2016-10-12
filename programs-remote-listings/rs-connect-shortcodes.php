@@ -77,6 +77,10 @@ class RS_Connect_Shortcodes {
 
         $vars = 'fields=_teacher_base_';
 
+        if (isset($atts['category'])) {
+            $vars .= '&category='.$atts['category'];
+        }
+
         $rs_the_teachers = RS_Connect_Api::get_teachers($vars);
         
         if (! is_array($rs_the_teachers)) {
