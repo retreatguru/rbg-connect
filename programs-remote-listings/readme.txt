@@ -1,7 +1,7 @@
 === Plugin Name ===
-Contributors: ryandury, dwenaus, benirving
+Contributors: retreatguru, dwenaus
 Donate link: http://retreat.guru/booking
-Tags: retreat, booking, events, registration, retreat guru
+Tags: retreat, booking, events, registration, retreat guru, event booking, event manager
 Requires at least: 3.0
 Tested up to: 4.6.1
 Stable tag: trunk
@@ -27,7 +27,7 @@ More information at [Retreat Booking Guru](https://retreat.guru/booking)
 
 = how can I get help =
 
-email support@retreat.guru if you need help. Or send us a messing while logged in to our system at secure.retreat.guru.
+email support@retreat.guru or phone 1-888-881-0404 if you need help. Or send us a message while logged in to our system at https://secure.retreat.guru/wp-admin/.
 
 == Screenshots ==
 
