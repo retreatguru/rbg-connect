@@ -28,6 +28,10 @@ class RS_Connect_Shortcodes {
             $template = 'shortcode-programs-table.php';
         }
 
+        if (in_array('show_first_teacher_photo', $atts)) {
+            $vars .= ',teacher_details';
+        }
+
         if (isset($atts['category'])) {
             $vars .= '&category='.$atts['category'];
         }

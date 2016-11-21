@@ -17,6 +17,11 @@ if (! empty($rs_the_programs)) {
                 <div class="rs-program-thumbnail"><a href="<?php echo $details_url; ?>"><img src="<?php echo $program_image_url; ?>"></a></div>
             <?php endif; ?>
 
+            <?php if ($program->teacher_details->teacher_objects && ! empty($show_first_teacher_photo)) : ?>
+                <?php $teacher_image_url = $program->teacher_details->teacher_objects[0]->photo_details->{$image_size}->url; ?>
+                <div class="rs-teacher-thumbnail"><a href="<?php echo $details_url; ?>"><img src="<?php echo $teacher_image_url; ?>"></a></div>
+            <?php endif; ?>
+
             <?php if ($program->title && empty($hide_title)) : ?>
                 <h3 class="rs-program-title"><a href="<?php echo $details_url; ?>"><?php echo $program->title; ?></a></h3>
             <?php endif; ?>
@@ -39,6 +44,10 @@ if (! empty($rs_the_programs)) {
 
             <?php if ($program->text && empty($hide_text)) : ?>
                 <div class="rs-program-excerpt"><?php echo $RS_Connect->excerpt($program->text); ?></div>
+            <?php endif; ?>
+
+            <?php if ($program->first_price && ! empty($show_first_price)) : ?>
+                <div class="rs-program-first-price">Starting at <?php echo RS_Currency::format_accounting($program->first_price); ?></div>
             <?php endif; ?>
 
             <?php if (! empty($show_register_link)) : ?>
