@@ -3,7 +3,11 @@ global $RS_Connect;
 global $shortcode_atts;
 global $rs_the_programs;
 $options = get_option('rs_remote_settings');
-if (is_array($shortcode_atts)) extract($shortcode_atts);
+
+if (is_array($shortcode_atts)) {
+    extract($shortcode_atts);
+}
+
 if (! empty($rs_the_programs)) {
 
     foreach($rs_the_programs as $program):
@@ -15,6 +19,11 @@ if (! empty($rs_the_programs)) {
             <?php if ($program->photo_details && empty($hide_photo)) : ?>
                 <?php $program_image_url = $program->photo_details->{$image_size}->url; ?>
                 <div class="rs-program-thumbnail"><a href="<?php echo $details_url; ?>"><img src="<?php echo $program_image_url; ?>"></a></div>
+            <?php endif; ?>
+
+            <?php if ($program->teacher_details->teacher_objects && ! empty($show_first_teacher_photo)) : ?>
+                <?php $teacher_image_url = $program->teacher_details->teacher_objects[0]->photo_details->{$image_size}->url; ?>
+                <div class="rs-teacher-thumbnail"><a href="<?php echo $details_url; ?>"><img src="<?php echo $teacher_image_url; ?>"></a></div>
             <?php endif; ?>
 
             <?php if ($program->title && empty($hide_title)) : ?>
@@ -41,6 +50,10 @@ if (! empty($rs_the_programs)) {
                 <div class="rs-program-excerpt"><?php echo $RS_Connect->excerpt($program->text); ?></div>
             <?php endif; ?>
 
+            <?php if ($program->price_first && ! empty($show_first_price)) : ?>
+                <div class="rs-program-first-price">From <?php echo $program->price_first; ?></div>
+            <?php endif; ?>
+
             <?php if (! empty($show_register_link)) : ?>
                 <?php
                 // todo: this is messy. why check for bookable and then also for action. and why insert 'closed' we should get most everything here from api
@@ -56,4 +69,7 @@ if (! empty($rs_the_programs)) {
             <?php endif; ?>
         </div>
 
-    <?php endforeach; } else { echo 'Sorry, no programs exist here.'; }?>
+    <?php endforeach;
+} else {
+    echo 'Sorry, no programs exist here.';
+}
