@@ -35,6 +35,9 @@ email support@retreat.guru if you need help. Or send us a messing while logged i
 
 == Changelog ==
 
+= 2.1 =
+* added show_first_price and show_first_teacher_photo shortcodes
+
 = 2.0.3 =
 * add teacher shortcode categorization
 
