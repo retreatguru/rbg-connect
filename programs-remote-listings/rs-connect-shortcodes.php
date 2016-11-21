@@ -32,6 +32,10 @@ class RS_Connect_Shortcodes {
             $vars .= ',teacher_details';
         }
 
+        if (in_array('show_first_price', $atts)) {
+            $vars .= ',price_first';
+        }
+
         if (isset($atts['category'])) {
             $vars .= '&category='.$atts['category'];
         }

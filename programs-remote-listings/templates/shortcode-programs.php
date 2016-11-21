@@ -3,7 +3,11 @@ global $RS_Connect;
 global $shortcode_atts;
 global $rs_the_programs;
 $options = get_option('rs_remote_settings');
-if (is_array($shortcode_atts)) extract($shortcode_atts);
+
+if (is_array($shortcode_atts)) {
+    extract($shortcode_atts);
+}
+
 if (! empty($rs_the_programs)) {
 
     foreach($rs_the_programs as $program):
@@ -46,8 +50,8 @@ if (! empty($rs_the_programs)) {
                 <div class="rs-program-excerpt"><?php echo $RS_Connect->excerpt($program->text); ?></div>
             <?php endif; ?>
 
-            <?php if ($program->first_price && ! empty($show_first_price)) : ?>
-                <div class="rs-program-first-price">Starting at <?php echo RS_Currency::format_accounting($program->first_price); ?></div>
+            <?php if ($program->price_first && ! empty($show_first_price)) : ?>
+                <div class="rs-program-first-price">Starting at <?php echo $program->price_first; ?></div>
             <?php endif; ?>
 
             <?php if (! empty($show_register_link)) : ?>
@@ -65,4 +69,7 @@ if (! empty($rs_the_programs)) {
             <?php endif; ?>
         </div>
 
-    <?php endforeach; } else { echo 'Sorry, no programs exist here.'; }?>
+    <?php endforeach;
+} else {
+    echo 'Sorry, no programs exist here.';
+}
