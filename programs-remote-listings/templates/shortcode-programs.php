@@ -51,7 +51,7 @@ if (! empty($rs_the_programs)) {
             <?php endif; ?>
 
             <?php if ($program->price_first && ! empty($show_first_price)) : ?>
-                <div class="rs-program-first-price">Starting at <?php echo $program->price_first; ?></div>
+                <div class="rs-program-first-price">From <?php echo $program->price_first; ?></div>
             <?php endif; ?>
 
             <?php if (! empty($show_register_link)) : ?>
