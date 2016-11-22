@@ -35,6 +35,9 @@ email support@retreat.guru or phone 1-888-881-0404 if you need help. Or send us 
 
 == Changelog ==
 
+= 2.1.1 =
+* fixed external reg. links when google analytics active
+
 = 2.1 =
 * added show_first_price and show_first_teacher_photo shortcodes
 
