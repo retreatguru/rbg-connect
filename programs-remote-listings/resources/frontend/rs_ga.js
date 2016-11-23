@@ -22,7 +22,8 @@ jQuery(document).ready(function($) {
     $(".rs-register-link a, .rs-show-register-link a").click(function(e){
         if (window.rs_ga_client_id && window.rs_ga_tracking_id && $('.rs-registration-external').length == 0){
             e.preventDefault();
-            location.href = $(this).prop("href") + "&ga-client-id=" + encodeURI(window.rs_ga_tracking_id)
+            var getVarSymbol = location.href.indexOf("?") >= 0 ? "&": "?";
+            location.href = $(this).prop("href") + getVarSymbol + "ga-client-id=" + encodeURI(window.rs_ga_tracking_id)
                 + encodeURI('~') + encodeURI(window.rs_ga_client_id);
         }
     });
