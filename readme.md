@@ -1,10 +1,11 @@
 ## Pre-Deployment Checklist ##
 
-Ensure that you have updated the version number in programs-remote-listings/rs-connect.php
-Edit the changelog in programs-remote-listings/readme.txt 
-Commit.
-Merge commit into master.
-Ensure tests are green at https://circleci.com/gh/retreatguru/rbg-connect/tree/master
+1. Update the version number in programs-remote-listings/rs-connect.php on line 6
+1. Update the $plugin_version near the top of programs-remote-listings/rs-connect.php
+1. Edit the changelog in programs-remote-listings/readme.txt with the same version number
+1. Commit.
+1. Merge commit into master.
+1. Ensure tests are green at https://circleci.com/gh/retreatguru/rbg-connect/tree/master
 
 ## Actual Deployment ##
 
