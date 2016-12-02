@@ -28,11 +28,11 @@ class RS_Connect_Shortcodes {
             $template = 'shortcode-programs-table.php';
         }
 
-        if (isset($atts['show_first_teacher_photo'])) {
+        if (in_array('show_first_teacher_photo', $atts)) {
             $vars .= ',teacher_details';
         }
 
-        if (isset($atts['show_first_price'])) {
+        if (in_array('show_first_price', $atts)) {
             $vars .= ',price_first';
         }
 
