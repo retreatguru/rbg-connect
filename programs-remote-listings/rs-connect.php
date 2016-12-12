@@ -155,7 +155,11 @@ class RS_Connect
         if (get_query_var('rs_program')) {
             $program_id = get_query_var('rs_program');
             $this->program = RS_Connect_Api::get_program($program_id);
+            $details_url = $this->program->alternate_url ? $this->program->alternate_url : $this->get_page_url('programs').$this->program->ID.'/'.$this->program->slug;
             if (! empty($this->program->text)) {
+                echo '<meta property="og:url" content="'.$details_url.'/" />'."\n";
+                echo '<meta property="og:title" content="'.$this->program->title.'" />'."\n";
+                echo '<meta property="og:image" content="'.$this->program->photo_details->medium->url.'" />'."\n";
                 echo '<meta property="og:description" content="'.wp_trim_words($this->program->text, 100,
                         '...').'" />';
             }
