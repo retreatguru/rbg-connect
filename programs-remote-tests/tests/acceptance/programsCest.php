@@ -53,8 +53,9 @@ class programsCest
         $I->see('$100.00 – Program Price');
         $I->see('Location: Nelson');
         $I->see('Address: 444 Baker St');
-        $I->see('Email: test@retreat.guru.');
-        $I->see('Phone: 1-234-5678');
+        $I->see('Contact details test');
+        $I->see('test@retreat.guru');
+        $I->see('1-234-5678');
         $I->see('Email us about program');
         $I->see('Mauris placerat eleifend leo. Quisque sit amet est et sapien ullamcorper pharetra');
         $I->see('Header Level 3');
