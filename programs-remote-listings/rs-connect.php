@@ -160,6 +160,8 @@ class RS_Connect
                 echo '<meta property="og:url" content="'.$program_url.'/" />'."\n";
                 echo '<meta property="og:title" content="'.$this->program->title.'" />'."\n";
                 echo '<meta property="og:image" content="'.$this->program->photo_details->medium->url.'" />'."\n";
+                echo '<meta property="og:image:width" content="'.$this->program->photo_details->medium->width.'" />'."\n";
+                echo '<meta property="og:image:height" content="'.$this->program->photo_details->medium->height.'" />'."\n";
                 echo '<meta property="og:description" content="'.wp_trim_words($this->program->text, 100, '...').'" />';
             }
         }
