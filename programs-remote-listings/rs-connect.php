@@ -41,6 +41,8 @@ class RS_Connect
         register_activation_hook(__FILE__, array($this, 'on_activate_upgrade'));
 
         add_action('init', array('RS_Upgrade_Remote', 'init'));
+
+        remove_action('wp_head', 'rel_canonical', 10, 0);
     }
 
     public function includes()
