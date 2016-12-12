@@ -41,8 +41,7 @@ class RS_Connect
         register_activation_hook(__FILE__, array($this, 'on_activate_upgrade'));
 
         add_action('init', array('RS_Upgrade_Remote', 'init'));
-
-        remove_action('wp_head', 'rel_canonical', 10, 0);
+        add_filter('wp', array($this, 'remove_rel_canonical'));
     }
 
     public function includes()
@@ -53,6 +52,13 @@ class RS_Connect
 
         if ($this->configured()) {
             include "{$this->plugin_dir}rs-connect-widgets.php";
+        }
+    }
+
+    public function remove_rel_canonical()
+    {
+        if (get_query_var('rs_program') || get_query_var('rs_teacher') || get_query_var('rs_category')) {
+            remove_action('wp_head', 'rel_canonical');
         }
     }
 
