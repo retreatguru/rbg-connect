@@ -35,6 +35,9 @@ email support@retreat.guru or phone 1-888-881-0404 if you need help. Or send us 
 
 == Changelog ==
 
+= 2.2.1 =
+* fixed facebook sharing
+
 = 2.2.0 =
 * moved and streamlined GA snippet to the bottom of the page
 
