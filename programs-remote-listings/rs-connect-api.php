@@ -2,9 +2,16 @@
 
 class RS_Connect_Api
 {
+    public static $programs = [];
+
     public static function get_program($id)
     {
-        return self::remote_get('events/'.$id.'?'.self::version());
+        // quick and dirty single request cache because we call this 3 times on a single page load. ugh.
+        if (empty(self::$programs[$id])) {
+            self::$programs[$id] = self::remote_get('events/' . $id . '?' . self::version());
+        }
+
+        return self::$programs[$id];
     }
 
     public static function get_programs($vars = null)

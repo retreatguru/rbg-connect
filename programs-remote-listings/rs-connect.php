@@ -3,7 +3,7 @@
 /*
 Plugin Name: Retreat Booking Guru Connect
 Description: Connect to Retreat Booking Guru to show program listings on your site and link to registration forms.
-Version: 2.2.1
+Version: 2.2.2
 Author: Retreat Guru
 Author URI: http://retreat.guru/booking
 */
@@ -12,7 +12,7 @@ class RS_Connect
 {
     protected $options = null;
     protected $program = null;
-    public static $plugin_version = 'wp2.2.1'; // todo: always update this with wp + the plugin Version set above
+    public static $plugin_version = 'wp2.2.2'; // todo: always update this with wp + the plugin Version set above
 
     public function __construct()
     {
@@ -162,13 +162,22 @@ class RS_Connect
             $program_id = get_query_var('rs_program');
             $this->program = RS_Connect_Api::get_program($program_id);
             $program_url = $this->get_page_url('programs').$this->program->ID.'/'.$this->program->slug;
+            $meta_description = $this->program->text;
+
+            if (! empty($this->program->excerpt)) {
+                $meta_description = $this->program->excerpt;
+            }
+
             if (! empty($this->program->text)) {
                 echo '<meta property="og:url" content="'.$program_url.'/" />'."\n";
                 echo '<meta property="og:title" content="'.$this->program->title.'" />'."\n";
                 echo '<meta property="og:image" content="'.$this->program->photo_details->medium->url.'" />'."\n";
                 echo '<meta property="og:image:width" content="'.$this->program->photo_details->medium->width.'" />'."\n";
                 echo '<meta property="og:image:height" content="'.$this->program->photo_details->medium->height.'" />'."\n";
-                echo '<meta property="og:description" content="'.wp_trim_words($this->program->text, 100, '...').'" />';
+
+                $trimmed = wp_trim_words($meta_description, 160, '...');
+                echo '<meta property="og:description" content="'. $trimmed .'" />';
+                echo '<meta name="description" content="'.$trimmed.'" />';
             }
         }
     }
@@ -178,6 +187,7 @@ class RS_Connect
         if (get_query_var('rs_program')) {
             $program_id = get_query_var('rs_program');
             $this->program = RS_Connect_Api::get_program($program_id);
+
             if (isset($this->program->title)) {
                 $program_title = $this->program->title.' | '.get_bloginfo('name');
             } else {
