@@ -2,7 +2,7 @@
 
 class RS_Connect_Api
 {
-    public static $programs = [];
+    public static $programs = array();
 
     public static function get_program($id)
     {
