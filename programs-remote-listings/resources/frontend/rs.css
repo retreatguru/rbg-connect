@@ -65,7 +65,8 @@ h2.rs-program-title { margin:0!important; }
     cursor: pointer;
     border-radius: 5px;
     /*background-color: #fff;*/
-    border: 1px solid #e5e5e5;;
+    border: 1px solid #e5e5e5;
+    box-sizing: border-box;
 }
 .rs-register-link a:hover, #submit-registration:hover, .rs-big-button:hover, .rs-meta-content-container a.rs-button:hover {
     border-color: #333;
