@@ -147,8 +147,10 @@
                     <fieldset>
                         Customize or add CSS site styles below<br/>
                         <label>
-                                    <textarea name="rs_remote_settings[rs_template][css]" type="text" style="width:700px; height:200px;" id="rs_remote_settings[rs_template][css]"><?php if (isset($options['rs_template']['css'])) echo trim($options['rs_template']['css']); ?>
-                                    </textarea><br/>
+                        <textarea name="rs_remote_settings[rs_template][css]"
+                                  type="text" style="width:700px; height:200px;"
+                                  id="rs_remote_settings[rs_template][css]"
+                        ><?php if (isset($options['rs_template']['css'])) echo trim($options['rs_template']['css']); ?></textarea><br/>
                     </fieldset>
                 </td>
             </tr>

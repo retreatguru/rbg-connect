@@ -6,7 +6,7 @@ namespace Codeception\Module;
 
 class AcceptanceHelper extends \Codeception\Module
 {
-    function changeDefaultPages(\AcceptanceTester $I, $programPage, $teacherPage)
+    public function changeDefaultPages(\AcceptanceTester $I, $programPage, $teacherPage)
     {
         $I->loginAdmin($I);
 
