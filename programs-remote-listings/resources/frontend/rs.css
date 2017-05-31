@@ -178,10 +178,10 @@ div.hasDatepicker { float: left; margin-right: 20px; }
 
 /* teachers page responsive layout */
 @media only screen and (min-width: 375px) and (max-width: 575px) {
-    .rs-teacher-photo, .rs-teacher-photo img {
+    .rs-teacher-content img {
         width: 100%;
     }
-    .rs-teacher-title, .rs-teacher-content {
+    .rs-teacher-custom-wrap {
         clear: both;
     }
 }
