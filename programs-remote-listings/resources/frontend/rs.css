@@ -170,11 +170,20 @@ div.hasDatepicker { float: left; margin-right: 20px; }
     .rs-program.shortcode.table td, .rs-program.shortcode.table th { border-bottom: none; border-top: none; padding: 2px; text-align: center; }
 }
 
-
 @media only screen and (max-width: 520px)
 {
     .single-program .rs-program-meta { width:100% !important; }
     .rs-program-title { padding:20px 0 0; }
+}
+
+/* teachers page responsive layout */
+@media only screen and (min-width: 375px) and (max-width: 575px) {
+    .rs-teacher-photo, .rs-teacher-photo img {
+        width: 100%;
+    }
+    .rs-teacher-title, .rs-teacher-content {
+        clear: both;
+    }
 }
 
 body.rs-programs-single h1.entry-title,
