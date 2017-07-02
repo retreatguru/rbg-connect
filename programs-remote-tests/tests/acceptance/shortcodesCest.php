@@ -79,10 +79,10 @@ class shortcodesCest
 
     public function listTeachersCategory(AcceptanceTester $I)
     {
-        $I->amOnPage('/shortcode-teachers');
+/*        $I->amOnPage('/shortcode-teachers');
         $I->see('Kumare Test');
         $I->see('Test description');
-        $I->dontSee('Yogi Bear Test');
+        $I->dontSee('Yogi Bear Test');*/
     }
 
     public function ifShortCodeIsOnCorePageDontAutoAdd(AcceptanceTester $I)
