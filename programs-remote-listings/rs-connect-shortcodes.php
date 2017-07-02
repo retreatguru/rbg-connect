@@ -66,11 +66,10 @@ class RS_Connect_Shortcodes {
 
     public function shortcode_register_button($atts)
     {
-        global $shortcode_atts;
-
-        if (! isset($shortcode_atts['id'])) {
+        if (! isset($atts['id'])) {
             return 'Error: You must specify a program ID in your shortcode<br/>e.g. [rs_register_button <strong>id="45"</strong>]';
         }
+
         // todo: Build link here to customize the link title instead of pulling it dynamically or maybe just search and replace string
         $program = RS_Connect_Api::get_program($atts['id']);
 

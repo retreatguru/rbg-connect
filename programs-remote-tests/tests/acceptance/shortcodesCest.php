@@ -79,11 +79,10 @@ class shortcodesCest
 
     public function listTeachersCategory(AcceptanceTester $I)
     {
-        // todo: uncomment this when v4.1 is deployed to production (teacher categorization is seeded properly)
-/*        $I->amOnPage('/shortcode-teachers');
+        $I->amOnPage('/shortcode-teachers');
         $I->see('Kumare Test');
         $I->see('Test description');
-        $I->dontSee('Yogi Bear Test');*/
+        $I->dontSee('Yogi Bear Test');
     }
 
     public function ifShortCodeIsOnCorePageDontAutoAdd(AcceptanceTester $I)
@@ -108,5 +107,16 @@ class shortcodesCest
         $I->click('Events');
         $I->fillField('.wp-editor-area', '');
         $I->click('#publish');
+    }
+
+    public function testRegisterButtonShortcode(AcceptanceTester $I)
+    {
+        $I->loginAdmin($I);
+        $I->amOnPage('/wp-admin/edit.php?post_type=page');
+        $I->click('Sample Page');
+        $I->fillField('.wp-editor-area', '[rs_register_button id=33]');
+        $I->click('#publish');
+        $I->amOnPage('/sample-page');
+        $I->see('Register Now', '.rs-register-link');
     }
 }
