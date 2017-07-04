@@ -60,4 +60,7 @@
 
     <h3>Viewing Categories via URL</h3>
     <p>You can see program and teacher categories by just using a url. If your main program URL is '/retreats/' then go to /retreats/category/featured-events/ to see just those categories. Teachers works similarly.</p>
+
+    <h3>Simple Register Button</h3>
+    <p><code>[rs_register_button id='33']</code>. This shortcode allows you to make a register now button just by adding the program id.</p>
 </div>
