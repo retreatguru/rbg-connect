@@ -4,3 +4,6 @@
 !programs-remote-tests/
 !circle.yml
 !readme.md
+!docker-compose.yml
+!dev
+!docker/

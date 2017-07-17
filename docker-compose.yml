@@ -1,0 +1,33 @@
+version: '2'
+services:
+  db:
+    image: mysql/mysql-server:5.7
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: rgconnect
+      MYSQL_USER: wp
+      MYSQL_PASSWORD: wp
+    volumes:
+      - mysql-data:/var/lib/mysql
+
+  wordpress:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    ports:
+      - "80:80"
+    restart: always
+    links:
+      - db
+    environment:
+      WORDPRESS_DB_HOST: db
+      WORDPRESS_DB_NAME: rgconnect
+      WORDPRESS_DB_USER: wp
+      WORDPRESS_DB_PASSWORD: wp
+    hostname: rgconnect.dev
+    volumes:
+      - .:/var/www:delegated
+
+volumes:
+  mysql-data:
