@@ -11,10 +11,17 @@ modules:
         - AcceptanceHelper
     config:
         PhpBrowser:
-            url: 'http://programs-remote.dev'
+            url: 'http://rgconnect.dev'
 env:
     ci:
         modules:
             config:
                 PhpBrowser:
                     url: 'http://programsconnect.dev'
+    docker:
+        modules:
+            config:
+                PhpBrowser:
+                    url: 'http://rgconnect.dev'
+
+

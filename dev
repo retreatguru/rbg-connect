@@ -11,6 +11,12 @@ main() {
         shell)
             docker-compose exec wordpress bash
             ;;
+        test)
+            if [ ! $1 ]; then
+                set -- "--help"
+            fi
+            docker-compose exec wordpress codecept.sh run --env docker "${@:2}"
+            ;;
         debug)
             shift
             if [ ! "$1" ]; then
@@ -32,6 +38,7 @@ The following commands are supported:
 up       Start development environment (builds if necessary)
 down     Destroy development environment (also clears the DB)
 shell    Enter wordpress container shell
+test     Run Codeception tests
 debug    Turn debugging (xdebug) on or off
 EOF
             exit 1
@@ -69,7 +76,6 @@ build() {
         --admin_password=admin \
         --skip-email
     wp plugin activate programs-remote-listings
-    wp post delete 1 # hello world
 
     wp rewrite structure /%postname%/
     wp post create --post_type=page --post_title='Events' --post_status=publish
@@ -85,6 +91,7 @@ build() {
     wp post create --post_type=page --post_title='Shortcode Teachers' --post_status=publish --post_content="[rs_teachers]"
     wp post create --post_type=page --post_title='Shortcode Event List Hide Text' --post_status=publish --post_content="[rs_programs hide_text]"
     wp post create --post_type=page --post_title='Shortcode Event List Hide Location' --post_status=publish --post_content="[rs_programs hide_location]"
+    wp post create --post_type=page --post_title='Shortcode Event List Hide Stuff' --post_status=publish --post_content="[rs_programs hide_text hide_location]"
     wp post create --post_type=page --post_title='Shortcode Event List Table Less' --post_status=publish --post_content="[rs_programs table show_title show_date]"
     wp post create --post_type=page --post_title='Shortcode Event List Table by Category' --post_status=publish --post_content="[rs_programs table show_title show_date category='plant-medicine']"
     echo "Remember to add rgconnect.dev to your /etc/hosts file"
