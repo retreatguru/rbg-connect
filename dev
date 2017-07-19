@@ -12,10 +12,11 @@ main() {
             docker-compose exec wordpress bash
             ;;
         test)
+            shift
             if [ ! $1 ]; then
                 set -- "--help"
             fi
-            docker-compose exec wordpress codecept.sh run --env docker "${@:2}"
+            docker-compose exec wordpress codecept.sh run --env docker "$@"
             ;;
         debug)
             shift
@@ -48,7 +49,7 @@ EOF
 
 # run a wp-cli command
 wp() {
-    docker-compose exec wordpress wp --allow-root "$@"
+    docker-compose exec --user=noroot wordpress wp "$@"
 }
 
 # build wordpress and link in the theme
