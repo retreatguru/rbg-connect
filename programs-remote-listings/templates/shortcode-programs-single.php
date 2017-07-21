@@ -91,14 +91,17 @@ if (is_array($shortcode_atts)) extract($shortcode_atts); ?>
                 <h2 class="rs-teachers-title"><?php echo _n('Teacher', 'Teachers',
                         count($rs_the_program->teacher_details->teacher_objects)) ?></h2>
 
-                <?php foreach ($rs_the_program->teacher_details->teacher_objects as $teacher) : ?>
+                <?php
+                foreach ($rs_the_program->teacher_details->teacher_objects as $teacher) :
+                    $teacher_photo_size = ($options['rs_template']['image_size'] == 'thumbnail') ? 'thumbnail' : 'medium';
+                    ?>
                     <?php $teacher_url = $RS_Connect->get_page_url('teachers') . $teacher->ID . '/' . $teacher->slug; ?>
                     <div class="teacher" style="clear:left; position:relative;">
-                        <?php if (isset($teacher->photo_details->medium)) { ?>
+                        <?php if (isset($teacher->photo_details->{$teacher_photo_size})) { ?>
                             <div
-                                style="float:left; width:<?php echo $teacher->photo_details->medium->width; ?>px; margin-right:20px;">
+                                style="float:left; width:<?php echo $teacher->photo_details->{$teacher_photo_size}->width; ?>px; margin-right:20px;">
                                 <a href="<?php echo $teacher_url; ?>" style="float:left; margin:5px 20px 10px 0;">
-                                    <img src="<?php echo $teacher->photo_details->medium->url; ?>"
+                                    <img src="<?php echo $teacher->photo_details->{$teacher_photo_size}->url; ?>"
                                          style="float:left; margin:5px 20px 10px 0;">
                                 </a>
                             </div>
