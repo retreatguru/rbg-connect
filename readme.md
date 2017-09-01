@@ -1,3 +1,12 @@
+## Installing dev environment
+1. Make sure docker is installed and configured
+1. Checkout the branch
+1. Run ``./dev up``
+1. Add rgconnect.dev to your hosts file
+1. Verify the site is accessible at http://rgconnect.dev
+1. Configure the plugin in http://rgconnect.dev/wp-admin accordingly
+1. Ensure tests pass by running `./dev test`
+
 ## Pre-Deployment Checklist ##
 
 1. Update the version number in programs-remote-listings/rs-connect.php on line 6

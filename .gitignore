@@ -1,6 +1,2 @@
-/*
-!.gitignore
-!programs-remote-listings/
-!programs-remote-tests/
-!circle.yml
-!readme.md
+.idea
+html/
