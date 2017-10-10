@@ -1,6 +1,6 @@
 <?php
 
-class programsCest
+class ProgramsCest
 {
     public function listPrograms(AcceptanceTester $I)
     {

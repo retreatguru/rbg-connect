@@ -1,6 +1,6 @@
 <?php
 
-class changeDefaultPagesCest
+class ChangeDefaultPagesCest
 {
     public function changePages(AcceptanceTester $I)
     {

@@ -1,6 +1,6 @@
 <?php
 
-class teachersCest
+class TeachersCest
 {
     public function listTeachers(AcceptanceTester $I)
     {
