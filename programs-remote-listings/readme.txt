@@ -35,6 +35,9 @@ email support@retreat.guru or phone 1-888-881-0404 if you need help. Or send us 
 
 == Changelog ==
 
+= 2.3.0 =
+* fix layouts for desktop and mobile sites
+
 = 2.2.3 =
 * fix rs_register_button shortcode
 
