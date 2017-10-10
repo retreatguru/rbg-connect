@@ -9,7 +9,7 @@ services:
       MYSQL_USER: wp
       MYSQL_PASSWORD: wp
     volumes:
-      - mysql-data:/var/lib/mysql
+      - ./docker/mysql/conf.d:/etc/mysql/conf.d
     ports:
       - "13306:3306"
 

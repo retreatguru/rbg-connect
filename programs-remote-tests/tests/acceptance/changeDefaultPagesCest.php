@@ -1,6 +1,6 @@
 <?php
 
-class changeDefaultPages
+class changeDefaultPagesCest
 {
     public function changePages(AcceptanceTester $I)
     {
@@ -16,6 +16,6 @@ class changeDefaultPages
         $I->click('Yogi Bear Test');
         $I->see('A yogi is a practitioner of yoga.');
 
-        $I->changeDefaultPages($I, 'Events', 'Teachers');
+        $I->changeDefaultPages($I, 'Events', 'Leaders');
     }
 }
