@@ -20,6 +20,10 @@
     position: static !important;
 }
 
+.rs-teacher-content {
+    overflow: hidden;
+}
+
 .rs-program-list-intro {
     margin-bottom: 20px;
 }
@@ -28,6 +32,7 @@
     font-size: 85%;
     text-transform: uppercase;
     font-weight: bold;
+    color: #888;
 }
 
 /*.rs-program.important { border-top: 2px solid #ffd; padding-top: 8px; background-image: -webkit-linear-gradient(#ffd, #fff); background-image: -moz-linear-gradient(#ffe1bd, #fef9ef); }*/
@@ -51,6 +56,14 @@ h2.rs-program-title {
     margin: 0 !important;
 }
 
+h2.rs-teacher-title {
+    padding-top: 0;
+}
+
+.rs-teacher-excerpt {
+    overflow: hidden;
+}
+
 .rs-program-photo {
     margin-bottom: 20px;
     width: 100%;
@@ -59,7 +72,10 @@ h2.rs-program-title {
 .rs-teacher-photo {
     float: left;
     margin-right: 20px;
-    margin-bottom: 5px;
+}
+
+.single-program .rs-teacher-photo img {
+    width: 200px;
 }
 
 .rs-teacher-bio {
@@ -71,13 +87,17 @@ h2.rs-program-title {
     padding: 0 !important;
 }
 
+.rs-teacher-programs {
+    clear: both;
+}
+
 .single-program {
     position: relative;
 }
 
-.single-program .entry-content {
-    float: left;
-    width: 100%;
+.entry-content {
+    float: left !important;
+    width: 100% !important;
 }
 
 .single-program .rs-program-meta {
@@ -86,7 +106,7 @@ h2.rs-program-title {
     box-sizing: border-box;
     border-radius: 5px;
     border: 1px solid #e5e5e5;
-    margin: 0 0 0 20px;
+    margin: 0 0 20px 20px;
 }
 
 .rs-program-meta li {
@@ -114,8 +134,12 @@ h2.rs-program-title {
 }
 
 /*registration link */
-.rs-regsitration-wrap {
+.rs-registration-wrap {
     margin: 0 0 20px; /*white-space: nowrap; */
+}
+
+.rs-register-link {
+    margin: 10px 0;
 }
 
 .rs-register-link a, #submit-registration, .rs-button {
@@ -382,8 +406,12 @@ div.hasDatepicker {
     font-size: 200%;
 }
 
-.shortcode .rs-program-title {
-    margin-bottom: 2px;
+.rs-program-title {
+    padding-top: 0;
+}
+
+.rs-program-excerpt {
+    overflow: hidden;
 }
 
 .rs-register-link a {
@@ -423,7 +451,11 @@ div.hasDatepicker {
     margin: 0;
 }
 
-/* responsive tables */
+.rs-program-custom-wrap .rs-program-label {
+    display: block;
+}
+
+/*
 @media (max-width: 35em) {
     .rs-program.table, .rs-program thead, .rs-program tbody, .rs-program tfoot, .rs-program th, .rs-program td, .rs-program tr {
         display: block;
@@ -454,7 +486,6 @@ div.hasDatepicker {
     }
 }
 
-/* teachers page responsive layout */
 @media only screen and (min-width: 375px) and (max-width: 575px) {
     .rs-teacher-content img {
         width: 100%;
@@ -464,8 +495,90 @@ div.hasDatepicker {
         clear: both;
     }
 }
+*/
+
+.teacher {
+    margin: 20px 0;
+    overflow: hidden;
+}
+
+.teacher .rs-photo-title {
+    clear: none;
+}
+
+.program h3 {
+    padding: 0;
+    clear: none;
+}
+
+.program p {
+    overflow: hidden;
+}
 
 body.rs-programs-single h1.entry-title,
 body.rs-teachers-single h1.entry-title {
     display: none;
 }
+
+/* mobile portraight view */
+@media (max-width: 709px) {
+    .single-program .rs-program-meta {
+        width: 100%;
+        margin-bottom: 20px;
+        border: none;
+    }
+
+    .single-program .rs-meta-content-container {
+        margin: 0;
+        padding: 10px 10px 5px 10px;
+        border-radius: 5px;
+        border: 1px solid #e5e5e5;
+        overflow: hidden;
+    }
+
+    .single-program .entry-content {
+        width: auto !important;
+        margin: 0 !important;
+    }
+
+    .rs-regsitration-wrap-top {
+        display: none;
+    }
+
+    .rs-teacher-photo {
+        width: 100%;
+    }
+
+    .rs-teacher-photo img {
+        width: 100%;
+    }
+
+    .single-program .rs-teacher-photo img {
+        width: 100%;
+    }
+
+    .teacher {
+        margin-bottom: 30px;
+    }
+
+    .program img {
+        width: 100%;
+    }
+
+    .rs-program-thumbnail {
+        width: 100%;
+    }
+
+    .rs-program-thumbnail img {
+        width: 100%;
+    }
+
+    .rs-teacher-thumbnail {
+        width: 100%;
+    }
+
+    .rs-teacher-thumbnail img {
+        width: 100%;
+    }
+}
+

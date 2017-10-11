@@ -9,22 +9,21 @@ $options = get_option('rs_remote_settings');
 if (is_array($shortcode_atts)) extract($shortcode_atts); ?>
 
 <article class="page type-page status-publish entry hentry single-teacher">
-    <header class="entry-header">
-        <h1 class="rs-program-title"><?php echo $rs_the_teacher->name; ?></h1>
-    </header>
-
     <div class="entry-content">
+        <h1 class="rs-program-title"><?php echo $rs_the_teacher->name; ?></h1>
         <?php // Program Details ?>
-        <div class="rs-teacher-content" style="padding:20px;">
+        <div class="rs-teacher-content">
             <?php if (isset($rs_the_teacher->photo_details->medium)) : ?>
-                <img src="<?php echo $rs_the_teacher->photo_details->medium->url; ?>" class="alignleft" style="padding:0 20px 20px 0px; float: left;">
+                <div class="rs-teacher-photo">
+                    <img src="<?php echo $rs_the_teacher->photo_details->medium->url; ?>" class="alignleft">
+                </div>
             <?php endif; ?>
 
             <?php if ($rs_the_teacher->text_full) : ?>
                 <div class="rs-teacher-custom-wrap"><?php echo $rs_the_teacher->text_full; ?></div>
             <?php endif; ?>
         </div>
-        <div class="rs-teacher-programs" style="clear: left; margin:20px;">
+        <div class="rs-teacher-programs">
             <?php if (! empty($rs_the_teacher->programs)) : ?>
                 <h3 style="margin-top: 30px;">Events with <?php echo $rs_the_teacher->name; ?></h3>
 
