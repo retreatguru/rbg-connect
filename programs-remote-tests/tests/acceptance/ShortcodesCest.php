@@ -1,6 +1,6 @@
 <?php
 
-class shortcodesCest
+class ShortcodesCest
 {
     public function listEventsByCategory(AcceptanceTester $I)
     {

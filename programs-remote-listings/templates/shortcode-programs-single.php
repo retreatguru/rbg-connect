@@ -13,6 +13,16 @@ if (is_array($shortcode_atts)) extract($shortcode_atts); ?>
 
     <div class="entry-content">
 
+        <h1 class="rs-program-title"><?php echo $rs_the_program->title; ?></h1>
+
+        <?php if (! empty($rs_the_program->teacher_list)) : ?>
+            <h2 class="rs-program-teacher"><?php echo $rs_the_program->teacher_list; ?></h2>
+        <?php endif; ?>
+
+        <p class="rs-program-date"><?php echo $rs_the_program->date; ?></p>
+
+        <div class="rs-regsitration-wrap rs-regsitration-wrap-top"><?php echo $rs_the_program->registration_action; ?></div>
+
         <div class="rs-program-meta">
             <?php  if ($rs_the_program->photo_details) : ?>
                 <div class="rs-program-photo">
@@ -69,16 +79,6 @@ if (is_array($shortcode_atts)) extract($shortcode_atts); ?>
             </div>
         </div>
 
-        <h1 class="rs-program-title"><?php echo $rs_the_program->title; ?></h1>
-        
-        <?php if (! empty($rs_the_program->teacher_list)) : ?>
-            <h2 class="rs-program-teacher"><?php echo $rs_the_program->teacher_list; ?></h2>
-        <?php endif; ?>
-        
-        <p class="rs-program-date"><?php echo $rs_the_program->date; ?></p>
-
-        <div class="rs-regsitration-wrap"><?php echo $rs_the_program->registration_action; ?></div>
-
         <?php // Program Details ?>
         <div class="rs-program-content">
             <?php if ($rs_the_program->text_full) : ?>
@@ -93,17 +93,15 @@ if (is_array($shortcode_atts)) extract($shortcode_atts); ?>
 
                 <?php foreach ($rs_the_program->teacher_details->teacher_objects as $teacher) : ?>
                     <?php $teacher_url = $RS_Connect->get_page_url('teachers') . $teacher->ID . '/' . $teacher->slug; ?>
-                    <div class="teacher" style="clear:left; position:relative;">
+                    <div class="teacher">
                         <?php if (isset($teacher->photo_details->medium)) { ?>
-                            <div
-                                style="float:left; width:<?php echo $teacher->photo_details->medium->width; ?>px; margin-right:20px;">
-                                <a href="<?php echo $teacher_url; ?>" style="float:left; margin:5px 20px 10px 0;">
-                                    <img src="<?php echo $teacher->photo_details->medium->url; ?>"
-                                         style="float:left; margin:5px 20px 10px 0;">
+                            <div class="rs-teacher-photo">
+                                <a href="<?php echo $teacher_url; ?>">
+                                    <img src="<?php echo $teacher->photo_details->medium->url; ?>">
                                 </a>
                             </div>
                         <?php } ?>
-                        <div class="rs-teachers-content" style="overflow:hidden;">
+                        <div class="rs-teachers-content">
                             <a href="<?php echo $teacher_url; ?>"><strong><?php echo $teacher->name; ?></strong></a><br/>
                             <?php echo $RS_Connect->excerpt($teacher->text); ?>
                             <br/><a href="<?php echo $teacher_url; ?>">Learn more about <?php echo $teacher->name; ?></a>

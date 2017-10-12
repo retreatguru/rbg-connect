@@ -1,11 +1,10 @@
 <?php
-use \AcceptanceTester;
 
-class teachersCest
+class TeachersCest
 {
     public function listTeachers(AcceptanceTester $I)
     {
-        $I->amOnPage('/teachers/');
+        $I->amOnPage('/leaders/');
         $I->see('Yogi Bear Test');
         $I->see('A yogi is a practitioner of yoga');
         $I->see('Kumare Test');

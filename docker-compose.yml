@@ -1,7 +1,7 @@
 version: '2'
 services:
   db:
-    image: mysql/mysql-server:5.7
+    image: mysql:5.7
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: root
@@ -9,7 +9,9 @@ services:
       MYSQL_USER: wp
       MYSQL_PASSWORD: wp
     volumes:
-      - mysql-data:/var/lib/mysql
+      - ./docker/mysql/conf.d:/etc/mysql/conf.d
+    ports:
+      - "13306:3306"
 
   wordpress:
     build:
@@ -27,7 +29,7 @@ services:
       WORDPRESS_DB_PASSWORD: wp
     hostname: rgconnect.dev
     volumes:
-      - .:/var/www:delegated
+      - .:/var/www:cached
 
 volumes:
   mysql-data:
