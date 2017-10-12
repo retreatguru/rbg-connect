@@ -1,9 +1,19 @@
 #!/bin/bash
 
+MARKER=.dev.build
+
 main() {
-    case $1 in
+    cd $(dirname $0)
+
+    if [ ! -f ".env" ]; then
+        cp .env.default .env
+    fi
+
+    COMMAND=$1
+    shift
+    case $COMMAND in
         up)
-            if [ -f html/wp-content/plugins ] && [ "$1" != "--build" ]; then
+            if [ -f $MARKER ] && [ "$1" != "--build" ]; then
                 docker-compose up -d
             else
                 build
@@ -19,14 +29,12 @@ main() {
             docker-compose exec wordpress bash "$@"
             ;;
         test)
-            shift
             if [ ! $1 ]; then
                 set -- "--help"
             fi
             docker-compose exec wordpress codecept.sh run --env docker "$@"
             ;;
         debug)
-            shift
             if [ ! "$1" ]; then
                 echo "usage $0 debug <on|off>"
                 exit 1
@@ -61,61 +69,22 @@ wp() {
 
 # build wordpress and link in the theme
 build() {
-    # set up the theme using symbolic links
-    mkdir -p html/wp-content/plugins
-    cd html/wp-content/plugins/
-    ln -fs ../../../programs-* .
-    cd - > /dev/null
-
-    # start containers and wait for DB
+    # start containers and setup wordpress
     docker-compose up --build -d
     docker-compose exec wordpress wait-db.sh
     docker-compose exec --user=noroot wordpress composer install -d ../programs-remote-tests
-
-    # install wordpress
-    wp core download
-    wp config create --dbname=rgconnect --dbuser=wp --dbpass=wp --dbhost=db
-    wp db reset --yes
-    wp core install \
-        --url=rgconnect.dev \
-        --title="RG Connect Site" \
-        --admin_email=info@retreat.guru \
-        --admin_user=admin \
-        --admin_password=admin \
-        --skip-email
-    wp plugin activate programs-remote-listings
-    wp rewrite structure /%postname%/
-
-    # Set up sidebar to show list of pages
-    wp widget reset sidebar-1
-    wp widget add pages sidebar-1
-
-    # Seed root pages for testing
-    wp post create --post_type=page --post_title='Events' --post_status=publish
-    wp post create --post_type=page --post_title='Leaders' --post_status=publish
-    wp post create --post_type=page --post_title='Retreats' --post_status=publish
-    wp post create --post_type=page --post_title='Gurus' --post_status=publish
-
-    # Seed shortcode pages for testing
-    wp post create --post_type=page --post_title='Shortcode Event List' --post_status=publish --post_content="[rs_programs category='plant-medicine']"
-    wp post create --post_type=page --post_title='Shortcode Event List Table' --post_status=publish --post_content="[rs_programs table show_title show_register_link show_date show_price_first show_more_link show_availability show_availability_words]"
-    wp post create --post_type=page --post_title='Shortcode Teachers' --post_status=publish --post_content="[rs_teachers]"
-    wp post create --post_type=page --post_title='Shortcode Event List Hide Text' --post_status=publish --post_content="[rs_programs hide_text]"
-    wp post create --post_type=page --post_title='Shortcode Event List Hide Location' --post_status=publish --post_content="[rs_programs hide_location]"
-    wp post create --post_type=page --post_title='Shortcode Event List Hide Stuff' --post_status=publish --post_content="[rs_programs hide_text hide_location]"
-    wp post create --post_type=page --post_title='Shortcode Event List Table Less' --post_status=publish --post_content="[rs_programs table show_title show_date]"
-    wp post create --post_type=page --post_title='Shortcode Event List Table by Category' --post_status=publish --post_content="[rs_programs table show_title show_date category='plant-medicine']"
-
-    # Set default posts to host content to Events and Teachers
-    wp option update rs_remote_settings --format=json '{"rs_domain":"tests", "page": {"programs": 3, "teachers": 4}}'
+    docker-compose exec --user=noroot wordpress configure-wordpress.sh
 
     echo "Remember to add rgconnect.dev to your /etc/hosts file"
+
+    touch $MARKER
 }
 
 # remove containers, volumes, db cache and wordpress
 clean() {
     docker-compose down --volumes
     git clean -xdf html/
+    rm $MARKER
 }
 
 main "$@"

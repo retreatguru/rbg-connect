@@ -1,88 +1,49 @@
-machine:
-  php:
-    version: 5.6.14
+version: 2
+jobs:
+  build:
+     working_directory: /var/www
+     docker:
+        - image: retreatguru/php56-apache
+          environment:
+            WORDPRESS_DB_HOST: 127.0.0.1
+            WORDPRESS_DB_NAME: rgconnect
+            WORDPRESS_DB_USER: wp
+            WORDPRESS_DB_PASSWORD: wp
 
-  hosts:
-    programsremote.dev: 127.0.0.1
+        - image: mysql:5.7
+          environment:
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_DATABASE: rgconnect
+            MYSQL_USER: wp
+            MYSQL_PASSWORD: wp
 
-dependencies:
-  pre:
-    # store repo plugins for later move
-    - mkdir ~/repo && mv * ~/repo
+     steps:
+        - run:
+            name: Pre-checkout
+            command: |
+              rm -rf /var/www/html
+              echo '127.0.0.1 rgconnect.dev' >> /etc/hosts
 
-    # get wordpress and move
-    - wget http://wordpress.org/latest.tar.gz
-    - tar xfz latest.tar.gz
-    - mv wordpress/* ./
+        - checkout
 
-    # move plugins into place
-    - mv ~/repo/* wp-content/plugins/
+        - run:
+            name: Build
+            command: |
+              cp .env.default .env
+              composer install -d programs-remote-tests/
+              mkdir /var/www/html
+              chown noroot:www-data /var/www/html
+              su noroot -c 'cd /var/www/html && ../docker/bin/configure-wordpress.sh'
 
-    # new database
-    - mysql -e 'CREATE DATABASE programsconnect;' -uroot;
+        - run:
+            name: Start web server
+            command: service apache2 start
 
-    # setup wp-cli, db tables, wp-config.php
-    - wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
-    - php wp-cli.phar core config --dbname=programsconnect --dbuser=root
-    - php wp-cli.phar core install --url='programsconnect.dev' --title='Remote Plugin Test' --admin_user=admin --admin_email=admin@example.com --admin_password=admin
+        - run:
+            name: Test
+            command: |
+              cd /var/www/programs-remote-tests
+              vendor/bin/codecept run acceptance
 
-    # setup codeception
-    # - wget http://codeception.com/releases/2.0.12/codecept.phar -P wp-content/plugins/programs-tests/
-    - cd wp-content/plugins/programs-remote-tests/ && composer install --prefer-source --no-interaction
-
-  post:
-    # web hosting
-    - cp wp-content/plugins/programs-remote-tests/circleci-apache-conf /etc/apache2/sites-available
-    - a2ensite circleci-apache-conf
-    - a2enmod rewrite
-    - sudo service apache2 restart
-
-    # enable phantomjs in webdriver mode
-    - phantomjs --webdriver=4444  --ssl-protocol=TLSv1:
-        background: true
-
-    # define braintree API vars
-    #- sed -i "s|$table_prefix = 'wp_';|$table_prefix = 'wp_'; \ndefine( 'BRAINTREE_MERCHANT_ID_TEST', 'fztvqpgwr4z8jrtj' ); \ndefine( 'BRAINTREE_PUBLIC_KEY_TEST', 'w7qbvtbx7zdzvcbz' ); \ndefine( 'BRAINTREE_PRIVATE_KEY_TEST', 'e688eb1eea0309363c7d4e3708c698cc' );|" wp-config.php
-
-    # set permalinks
-    - cp wp-content/plugins/programs-remote-tests/wp-cli.yml wp-cli.yml
-
-    # activate essential plugins
-    - php wp-cli.phar plugin activate programs-remote-listings
-
-    # Seed initial pages for events and teachers
-    - php wp-cli.phar post create --post_type=page --post_title='Events' --post_status=publish
-    - php wp-cli.phar post create --post_type=page --post_title='Teachers' --post_status=publish
-    # Seed another pair of pages for testing
-    - php wp-cli.phar post create --post_type=page --post_title='Retreats' --post_status=publish
-    - php wp-cli.phar post create --post_type=page --post_title='Gurus' --post_status=publish
-
-    # Seed shortcode pages for testing
-    - php wp-cli.phar post create --post_type=page --post_title='Shortcode Event List' --post_status=publish --post_content="[rs_programs category='plant-medicine']"
-    - php wp-cli.phar post create --post_type=page --post_title='Shortcode Event List Table' --post_status=publish --post_content="[rs_programs table show_title show_register_link show_date show_price_first show_more_link show_availability show_availability_words]"
-
-    # TODO make sure to add these to RBG-Vagrant vvv-init.sh for the remote side (BEN!)
-    - php wp-cli.phar post create --post_type=page --post_title='Shortcode Event List Hide Stuff' --post_status=publish --post_content="[rs_programs hide_text hide_location]"
-    - php wp-cli.phar post create --post_type=page --post_title='Shortcode Event List Table Less' --post_status=publish --post_content="[rs_programs table show_title show_date]"
-    - php wp-cli.phar post create --post_type=page --post_title='Shortcode Event List Table by Category' --post_status=publish --post_content="[rs_programs table show_title show_date category='plant-medicine']"
-    - php wp-cli.phar post create --post_type=page --post_title='Shortcode Teachers' --post_status=publish --post_content="[rs_teachers category='awesome']"
-    - php wp-cli.phar rewrite structure '/%postname%/' --hard
-
-    - cd wp-content/plugins/programs-remote-tests/ && php vendor/bin/codecept build
-
-test:
-  override:
-    # run Codeception tests
-    - cd wp-content/plugins/programs-remote-tests/ && php vendor/bin/codecept run --env ci --verbose
-
-    # ensure the code written is compatible with all versions of php. we skip php 5.4 because of an error
-    - cd wp-content/plugins/programs-remote-tests/ && ./vendor/bin/phpcs ../programs-remote-listings --standard=PHPCompatibility --runtime-set testVersion 5.2
-    - cd wp-content/plugins/programs-remote-tests/ && ./vendor/bin/phpcs ../programs-remote-listings --standard=PHPCompatibility --runtime-set testVersion 5.3
-    - cd wp-content/plugins/programs-remote-tests/ && ./vendor/bin/phpcs ../programs-remote-listings --standard=PHPCompatibility --runtime-set testVersion 5.5
-    - cd wp-content/plugins/programs-remote-tests/ && ./vendor/bin/phpcs ../programs-remote-listings --standard=PHPCompatibility --runtime-set testVersion 5.6
-    - cd wp-content/plugins/programs-remote-tests/ && ./vendor/bin/phpcs ../programs-remote-listings --standard=PHPCompatibility --runtime-set testVersion 7.0
-
-general:
-  artifacts:
-    - "wp-content/plugins/programs-remote-tests/tests/_output"
-    - "wp-content/debug.log"
+        - store_artifacts:
+            path: /var/www/programs-remote-tests/tests/_output

@@ -11,14 +11,14 @@ services:
     volumes:
       - ./docker/mysql/conf.d:/etc/mysql/conf.d
     ports:
-      - "13306:3306"
+      - "${LOCALHOST}:13306:3306"
 
   wordpress:
     build:
       context: .
       dockerfile: docker/Dockerfile
     ports:
-      - "80:80"
+      - "${LOCALHOST}:80:80"
     restart: always
     links:
       - db
