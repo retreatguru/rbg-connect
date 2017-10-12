@@ -35,7 +35,6 @@
     color: #888;
 }
 
-/*.rs-program.important { border-top: 2px solid #ffd; padding-top: 8px; background-image: -webkit-linear-gradient(#ffd, #fff); background-image: -moz-linear-gradient(#ffe1bd, #fef9ef); }*/
 .rs-program.minor, .rs-programs-widget.minor {
     display: none;
 }
@@ -113,8 +112,6 @@ h2.rs-teacher-title {
     list-style: none;
 }
 
-/*.rs-program-meta { margin-bottom: 20px; margin-top: 10px; }*/
-
 .rs-meta-content-container {
     margin: 20px 20px;
 }
@@ -135,7 +132,7 @@ h2.rs-teacher-title {
 
 /*registration link */
 .rs-registration-wrap {
-    margin: 0 0 20px; /*white-space: nowrap; */
+    margin: 0 0 20px;
 }
 
 .rs-register-link {
@@ -173,140 +170,7 @@ h2.rs-teacher-title {
     clear: both;
 }
 
-/* registration form */
-#rs-registration-form {
-    margin-bottom: 2em;
-}
-
-#rs-registration-form h2, .rs-form h2 {
-    border-bottom: 1px dotted #CCC;
-    padding: 0 0 5px 0;
-    margin: 15px 0 5px;
-}
-
-#rs-registration-form .rs-error {
-    color: #790000;
-    font-weight: bold;
-    font-size: 1.1em;
-    padding: 15px;
-    margin: 10px 0;
-}
-
-.wprs-registration-table, .rs-form {
-    border-collapse: separate;
-    border-spacing: 0 10px;
-    border-width: 0;
-    width: 100%;
-    margin: 0;
-}
-
-.wprs-registration-table th, .rs-form th {
-    color: #000;
-    font-size: 1em;
-    font-weight: normal;
-    width: 40%;
-    vertical-align: top;
-    text-align: right;
-    padding-right: 20px;
-}
-
-.wprs-registration-table td, .rs-form td {
-    border-top-width: 0;
-}
-
-.wprs-registration-table td small, .rs-form td small {
-    display: block;
-}
-
-/* registration form errors */
-#rs-registration-form .rs-custom-field-required {
-    color: #790000;
-    font-size: 1.2em;
-}
-
-#rs-registration-form .rs-custom-field-errors {
-    color: #790000;
-    font-size: 0.9em;
-    font-weight: bold;
-    margin: 5px 0;
-    line-height: 1.3em;
-    list-style-type: none;
-}
-
-#rs-registration-form .wprs-registration-error {
-    background-color: #ffffdd;
-    border: 1px dotted #790000;
-}
-
-#rs-registration-form .wprs-registration-error input, #content .wprs-registration-error select {
-    border-color: #790000;
-}
-
-#rs-registration-form .wprs-registration-error label {
-    color: #790000;
-}
-
-#rs-registration-form tr.wprs-registration-error th {
-    border-width: 1px 0px 1px 1px;
-    border-style: dotted;
-}
-
-#rs-registration-form tr.wprs-registration-error td {
-    border-width: 1px 1px 1px 0px;
-    border-style: dotted;
-}
-
-#rs-registration-form tr.wprs-registration-error td {
-    border-top: 1px dotted #790000;
-}
-
-#rs-registration-form .rs-payment-error {
-    color: #790000;
-    background-color: #ffdfdf;
-    border: 1px dotted #790000;
-    padding: 10px;
-    font-style: italic;
-    font-weight: bold;
-}
-
-#rs-registration-form .rs-price {
-    padding: 9px 0 0 30px;
-}
-
-#rs-registration-form .rs-price th {
-    width: auto;
-}
-
-#rs-registration-form .rs-form-help, #rs-registration-form small, .rs-form small {
-    font-size: 80%;
-    color: #777;
-    line-height: 1.4;
-}
-
-/*extra nights*/
-.rs-extra-nights, .rs-extra-nights a {
-    float: right;
-}
-
-.rs-extra-nights div {
-    float: right;
-    clear: right;
-}
-
-/* registration total */
-.rs-total-calculated {
-    font-size: 120%;
-}
-
-/* edit link */
-.rs-container .edit-link {
-    float: right;
-    font-size: 70%;
-    text-transform: uppercase;
-}
-
 /* widgets */
-/*.rs-programs-widget { margin: 15px 0; list-style: none; clear: left; }*/
 .rs-programs-widget h4, .rs-programs-widget p {
     clear: none;
     line-height: 1.0;
@@ -325,79 +189,6 @@ h2.rs-teacher-title {
     width: 140px;
 }
 
-/* alerts - from twitter bootstrap */
-.alert {
-    margin-bottom: 18px;
-    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
-    background-color: #fcf8e3;
-    border: 1px solid #fbeed5;
-    -webkit-border-radius: 4px;
-    -moz-border-radius: 4px;
-    border-radius: 4px;
-    padding: 8px 35px 8px 14px;
-}
-
-.alert-success {
-    background-color: #dff0d8;
-    border-color: #d6e9c6;
-}
-
-.alert-danger, .alert-error {
-    background-color: #f2dede;
-    border-color: #eed3d7;
-}
-
-.alert-info {
-    background-color: #d9edf7;
-    border-color: #bce8f1;
-}
-
-.alert-block {
-    padding-top: 14px;
-    padding-bottom: 14px;
-}
-
-.alert-block > p, .alert-block > ul {
-    margin-bottom: 0;
-}
-
-.alert-block p + p {
-    margin-top: 5px;
-}
-
-/* datepickers */
-.rs-stay-datepicker label {
-    font-weight: bold;
-    line-height: 40px;
-}
-
-.rs-stay-datepicker input {
-    width: 100px;
-    margin-left: 5px;
-}
-
-div.hasDatepicker {
-    float: left;
-    margin-right: 20px;
-}
-
-.ui-datepicker {
-    width: 15em;
-}
-
-/* datepickers fixes for twenty ten */
-#content .ui-datepicker-calendar {
-    margin: 0 0 0.4em;
-}
-
-#content .ui-datepicker tr td {
-    padding: 0;
-}
-
-#content .ui-datepicker tr th {
-    padding: 0;
-}
-
 .rs-program-additional-info {
     clear: left;
 }
@@ -412,10 +203,6 @@ div.hasDatepicker {
 
 .rs-program-excerpt {
     overflow: hidden;
-}
-
-.rs-register-link a {
-    display: inline-block;
 }
 
 .shortcode .status div {
@@ -455,48 +242,6 @@ div.hasDatepicker {
     display: block;
 }
 
-/*
-@media (max-width: 35em) {
-    .rs-program.table, .rs-program thead, .rs-program tbody, .rs-program tfoot, .rs-program th, .rs-program td, .rs-program tr {
-        display: block;
-    }
-
-    .rs-program.shortcode.table tr {
-        margin-top: 2em;
-        margin-bottom: 2em;
-        border-bottom: 1px solid #eaeaea;
-        border-top: 1px solid #eaeaea;
-    }
-
-    .rs-program.shortcode.table td, .rs-program.shortcode.table th {
-        border-bottom: none;
-        border-top: none;
-        padding: 2px;
-        text-align: center;
-    }
-}
-
-@media only screen and (max-width: 520px) {
-    .single-program .rs-program-meta {
-        width: 100% !important;
-    }
-
-    .rs-program-title {
-        padding: 20px 0 0;
-    }
-}
-
-@media only screen and (min-width: 375px) and (max-width: 575px) {
-    .rs-teacher-content img {
-        width: 100%;
-    }
-
-    .rs-teacher-custom-wrap {
-        clear: both;
-    }
-}
-*/
-
 .teacher {
     margin: 20px 0;
     overflow: hidden;
@@ -520,7 +265,7 @@ body.rs-teachers-single h1.entry-title {
     display: none;
 }
 
-/* mobile portraight view */
+/* mobile portrait view */
 @media (max-width: 709px) {
     .single-program .rs-program-meta {
         width: 100%;
@@ -581,4 +326,3 @@ body.rs-teachers-single h1.entry-title {
         width: 100%;
     }
 }
-
