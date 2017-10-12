@@ -142,23 +142,23 @@ h2.rs-teacher-title {
     margin: 10px 0;
 }
 
-.rs-register-link a, #submit-registration, .rs-button {
-    /*height: 2em;*/
+.rs-register-link a, .rs-button {
+    text-decoration: none;
     font-weight: bold;
     padding: 12px 18px 10px;
-    /*color: #eb171c;*/
     font-size: 14px;
     line-height: 100%;
-    text-decoration: none;
     text-transform: uppercase;
     cursor: pointer;
     border-radius: 5px;
-    /*background-color: #fff;*/
-    border: 1px solid #e5e5e5;;
+    border: 1px solid black;
+    color: black !important;
+    box-shadow: none !important;
 }
 
-.rs-register-link a:hover, #submit-registration:hover, .rs-big-button:hover, .rs-meta-content-container a.rs-button:hover {
-    border-color: #333;
+.rs-register-link a:hover, .rs-button:hover {
+    text-decoration: none;
+    box-shadow: 0px 1px 1px rgba(50, 50, 50, 0.5) !important;
 }
 
 .rs-meta-content-container a.rs-button, .rs-meta-content-container .rs-register-link a {
