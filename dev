@@ -3,7 +3,8 @@
 main() {
     case $1 in
         up)
-            if [ -f html/wp-content/plugins ] && [ "$1" != "--build" ]; then
+            shift
+            if [ -d html/wp-content/plugins ] && [ "$1" != "--build" ]; then
                 docker-compose up -d
             else
                 build
