@@ -21,7 +21,7 @@ if (is_array($shortcode_atts)) extract($shortcode_atts); ?>
 
     <div class="rs-action"><?php echo $rs_the_program->registration_action; ?></div>
 
-    <div class="rs-metabox alignright">
+    <div class="rs-metabox">
         <?php  if ($rs_the_program->photo_details) : ?>
             <div class="rs-photo">
                 <img src="<?php echo $rs_the_program->photo_details->large->url; ?>">
@@ -94,20 +94,19 @@ if (is_array($shortcode_atts)) extract($shortcode_atts); ?>
             <?php foreach ($rs_the_program->teacher_details->teacher_objects as $teacher) : ?>
                 <?php $teacher_url = $RS_Connect->get_page_url('teachers') . $teacher->ID . '/' . $teacher->slug; ?>
                 <div class="rs-item">
-                    <h3 class="rs-item-title"><a href="<?php echo $teacher_url; ?>"><?php echo $teacher->name; ?></a></h3>
                     <?php if (isset($teacher->photo_details->medium)) { ?>
                         <div class="rs-photo">
                             <a href="<?php echo $teacher_url; ?>">
-                                <img class="alignleft" src="<?php echo $teacher->photo_details->medium->url; ?>">
+                                <img src="<?php echo $teacher->photo_details->medium->url; ?>">
                             </a>
                         </div>
                     <?php } ?>
                     <div class="rs-content">
+                        <h3 class="rs-item-title"><a href="<?php echo $teacher_url; ?>"><?php echo $teacher->name; ?></a></h3>
                         <div><?php echo $RS_Connect->excerpt($teacher->text); ?></div>
                         <div><a href="<?php echo $teacher_url; ?>">Learn more about <?php echo $teacher->name; ?></a></div>
                     </div>
                 </div>
-                <br/>
             <?php endforeach; ?>
         </div>
     <?php endif; ?>

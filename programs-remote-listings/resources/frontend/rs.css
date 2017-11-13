@@ -24,9 +24,18 @@
     margin: 10px 0;
 }
 
-/* Program Metabox */
+/* Single item page */
+
+.rs-single .rs-photo {
+    width: 300px;
+    float: left;
+    margin: 0 20px 0 0;
+}
+
+/* Program metabox */
 
 .rs-metabox {
+    float: right;
     width: 40%;
     border: 1px solid #ccc;
     padding: 10px;
@@ -65,34 +74,59 @@
 
 /* Small list */
 
-.rs-small-list .rs-item .rs-photo {
-    width: 150px;
+.rs-small-list .rs-item .rs-item-title {
+    margin-top: 0;
 }
 
-.rs-small-list .rs-item .rs-content {
+.rs-small-list .rs-item .rs-date {
+    font-weight: bold;
+}
+
+.rs-small-list .rs-item {
+    margin-bottom: 2em;
+}
+
+/* Single program */
+
+.rs-small-list.rs-teacher .rs-item .rs-photo {
+    width: 150px;
+    float: left;
+    margin: 0 10px 0 0;
+}
+
+.rs-small-list.rs-teacher .rs-item .rs-content {
     overflow: hidden;
 }
 
-.rs-small-list .rs-item .rs-item-title {
-    margin-top: 0;
+/* Single teacher */
+
+.rs-small-list.rs-program .rs-item .rs-photo {
+    width: 300px;
+    float: right;
+    margin: 0 0 0 20px;
 }
 
 /* Mobile overrides */
 
 @media screen and (max-width: 769px) {
     .rs-metabox {
+        float: none;
         border: none;
         padding: 0;
         margin: 0 0 20px 0;
         width: 100%;
     }
 
-    .rs-single.rs-program > .rs-action {
-        display: none;
+    .rs-single .rs-photo,
+    .rs-small-list.rs-program .rs-item .rs-photo,
+    .rs-small-list.rs-teacher .rs-item .rs-photo {
+        width: 100%;
+        float: none;
+        margin: 20px 0;
     }
 
-    .rs-small-list .rs-item .rs-photo {
-        width: 100%;
+    .rs-single.rs-program > .rs-action {
+        display: none;
     }
 
     .rs-small-list .rs-item .rs-content {
@@ -103,3 +137,12 @@
         margin-top: 10px;
     }
 }
+
+/* Global */
+
+.rs-content:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
