@@ -7,51 +7,54 @@ $options = get_option('rs_remote_settings');
 if (is_array($shortcode_atts)) {
     extract($shortcode_atts);
 }
+?>
 
-if (! empty($rs_the_programs)) {
+<?php if (! empty($rs_the_programs)): ?>
 
-    foreach($rs_the_programs as $program):
-        $image_size = ! empty($options['rs_template']['image_size']) ? $options['rs_template']['image_size'] : 'medium';
-        $details_url = $program->alternate_url ? $program->alternate_url : $RS_Connect->get_page_url('programs').$program->ID.'/'.$program->slug; ?>
+    <div class="rs-list rs-program">
+    <?php foreach($rs_the_programs as $program): ?>
+        <?php $image_size = ! empty($options['rs_template']['image_size']) ? $options['rs_template']['image_size'] : 'large'; ?>
+        <?php $details_url = $program->alternate_url ? $program->alternate_url : $RS_Connect->get_page_url('programs').$program->ID.'/'.$program->slug; ?>
 
-        <?php // todo: the program categories should be appended with rs-program-category- ?>
-        <div class="rs-program rs-group <?php foreach($program->categories as $category) {echo $category->slug . " ";} ?>">
+        <div class="rs-item <?php foreach($program->categories as $category) { echo 'rs-program-category-'.$category->slug . ' '; } ?>">
+            <?php if ($program->title && empty($hide_title)) : ?>
+                <h2 class="rs-title"><a href="<?php echo $details_url; ?>"><?php echo $program->title; ?></a></h2>
+            <?php endif; ?>
+
+            <?php if ($program->teacher_list && empty($hide_with_teachers)) : ?>
+                <h3 class="rs-with-teachers"><?php echo $program->teacher_list; ?></h3>
+            <?php endif; ?>
+
+            <p>
+                <?php if ($program->date && empty($hide_date)) : ?>
+            <div class="rs-date"><?php echo $program->date; ?></div>
+        <?php endif; ?>
+
+            <?php if ($program->location && empty($hide_location)) : ?>
+                <div class="rs-location"><?php echo $program->location; ?></div>
+            <?php endif; ?>
+            </p>
+
+            <?php if ($program->early_bird_discount && empty($hide_discount)) : ?>
+                <p class="rs-early-bird-discount rs-highlight"><?php echo $program->early_bird_discount; ?></p>
+            <?php endif; ?>
+
             <?php if ($program->photo_details && empty($hide_photo)) : ?>
                 <?php $program_image_url = $program->photo_details->{$image_size}->url; ?>
-                <div class="rs-program-thumbnail"><a href="<?php echo $details_url; ?>"><img src="<?php echo $program_image_url; ?>"></a></div>
+                <div class="rs-photo"><a href="<?php echo $details_url; ?>"><img src="<?php echo $program_image_url; ?>"></a></div>
             <?php endif; ?>
 
             <?php if ($program->teacher_details->teacher_objects && ! empty($show_first_teacher_photo)) : ?>
                 <?php $teacher_image_url = $program->teacher_details->teacher_objects[0]->photo_details->{$image_size}->url; ?>
-                <div class="rs-teacher-thumbnail"><a href="<?php echo $details_url; ?>"><img src="<?php echo $teacher_image_url; ?>"></a></div>
-            <?php endif; ?>
-
-            <?php if ($program->title && empty($hide_title)) : ?>
-                <h3 class="rs-program-title"><a href="<?php echo $details_url; ?>"><?php echo $program->title; ?></a></h3>
-            <?php endif; ?>
-
-            <?php if ($program->teacher_list && empty($hide_with_teachers)) : ?>
-                <h3 class="rs-program-with-teachers"><?php echo $program->teacher_list; ?></h3>
-            <?php endif; ?>
-
-            <?php if ($program->date && empty($hide_date)) : ?>
-                <div class="rs-program-date"><?php echo $program->date; ?></div>
-            <?php endif; ?>
-
-            <?php if ($program->location && empty($hide_location)) : ?>
-                <div class="rs-program-location"><?php echo $program->location; ?></div>
-            <?php endif; ?>
-
-            <?php if ($program->early_bird_discount && empty($hide_discount)) : ?>
-                <div class="rs-program-early-bird-discount rs-highlight"><?php echo $program->early_bird_discount; ?></div>
+                <div class="rs-photo rs-teacher-thumbnail"><a href="<?php echo $details_url; ?>"><img src="<?php echo $teacher_image_url; ?>"></a></div>
             <?php endif; ?>
 
             <?php if ($program->text && empty($hide_text)) : ?>
-                <div class="rs-program-excerpt"><?php echo $RS_Connect->excerpt($program->text); ?></div>
+                <p class="rs-excerpt"><?php echo $RS_Connect->excerpt($program->text); ?></p>
             <?php endif; ?>
 
             <?php if ($program->price_first && ! empty($show_first_price)) : ?>
-                <div class="rs-program-first-price">From <?php echo $program->price_first; ?></div>
+                <p class="rs-first-price">From <?php echo $program->price_first; ?></p>
             <?php endif; ?>
 
             <?php if (! empty($show_register_link)) : ?>
@@ -68,8 +71,6 @@ if (! empty($rs_the_programs)) {
                 <?php endif; ?>
             <?php endif; ?>
         </div>
-
-    <?php endforeach;
-} else {
-    echo 'Sorry, no programs exist here.';
-}
+    <?php endforeach; ?>
+    </div>
+<?php endif; ?>

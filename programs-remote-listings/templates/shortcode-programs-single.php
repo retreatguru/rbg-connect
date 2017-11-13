@@ -14,10 +14,10 @@ if (is_array($shortcode_atts)) extract($shortcode_atts); ?>
     <h2 class="rs-title"><?php echo $rs_the_program->title; ?></h2>
 
     <?php if (! empty($rs_the_program->teacher_list)) : ?>
-        <h3 class="rs-subtitle"><?php echo $rs_the_program->teacher_list; ?></h3>
+        <h3 class="rs-with-teachers"><?php echo $rs_the_program->teacher_list; ?></h3>
     <?php endif; ?>
 
-    <p class="rs-date"><?php echo $rs_the_program->date; ?></p>
+    <div class="rs-date"><?php echo $rs_the_program->date; ?></div>
 
     <div class="rs-action"><?php echo $rs_the_program->registration_action; ?></div>
 

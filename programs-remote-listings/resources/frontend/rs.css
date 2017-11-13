@@ -74,33 +74,29 @@
 
 /* Small list */
 
-.rs-small-list .rs-item .rs-item-title {
+.rs-list .rs-item .rs-item-title {
     margin-top: 0;
 }
 
-.rs-small-list .rs-item .rs-date {
-    font-weight: bold;
-}
-
-.rs-small-list .rs-item {
+.rs-list .rs-item {
     margin-bottom: 2em;
 }
 
-/* Single program */
+/* Teacher list */
 
-.rs-small-list.rs-teacher .rs-item .rs-photo {
+.rs-list.rs-teacher .rs-item .rs-photo {
     width: 150px;
     float: left;
     margin: 0 10px 0 0;
 }
 
-.rs-small-list.rs-teacher .rs-item .rs-content {
+.rs-list.rs-teacher .rs-item .rs-content {
     overflow: hidden;
 }
 
-/* Single teacher */
+/* Program list */
 
-.rs-small-list.rs-program .rs-item .rs-photo {
+.rs-list.rs-program .rs-item .rs-photo {
     width: 300px;
     float: right;
     margin: 0 0 0 20px;
@@ -118,8 +114,8 @@
     }
 
     .rs-single .rs-photo,
-    .rs-small-list.rs-program .rs-item .rs-photo,
-    .rs-small-list.rs-teacher .rs-item .rs-photo {
+    .rs-list.rs-program .rs-item .rs-photo,
+    .rs-list.rs-teacher .rs-item .rs-photo {
         width: 100%;
         float: none;
         margin: 20px 0;
@@ -129,11 +125,11 @@
         display: none;
     }
 
-    .rs-small-list .rs-item .rs-content {
+    .rs-list .rs-item .rs-content {
         overflow: visible;
     }
 
-    .rs-small-list .rs-item .rs-item-title {
+    .rs-list .rs-item .rs-item-title {
         margin-top: 10px;
     }
 }
@@ -146,3 +142,10 @@
     clear: both;
 }
 
+.rs-date {
+    font-weight: bold;
+}
+
+.rs-location {
+    font-weight: bold;
+}
