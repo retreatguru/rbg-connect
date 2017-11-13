@@ -116,36 +116,6 @@
     width: 400px;
 }
 
-/* Mobile overrides */
-
-@media screen and (max-width: 769px) {
-    .rs-metabox {
-        float: none;
-        border: none;
-        padding: 0;
-        margin: 0 0 20px 0;
-        width: 100%;
-    }
-
-    .rs-photo {
-        width: 100% !important;
-        float: none !important;
-        margin: 20px 0 !important;
-    }
-
-    .rs-single.rs-program > .rs-action {
-        display: none;
-    }
-
-    .rs-list .rs-item .rs-content {
-        overflow: visible;
-    }
-
-    .rs-list .rs-item .rs-item-title {
-        margin-top: 10px;
-    }
-}
-
 /* Global */
 
 .rs-content:after,
@@ -175,4 +145,74 @@
     margin-bottom: 10px;
     font-weight: bold;
     font-style: italic;
+}
+
+/* Mobile overrides */
+
+@media screen and (max-width: 769px) {
+    .rs-metabox {
+        float: none;
+        border: none;
+        padding: 0;
+        margin: 0 0 20px 0;
+        width: 100%;
+    }
+
+    .rs-photo {
+        width: 100% !important;
+        float: none !important;
+        margin: 20px 0 !important;
+    }
+
+    .rs-single.rs-program > .rs-action {
+        display: none;
+    }
+
+    .rs-list .rs-item .rs-content {
+        overflow: visible;
+    }
+
+    .rs-list .rs-item .rs-item-title {
+        margin-top: 10px;
+    }
+
+}
+
+@media screen and (max-width: 769px) {
+    table.rs-program,
+    table.rs-program thead,
+    table.rs-program tbody,
+    table.rs-program tr,
+    table.rs-program th,
+    table.rs-program td {
+        display: block;
+        margin: 0;
+        padding: 0;
+        border: none;
+    }
+
+    table.rs-program tr {
+        margin-bottom: 20px;
+    }
+
+    table.rs-program thead tr {
+        display: none;
+    }
+
+    table.rs-program td.rs-dates {
+        font-weight: bold;
+        font-size: 80%;
+    }
+
+    table.rs-program td.rs-availability {
+        display: none;
+    }
+
+    table.rs-program td.rs-availability-words {
+        display: none;
+    }
+
+    table.rs-program td.rs-title {
+        font-weight: bold;
+    }
 }
