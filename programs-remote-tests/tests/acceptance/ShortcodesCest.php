@@ -98,7 +98,7 @@ class ShortcodesCest
         $I->dontSee('Multi Person Lodging');
         $I->see('Example program');
         $I->see('Exhaustive program');
-        $I->click('Exhaustive program', '.rs-program-title');
+        $I->click('Exhaustive program', '.rs-title');
         $I->dontSee('Example program');
         $I->see('Register Now');
 
