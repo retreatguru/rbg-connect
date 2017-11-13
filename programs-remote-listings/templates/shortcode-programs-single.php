@@ -9,110 +9,108 @@ $options = get_option('rs_remote_settings');
 <?php
 if (is_array($shortcode_atts)) extract($shortcode_atts); ?>
 
-<article class="single-program">
+<article class="rs-single rs-program">
 
-    <div class="entry-content">
+    <h2 class="rs-title"><?php echo $rs_the_program->title; ?></h2>
 
-        <div class="rs-program-meta">
-            <?php  if ($rs_the_program->photo_details) : ?>
-                <div class="rs-program-photo">
-                    <img src="<?php echo $rs_the_program->photo_details->large->url; ?>" width="100%">
-                </div>
-            <?php endif; ?>
+    <?php if (! empty($rs_the_program->teacher_list)) : ?>
+        <h3 class="rs-with-teachers"><?php echo $rs_the_program->teacher_list; ?></h3>
+    <?php endif; ?>
 
-            <div class="rs-meta-content-container">
+    <div class="rs-date"><?php echo $rs_the_program->date; ?></div>
 
-                <?php if ($rs_the_program->early_bird_discount && empty($hide_discount)) : ?>
-                    <div class="rs-program-early-bird-discount rs-highlight"><?php echo $rs_the_program->early_bird_discount; ?></div>
-                <?php endif; ?>
+    <div class="rs-action"><?php echo $rs_the_program->registration_action; ?></div>
 
-                <?php // Pricing ?>
-                <?php if ($rs_the_program->price_details) : ?>
-                    <div class="rs-program-price"><?php echo $rs_the_program->price_details ?></div>
-                <?php endif; ?>
-
-                <?php // Datetime details ?>
-                <?php if ($rs_the_program->date_time) : ?>
-                    <p class="rs-program-datetime"><span class="rs-program-label">Date &amp; Time Details:</span> <?php echo $rs_the_program->date_time; ?></p>
-                <?php endif; ?>
-
-                <?php // Location ?>
-                <?php if ($rs_the_program->location) : ?>
-                    <p class="rs-program-location"><span class="rs-program-label">Location:</span> <?php echo $rs_the_program->location; ?></p>
-                <?php endif; ?>
-
-                <?php // Address ?>
-                <?php if ($rs_the_program->address) : ?>
-                    <p class="rs-program-address"><span class="rs-program-label">Address:</span> <?php echo $rs_the_program->address; ?></p>
-                <?php endif; ?>
-
-                <?php // Contact details ?>
-                <?php if ($rs_the_program->contact) : ?>
-                    <p class="rs-program-contact"><?php echo $rs_the_program->contact ?></p>
-                <?php endif; ?>
-
-                <?php // Custom fields ?>
-                <?php if ($rs_the_program->custom) : ?>
-                    <div class="rs-program-custom-wrap"><?php echo $rs_the_program->custom; ?></div>
-                <?php endif; ?>
-
-                <?php if ($rs_the_program->email && empty($options['rs_template']['hide_contact_button'])) : ?>
-                    <?php if (! empty($options['rs_template']['contact_button_text'])) {
-                        $contact_button_text = $options['rs_template']['contact_button_text'];
-                    } else {
-                        $contact_button_text = 'Email us about program';
-                    } ?>
-                    <a href="mailto:<?php echo $rs_the_program->email; ?>?subject=An inquiry about <?php echo $rs_the_program->title; ?>" class="rs-button"><?php echo $contact_button_text; ?></a>
-                <?php endif; ?>
-
-                <div class="rs-regsitration-wrap"><?php echo $rs_the_program->registration_action; ?></div>
-            </div>
-        </div>
-
-        <h1 class="rs-program-title"><?php echo $rs_the_program->title; ?></h1>
-        
-        <?php if (! empty($rs_the_program->teacher_list)) : ?>
-            <h2 class="rs-program-teacher"><?php echo $rs_the_program->teacher_list; ?></h2>
-        <?php endif; ?>
-        
-        <p class="rs-program-date"><?php echo $rs_the_program->date; ?></p>
-
-        <div class="rs-regsitration-wrap"><?php echo $rs_the_program->registration_action; ?></div>
-
-        <?php // Program Details ?>
-        <div class="rs-program-content">
-            <?php if ($rs_the_program->text_full) : ?>
-                <div class="rs-program-custom-wrap"><?php echo $rs_the_program->text_full; ?></div>
-            <?php endif; ?>
-        </div>
-
-        <?php if ($rs_the_program->teacher_details->teacher_objects) : ?>
-            <div class="rs-teachers-container">
-                <h2 class="rs-teachers-title"><?php echo _n('Teacher', 'Teachers',
-                        count($rs_the_program->teacher_details->teacher_objects)) ?></h2>
-
-                <?php foreach ($rs_the_program->teacher_details->teacher_objects as $teacher) : ?>
-                    <?php $teacher_url = $RS_Connect->get_page_url('teachers') . $teacher->ID . '/' . $teacher->slug; ?>
-                    <div class="teacher" style="clear:left; position:relative;">
-                        <?php if (isset($teacher->photo_details->medium)) { ?>
-                            <div
-                                style="float:left; width:<?php echo $teacher->photo_details->medium->width; ?>px; margin-right:20px;">
-                                <a href="<?php echo $teacher_url; ?>" style="float:left; margin:5px 20px 10px 0;">
-                                    <img src="<?php echo $teacher->photo_details->medium->url; ?>"
-                                         style="float:left; margin:5px 20px 10px 0;">
-                                </a>
-                            </div>
-                        <?php } ?>
-                        <div class="rs-teachers-content" style="overflow:hidden;">
-                            <a href="<?php echo $teacher_url; ?>"><strong><?php echo $teacher->name; ?></strong></a><br/>
-                            <?php echo $RS_Connect->excerpt($teacher->text); ?>
-                            <br/><a href="<?php echo $teacher_url; ?>">Learn more about <?php echo $teacher->name; ?></a>
-                        </div>
-                    </div>
-                <?php endforeach; ?>
+    <div class="rs-metabox">
+        <?php  if ($rs_the_program->photo_details) : ?>
+            <div class="rs-photo">
+                <img src="<?php echo $rs_the_program->photo_details->large->url; ?>">
             </div>
         <?php endif; ?>
+
+        <div class="rs-metabox-details">
+
+            <?php if ($rs_the_program->early_bird_discount && empty($hide_discount)) : ?>
+                <div class="rs-early-bird-discount rs-highlight"><?php echo $rs_the_program->early_bird_discount; ?></div>
+            <?php endif; ?>
+
+            <?php // Pricing ?>
+            <?php if ($rs_the_program->price_details) : ?>
+                <div class="rs-price"><?php echo $rs_the_program->price_details ?></div>
+            <?php endif; ?>
+
+            <?php // Datetime details ?>
+            <?php if ($rs_the_program->date_time) : ?>
+                <div class="rs-date"><span class="rs-program-label">Date &amp; Time Details:</span> <?php echo $rs_the_program->date_time; ?></div>
+            <?php endif; ?>
+
+            <?php // Location ?>
+            <?php if ($rs_the_program->location) : ?>
+                <div class="rs-location"><span class="rs-program-label">Location:</span> <?php echo $rs_the_program->location; ?></div>
+            <?php endif; ?>
+
+            <?php // Address ?>
+            <?php if ($rs_the_program->address) : ?>
+                <div class="rs-address"><span class="rs-program-label">Address:</span> <?php echo $rs_the_program->address; ?></div>
+            <?php endif; ?>
+
+            <?php // Contact details ?>
+            <?php if ($rs_the_program->contact) : ?>
+                <div class="rs-contact"><?php echo $rs_the_program->contact ?></div>
+            <?php endif; ?>
+
+            <?php // Custom fields ?>
+            <?php if ($rs_the_program->custom) : ?>
+                <div class="rs-custom-fields"><?php echo $rs_the_program->custom; ?></div>
+            <?php endif; ?>
+
+            <?php if ($rs_the_program->email && empty($options['rs_template']['hide_contact_button'])) : ?>
+                <?php if (! empty($options['rs_template']['contact_button_text'])) {
+                    $contact_button_text = $options['rs_template']['contact_button_text'];
+                } else {
+                    $contact_button_text = 'Email us about program';
+                } ?>
+                <a href="mailto:<?php echo $rs_the_program->email; ?>?subject=An inquiry about <?php echo $rs_the_program->title; ?>" class="rs-button"><?php echo $contact_button_text; ?></a>
+            <?php endif; ?>
+
+            <div class="rs-action"><?php echo $rs_the_program->registration_action; ?></div>
+        </div>
     </div>
+
+    <?php // Program Content ?>
+    <?php if ($rs_the_program->text_full) : ?>
+    <div class="rs-content">
+        <?php echo $rs_the_program->text_full; ?>
+    </div>
+    <?php endif; ?>
+
+
+    <?php // Teachers ?>
+    <?php if ($rs_the_program->teacher_details->teacher_objects) : ?>
+        <div class="rs-list rs-teacher">
+            <h2 class="rs-title"><?php echo _n('Teacher', 'Teachers',
+                    count($rs_the_program->teacher_details->teacher_objects)) ?></h2>
+
+            <?php foreach ($rs_the_program->teacher_details->teacher_objects as $teacher) : ?>
+                <?php $teacher_url = $RS_Connect->get_page_url('teachers') . $teacher->ID . '/' . $teacher->slug; ?>
+                <div class="rs-item">
+                    <?php if (isset($teacher->photo_details->medium)) { ?>
+                        <div class="rs-photo">
+                            <a href="<?php echo $teacher_url; ?>">
+                                <img src="<?php echo $teacher->photo_details->medium->url; ?>">
+                            </a>
+                        </div>
+                    <?php } ?>
+                    <div class="rs-content">
+                        <h3 class="rs-title"><a href="<?php echo $teacher_url; ?>"><?php echo $teacher->name; ?></a></h3>
+                        <p><?php echo $RS_Connect->excerpt($teacher->text); ?></p>
+                        <p><a href="<?php echo $teacher_url; ?>">Learn more about <?php echo $teacher->name; ?></a></p>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        </div>
+    <?php endif; ?>
+
     <div style="clear:both;"></div>
 
 </article>
