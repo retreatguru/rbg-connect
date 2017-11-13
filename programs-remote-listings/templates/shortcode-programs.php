@@ -13,7 +13,7 @@ if (is_array($shortcode_atts)) {
 
     <div class="rs-list rs-program">
     <?php foreach($rs_the_programs as $program): ?>
-        <?php $image_size = ! empty($options['rs_template']['image_size']) ? $options['rs_template']['image_size'] : 'large'; ?>
+        <?php $image_size = ! empty($options['rs_template']['image_size']) ? $options['rs_template']['image_size'] : 'medium'; ?>
         <?php $details_url = $program->alternate_url ? $program->alternate_url : $RS_Connect->get_page_url('programs').$program->ID.'/'.$program->slug; ?>
 
         <div class="rs-item <?php foreach($program->categories as $category) { echo 'rs-program-category-'.$category->slug . ' '; } ?>">
@@ -27,17 +27,17 @@ if (is_array($shortcode_atts)) {
 
             <p>
                 <?php if ($program->date && empty($hide_date)) : ?>
-            <div class="rs-date"><?php echo $program->date; ?></div>
-        <?php endif; ?>
+                    <div class="rs-date"><?php echo $program->date; ?></div>
+                <?php endif; ?>
 
-            <?php if ($program->location && empty($hide_location)) : ?>
-                <div class="rs-location"><?php echo $program->location; ?></div>
-            <?php endif; ?>
+                <?php if ($program->location && empty($hide_location)) : ?>
+                    <div class="rs-location"><?php echo $program->location; ?></div>
+                <?php endif; ?>
+
+                <?php if ($program->early_bird_discount && empty($hide_discount)) : ?>
+                    <div class="rs-early-bird-discount rs-highlight"><?php echo $program->early_bird_discount; ?></div>
+                <?php endif; ?>
             </p>
-
-            <?php if ($program->early_bird_discount && empty($hide_discount)) : ?>
-                <p class="rs-early-bird-discount rs-highlight"><?php echo $program->early_bird_discount; ?></p>
-            <?php endif; ?>
 
             <?php if ($program->photo_details && empty($hide_photo)) : ?>
                 <?php $program_image_url = $program->photo_details->{$image_size}->url; ?>

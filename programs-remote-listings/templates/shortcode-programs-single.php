@@ -41,7 +41,7 @@ if (is_array($shortcode_atts)) extract($shortcode_atts); ?>
 
             <?php // Datetime details ?>
             <?php if ($rs_the_program->date_time) : ?>
-                <div class="rs-datetime"><span class="rs-program-label">Date &amp; Time Details:</span> <?php echo $rs_the_program->date_time; ?></div>
+                <div class="rs-date"><span class="rs-program-label">Date &amp; Time Details:</span> <?php echo $rs_the_program->date_time; ?></div>
             <?php endif; ?>
 
             <?php // Location ?>
@@ -87,7 +87,7 @@ if (is_array($shortcode_atts)) extract($shortcode_atts); ?>
 
     <?php // Teachers ?>
     <?php if ($rs_the_program->teacher_details->teacher_objects) : ?>
-        <div class="rs-small-list rs-teacher">
+        <div class="rs-list rs-teacher">
             <h2 class="rs-title"><?php echo _n('Teacher', 'Teachers',
                     count($rs_the_program->teacher_details->teacher_objects)) ?></h2>
 
@@ -102,9 +102,9 @@ if (is_array($shortcode_atts)) extract($shortcode_atts); ?>
                         </div>
                     <?php } ?>
                     <div class="rs-content">
-                        <h3 class="rs-item-title"><a href="<?php echo $teacher_url; ?>"><?php echo $teacher->name; ?></a></h3>
-                        <div><?php echo $RS_Connect->excerpt($teacher->text); ?></div>
-                        <div><a href="<?php echo $teacher_url; ?>">Learn more about <?php echo $teacher->name; ?></a></div>
+                        <h3 class="rs-title"><a href="<?php echo $teacher_url; ?>"><?php echo $teacher->name; ?></a></h3>
+                        <p><?php echo $RS_Connect->excerpt($teacher->text); ?></p>
+                        <p><a href="<?php echo $teacher_url; ?>">Learn more about <?php echo $teacher->name; ?></a></p>
                     </div>
                 </div>
             <?php endforeach; ?>

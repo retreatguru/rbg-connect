@@ -24,7 +24,7 @@ if (is_array($shortcode_atts)) extract($shortcode_atts); ?>
         </div>
     <?php endif; ?>
 
-    <div class="rs-small-list rs-program">
+    <div class="rs-list rs-program">
         <?php if (! empty($rs_the_teacher->programs)) : ?>
             <div></div>
             <h2 class="rs-title">Events with <?php echo $rs_the_teacher->name; ?></h2>
