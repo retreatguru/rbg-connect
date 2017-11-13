@@ -3,7 +3,7 @@
 /*
 Plugin Name: Retreat Booking Guru Connect
 Description: Connect to Retreat Booking Guru to show program listings on your site and link to registration forms.
-Version: 2.3.0
+Version: 3.0.0
 Author: Retreat Guru
 Author URI: http://retreat.guru/booking
 */
@@ -12,7 +12,7 @@ class RS_Connect
 {
     protected $options = null;
     protected $program = null;
-    public static $plugin_version = 'wp2.3.0'; // todo: always update this with wp + the plugin Version set above
+    public static $plugin_version = 'wp3.0.0'; // todo: always update this with wp + the plugin Version set above
 
     public function __construct()
     {
