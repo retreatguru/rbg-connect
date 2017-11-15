@@ -103,7 +103,7 @@ if (is_array($shortcode_atts)) extract($shortcode_atts); ?>
                                 </a>
                             </div>
                         <?php } ?>
-                        <div class="rs-teachers-content" style="overflow:hidden;">
+                        <div class="rs-teachers-content">
                             <a href="<?php echo $teacher_url; ?>"><strong><?php echo $teacher->name; ?></strong></a><br/>
                             <?php echo $RS_Connect->excerpt($teacher->text); ?>
                             <br/><a href="<?php echo $teacher_url; ?>">Learn more about <?php echo $teacher->name; ?></a>
