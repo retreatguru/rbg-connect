@@ -35,6 +35,9 @@ email support@retreat.guru or phone 1-888-881-0404 if you need help. Or send us 
 
 == Changelog ==
 
+= 2.2.5 =
+* removed calls to props that weren't being used but triggered notice errors
+
 = 2.2.4 =
 * minor fixes to mobile layout
 
