@@ -11,7 +11,7 @@ wp core download
 wp config create --dbname=$WORDPRESS_DB_NAME --dbhost=$WORDPRESS_DB_HOST --dbuser=$WORDPRESS_DB_USER --dbpass=$WORDPRESS_DB_PASSWORD
 wp db reset --yes
 wp core install \
-    --url=rgconnect.dev \
+    --url=rgconnect.test \
     --title="RG Connect Site" \
     --admin_email=info@retreat.guru \
     --admin_user=admin \

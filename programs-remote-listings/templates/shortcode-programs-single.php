@@ -16,7 +16,7 @@ if (is_array($shortcode_atts)) extract($shortcode_atts); ?>
         <div class="rs-program-meta">
             <?php  if ($rs_the_program->photo_details) : ?>
                 <div class="rs-program-photo">
-                    <img src="<?php echo $rs_the_program->photo_details->large->url; ?>" width="100%">
+                    <img src="<?php echo $rs_the_program->photo_details->large->url; ?>">
                 </div>
             <?php endif; ?>
 

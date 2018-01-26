@@ -22,7 +22,7 @@ jobs:
             name: Pre-checkout
             command: |
               rm -rf /var/www/html
-              echo '127.0.0.1 rgconnect.dev' >> /etc/hosts
+              echo '127.0.0.1 rgconnect.test' >> /etc/hosts
 
         - checkout
 
