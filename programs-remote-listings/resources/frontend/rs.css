@@ -14,6 +14,7 @@
 .rs-program-title, .rs-program-teacher, .rs-teacher-title, .rs-program-with-teachers { line-height: 1.2; clear: none; }
 h2.rs-program-title { margin:0!important; }
 .rs-program-photo { margin-bottom: 20px; width:100%;}
+.single-program .rs-program-photo img { width: 100%; }
 .rs-teacher-photo { float: left; margin-right: 20px; margin-bottom: 5px; }
 .rs-teacher-bio { clear: left; }
 .rs-program-with-teachers { margin:0 !important; padding:0 !important; }

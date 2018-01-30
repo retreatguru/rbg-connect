@@ -12,7 +12,7 @@ class RS_Connect
 {
     protected $options = null;
     protected $program = null;
-    public static $plugin_version = 'wp2.2.4'; // todo: always update this with wp + the plugin Version set above
+    public static $plugin_version = 'wp2.2.5'; // todo: always update this with wp + the plugin Version set above
 
     public function __construct()
     {
