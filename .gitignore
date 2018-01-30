@@ -13,6 +13,7 @@ wp-comments-post.php
 wp-config-sample.php
 wp-content/
 wp-cron.php
+wp-config.php 
 wp-includes/
 wp-links-opml.php
 wp-load.php
