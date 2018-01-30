@@ -31,7 +31,6 @@ jobs:
             command: |
               cp .env.default .env
               composer install -d programs-remote-tests/
-              mkdir /var/www/html
               chown noroot:www-data /var/www/html
               su noroot -c 'cd /var/www/html && ../docker/bin/configure-wordpress.sh'
 
