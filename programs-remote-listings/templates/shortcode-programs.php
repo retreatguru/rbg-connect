@@ -11,15 +11,19 @@ if (is_array($shortcode_atts)) {
 if (! empty($rs_the_programs)) {
 
     foreach($rs_the_programs as $program):
+
         $image_size = ! empty($options['rs_template']['image_size']) ? $options['rs_template']['image_size'] : 'medium';
         $details_url = $program->alternate_url ? $program->alternate_url : $RS_Connect->get_page_url('programs').$program->ID.'/'.$program->slug; ?>
 
         <?php // todo: the program categories should be appended with rs-program-category- ?>
-        <div class="rs-program rs-group <?php foreach($program->categories as $category) {echo $category->slug . " ";} ?>">
+        <div class="rs-program rs-group <?php foreach($program->categories as $category) {echo $category->slug . " ";} ?>"
+             id="rs-program-id-<?php echo $program->ID; ?>">
             <?php if ($program->photo_details && empty($hide_photo)) : ?>
                 <?php $program_image_url = $program->photo_details->{$image_size}->url; ?>
                 <div class="rs-program-thumbnail"><a href="<?php echo $details_url; ?>"><img src="<?php echo $program_image_url; ?>"></a></div>
             <?php endif; ?>
+
+            <div class="rs-program-content-wrap">
 
             <?php if ($program->teacher_details->teacher_objects && ! empty($show_first_teacher_photo)) : ?>
                 <?php $teacher_image_url = $program->teacher_details->teacher_objects[0]->photo_details->{$image_size}->url; ?>
@@ -67,6 +71,8 @@ if (! empty($rs_the_programs)) {
                     <?php if (empty($program->registration_action)) { echo 'Closed'; } else { echo $program->registration_action; } ?>
                 <?php endif; ?>
             <?php endif; ?>
+
+            </div> <!-- rs-program-content-wrap -->
         </div>
 
     <?php endforeach;

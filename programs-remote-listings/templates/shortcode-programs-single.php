@@ -9,7 +9,7 @@ $options = get_option('rs_remote_settings');
 <?php
 if (is_array($shortcode_atts)) extract($shortcode_atts); ?>
 
-<article class="single-program">
+<article class="single-program" id="rs-single-program-id-<?php echo $rs_the_program->ID; ?>">
 
     <div class="entry-content">
 
@@ -88,7 +88,10 @@ if (is_array($shortcode_atts)) extract($shortcode_atts); ?>
 
         <?php if ($rs_the_program->teacher_details->teacher_objects) : ?>
             <div class="rs-teachers-container">
-                <h2 class="rs-teachers-title"><?php echo _n('Teacher', 'Teachers',
+                <?php $teacher_settings = $rs_the_program->teacher_details->teacher_settings; ?>
+                <?php $teacher_title = $teacher_settings->title ?: 'Teacher'; ?>
+                <?php $teacher_title_plural = $teacher_settings->title_plural ?: 'Teachers'; ?>
+                <h2 class="rs-teachers-title"><?php echo _n($teacher_title, $teacher_title_plural,
                         count($rs_the_program->teacher_details->teacher_objects)) ?></h2>
 
                 <?php foreach ($rs_the_program->teacher_details->teacher_objects as $teacher) : ?>

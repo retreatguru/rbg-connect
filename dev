@@ -75,7 +75,7 @@ build() {
     docker-compose exec --user=noroot wordpress composer install -d ../programs-remote-tests
     docker-compose exec --user=noroot wordpress configure-wordpress.sh
 
-    echo "Remember to add rgconnect.dev to your /etc/hosts file"
+    echo "Remember to add rgconnect.test to your /etc/hosts file"
 
     touch $MARKER
 }
