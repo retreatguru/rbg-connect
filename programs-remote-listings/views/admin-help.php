@@ -21,14 +21,39 @@
 
     <h3>Showing extra items that are not enabled by default:</h3>
     <p>If you want to add additional information on the program list page, you can add the following attributes.</p>
-    <ul>
-        <li><code>show_first_teacher_photo</code><br>show the image of the first teacher (usually used in conjunction with hide_photo to show the teacher photo rather than the program photo)</li>
-        <li><code>show_first_price</code><br>show the first/lowest price. Outputs "From $xxxx.xx".</li>
-        <li><code>show_price_details</code><br>show the full price list. Outputs a full price list.</li>
-        <li><code>show_more_link="see more..."</code><br>show a link to prompt guests to see more about the program. Optionally add a value to customize the text.</li>
-        <li><code>show_availability="Spaces"</code><br>show the number of available spaces left. Optionally add a value to customize the label text.</li>
-        <li><code>show_availability_words="Availability"</code><br>show the availability as a word eg: 'Nearly full'. Optionally add a value to customize the label text.</li>
+
+    <ul class="rs-connect-help-show-program-list">
+        <li>
+            <code>show_first_teacher_photo</code>
+            <br>show the image of the first teacher (usually used in conjunction with hide_photo to show the teacher photo rather than the program photo)
+        </li>
+        <li>
+            <code>show_first_price</code>
+            <br>show the first/lowest price. Outputs "From $xxxx.xx".
+        </li>
+        <li>
+            <code>show_price_details</code>
+            <br>show the full price list. Outputs a full price list.
+        </li>
+        <li>
+            <code>show_more_link="see more..."</code>
+            <br>show a link to prompt guests to see more about the program.
+            <br><small>Optionally add a value to customize the text.</small>
+        </li>
+        <li>
+            <code>show_availability="Spaces"</code>
+            <br>show the number of available spaces left.
+            <br><small>Optionally add a value to customize the label text.</small>
+        </li>
+        <li>
+            <code>show_availability_words="Availability"</code>
+            <br>show the availability as a word eg: 'Nearly full'.
+            <br><small>Optionally add a value to customize the label text.</small>
+        </li>
     </ul>
+
+    <style>.rs-connect-help-show-program-list li { margin-top: 2% !important; }</style>
+
     <p><code>[rs_programs show_first_teacher_photo show_first_price show_price_details show_more_link="see more..." show_availability="Spaces" show_availability_words="Availability"]</code></p>
 
     <h3>Add a link directly to the registration form</h3>
