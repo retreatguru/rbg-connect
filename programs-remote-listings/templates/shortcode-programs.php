@@ -62,24 +62,20 @@ if (! empty($rs_the_programs)) {
                 <div class="rs-program-price-details"><?php echo $program->price_details; ?></div>
             <?php endif; ?>
 
-            <?php if (! empty($show_availability)) : ?>
-                <div class="rs-availability">
-                <?php if (! empty($program->registration_spaces_available)) : ?>
-                    <?php echo $show_availability ?: 'Spaces'.' '.$program->registration_spaces_available; ?>
-                <?php endif; ?>
+            <?php if (! empty($show_availability) && ! empty($program->registration_spaces_available)) : ?>
+                <div class="rs-availability"><?php echo is_string($show_availability) ? $show_availability : 'Spaces'; ?>
+                    <span class="rs-availability-number"> <?php echo $program->registration_spaces_available; ?></span>
                 </div>
             <?php endif; ?>
 
-            <?php if (! empty($show_availability_words)) : ?>
-                <div class="rs-availability-words">
-                    <?php if (! empty($program->registration_spaces_available_words)) : ?>
-                        <?php echo $show_availability_words ?: 'Availability'.' '.$program->registration_spaces_available_words; ?>
-                    <?php endif; ?>
+            <?php if (! empty($show_availability_words) && ! empty($program->registration_spaces_available_words)) : ?>
+                <div class="rs-availability-words"><?php echo is_string($show_availability_words) ? $show_availability_words : 'Availability'; ?>
+                    <span class="rs-availability-words-value"><?php echo $program->registration_spaces_available_words; ?></span>
                 </div>
             <?php endif; ?>
 
             <?php if (! empty($show_more_link)) : ?>
-                <a href="<?php echo $details_url; ?>" target="_blank">see more +</a><br>
+                <a href="<?php echo $details_url; ?>" target="_blank"><?php echo is_string($show_more_link) ? $show_more_link : ' see more...'; ?></a><br>
             <?php endif; ?>
 
             <?php if (! empty($show_register_link)) : ?>
