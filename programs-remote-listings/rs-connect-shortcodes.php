@@ -22,6 +22,7 @@ class RS_Connect_Shortcodes {
         $vars = 'fields=_program_base_,_program_registration_';
 
         if (empty($shortcode_atts['table'])) {
+            $vars .= ',price_details';
             $template = 'shortcode-programs.php';
         } else {
             $vars .= ',price_details,price_first,custom_fields';
