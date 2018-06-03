@@ -19,12 +19,17 @@
 
     <p><code>[rs_programs hide_photo hide_date hide_location hide_discount hide_text]</code></p>
 
-    <p>Showing extra items that are not enabled by default:</p>
-    <p>
-        - show_first_teacher_photo - show the image of the first teacher (usually used in conjunction with hide_photo to show the teacher photo rather than the program photo)<br>
-        - show_first_price - show the first/lowest price. Outputs "From $xxxx.xx".<br>
-    </p>
-    <p><code>[rs_programs show_first_teacher_photo show_first_price]</code></p>
+    <h3>Showing extra items that are not enabled by default:</h3>
+    <p>If you want to add additional information on the program list page, you can add the following attributes.</p>
+    <ul>
+        <li><code>show_first_teacher_photo</code><br>show the image of the first teacher (usually used in conjunction with hide_photo to show the teacher photo rather than the program photo)</li>
+        <li><code>show_first_price</code><br>show the first/lowest price. Outputs "From $xxxx.xx".</li>
+        <li><code>show_price_details</code><br>show the full price list. Outputs a full price list.</li>
+        <li><code>show_more_link="see more..."</code><br>show a link to prompt guests to see more about the program. Optionally add a value to customize the text.</li>
+        <li><code>show_availability="Spaces"</code><br>show the number of available spaces left. Optionally add a value to customize the label text.</li>
+        <li><code>show_availability_words="Availability"</code><br>show the availability as a word eg: 'Nearly full'. Optionally add a value to customize the label text.</li>
+    </ul>
+    <p><code>[rs_programs show_first_teacher_photo show_first_price show_price_details show_more_link="see more..." show_availability="Spaces" show_availability_words="Availability"]</code></p>
 
     <h3>Add a link directly to the registration form</h3>
     <p>To add a link underneath each program that points directly to the registration form, you can add the following attribute to the shortcode:</p>
