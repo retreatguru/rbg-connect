@@ -58,6 +58,30 @@ if (! empty($rs_the_programs)) {
                 <div class="rs-program-first-price">From <?php echo $program->price_first; ?></div>
             <?php endif; ?>
 
+            <?php if (! empty($show_price_details) && ! empty($program->price_details)) : ?>
+                <div class="rs-program-price-details"><?php echo $program->price_details; ?></div>
+            <?php endif; ?>
+
+            <?php if (! empty($show_availability)) : ?>
+                <div class="rs-availability">
+                <?php if (! empty($program->registration_spaces_available)) : ?>
+                    <?php echo $show_availability ?: 'Spaces'.' '.$program->registration_spaces_available; ?>
+                <?php endif; ?>
+                </div>
+            <?php endif; ?>
+
+            <?php if (! empty($show_availability_words)) : ?>
+                <div class="rs-availability-words">
+                    <?php if (! empty($program->registration_spaces_available_words)) : ?>
+                        <?php echo $show_availability_words ?: 'Availability'.' '.$program->registration_spaces_available_words; ?>
+                    <?php endif; ?>
+                </div>
+            <?php endif; ?>
+
+            <?php if (! empty($show_more_link)) : ?>
+                <a href="<?php echo $details_url; ?>" target="_blank">see more +</a><br>
+            <?php endif; ?>
+
             <?php if (! empty($show_register_link)) : ?>
                 <?php
                 // todo: this is messy. why check for bookable and then also for action. and why insert 'closed' we should get most everything here from api
