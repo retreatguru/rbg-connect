@@ -299,12 +299,12 @@ class RS_Connect
             $inline_styles .= $this->options['rs_template']['css'];
         }
 
+        wp_add_inline_style('rs-f', $inline_styles);
+
         if (isset($this->options['rs_template']['js'])) {
             $inline_script = $this->options['rs_template']['js'];
             wp_add_inline_script('rs-js', $inline_script);
         }
-
-        wp_add_inline_style('rs-f', $inline_styles);
     }
 
     public function enqueue_footer_items()
