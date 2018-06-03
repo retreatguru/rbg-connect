@@ -154,6 +154,21 @@
                     </fieldset>
                 </td>
             </tr>
+            <tr>
+                <th scope="row">Insert Javascript (for Developers)</th>
+                <td>
+                    <?php if (current_user_can('activate_plugins')) : ?>
+                        <fieldset id="rs-connect-settings-show-theme-js">
+                            Add JavaScript code below. <strong>* Warning * Be careful, this could break the listings pages</strong><br/>
+                            <label>
+                            <textarea name="rs_remote_settings[rs_template][js]"
+                                      type="text" style="width:700px; height:200px;"
+                                      id="rs_remote_settings[rs_template][js]"
+                            ><?php if (isset($options['rs_template']['js'])) echo trim($options['rs_template']['js']); ?></textarea><br/>
+                        </fieldset>
+                    <?php endif; ?>
+                </td>
+            </tr>
             <tr style="display:none;">
                 <th scope="row">Before theme & after</th>
                 <td>
