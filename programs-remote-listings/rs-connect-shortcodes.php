@@ -25,7 +25,7 @@ class RS_Connect_Shortcodes {
             $vars .= ',price_details';
             $template = 'shortcode-programs.php';
         } else {
-            $vars .= ',price_details,price_first,custom_fields';
+            $vars .= ',price_details,teacher_details,price_first,custom_fields';
             $template = 'shortcode-programs-table.php';
         }
 
