@@ -116,7 +116,7 @@ class RS_Connect
         $program_slug = ! empty($args['rs_program_slug']) ? $args['rs_program_slug'] : '';
 
         if ($program_slug) {
-            $program = RS_Connect_Api::get_programs('name='.$program_slug);
+            $program = RS_Connect_Api::get_programs('fields=slug&name='.$program_slug);
             if ($program && ! empty($program->ID)) {
                 $parse_request->query_vars['rs_program'] = $program->ID;
             }
