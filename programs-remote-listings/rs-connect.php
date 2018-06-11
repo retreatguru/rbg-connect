@@ -35,6 +35,7 @@ class RS_Connect
 
         add_filter('query_vars', array($this, 'register_query_var'));
         add_action('wp_enqueue_scripts', array($this, 'enqueue_header_items'));
+        add_action('admin_enqueue_scripts', array($this, 'enqueue_admin_header_items'));
 
         add_filter('body_class', array($this, 'body_classes'));
         add_action('template_redirect', array($this, 'receive_preview_request'));
@@ -313,6 +314,12 @@ class RS_Connect
             wp_register_script('rs-ga-js', plugins_url('/resources/frontend/rs_ga.js', __FILE__), null, self::$plugin_version, true);
             wp_print_scripts('rs-ga-js');
         }
+    }
+
+    public function enqueue_admin_header_items()
+    {
+        wp_enqueue_script('rs-js', plugins_url('/resources/admin/rs-admin.js', __FILE__), array('jquery'), self::$plugin_version);
+        wp_enqueue_style('rs-f', plugins_url('/resources/admin/rs.css', __FILE__), null, self::$plugin_version);
     }
 
     public function configured()

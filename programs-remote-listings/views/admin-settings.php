@@ -155,18 +155,23 @@
                 </td>
             </tr>
             <tr>
-                <th scope="row">Insert Javascript (for Developers)</th>
+                <th><a href="javascript:;" id="rs-plugin-settings-show-advanced">Show advanced settings +</a></th>
+            </tr>
+            <tr class="rs-plugin-settings-advanced-container" style="<?php echo empty($options['rs_template']['js']) ? 'display: none' : ''; ?>">
+                <th scope="row">Advanced Settings<br><small>(for developers)</small></th>
                 <td>
-                    <?php if (current_user_can('activate_plugins')) : ?>
-                        <fieldset id="rs-connect-settings-show-theme-js">
-                            Add JavaScript code below. <strong>* Warning * Be careful, this could break the listings pages</strong><br/>
-                            <label>
+                    <div>
+                        <?php if (current_user_can('activate_plugins')) : ?>
+                            <fieldset id="rs-connect-settings-show-theme-js">
+                                Add JavaScript code below. <strong>* Warning * Be careful, this could break the listings pages</strong><br/>
+                                <label>
                             <textarea name="rs_remote_settings[rs_template][js]"
                                       type="text" style="width:700px; height:200px;"
                                       id="rs_remote_settings[rs_template][js]"
                             ><?php if (isset($options['rs_template']['js'])) echo trim($options['rs_template']['js']); ?></textarea><br/>
-                        </fieldset>
-                    <?php endif; ?>
+                            </fieldset>
+                        <?php endif; ?>
+                    </div>
                 </td>
             </tr>
             <tr style="display:none;">
