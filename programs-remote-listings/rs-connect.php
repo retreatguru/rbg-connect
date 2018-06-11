@@ -312,14 +312,6 @@ class RS_Connect
         return wp_trim_words($description, $limit);
     }
 
-    public function enqueue_footer_items()
-    {
-        if (! empty($this->options['google_analytics_enable'])) {
-            wp_register_script('rs-ga-js', plugins_url('/resources/frontend/rs_ga.js', __FILE__), null, self::$plugin_version, true);
-            wp_print_scripts('rs-ga-js');
-        }
-    }
-
     public function enqueue_header_items()
     {
         wp_enqueue_script('rs-js', plugins_url('/resources/frontend/rs.js', __FILE__), array('jquery'), self::$plugin_version);
@@ -348,10 +340,12 @@ class RS_Connect
         }
     }
 
-    public function enqueue_admin_header_items()
+    public function enqueue_footer_items()
     {
-        wp_enqueue_script('rs-js', plugins_url('/resources/admin/rs-admin.js', __FILE__), array('jquery'), self::$plugin_version);
-        wp_enqueue_style('rs-f', plugins_url('/resources/admin/rs.css', __FILE__), null, self::$plugin_version);
+        if (! empty($this->options['google_analytics_enable'])) {
+            wp_register_script('rs-ga-js', plugins_url('/resources/frontend/rs_ga.js', __FILE__), null, self::$plugin_version, true);
+            wp_print_scripts('rs-ga-js');
+        }
     }
 
     public function enqueue_admin_header_items()
