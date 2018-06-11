@@ -14,7 +14,13 @@ $teacher_word = $teacher_details->title_plural ?: 'Hosts';
             <th class="rs-dates"><?php echo is_string($show_date) ? $show_date : 'Dates'; ?></th>
         <?php endif; ?>
         <?php if (! empty($show_title)) : ?>
-            <th class="rs-title"><?php _e($programs_page_title) ?></th>
+            <th class="rs-title">
+            <?php if (is_string($show_title)) : ?>
+                <?php echo $show_title; ?>
+            <?php else: ?>
+                <?php _e($programs_page_title); ?>
+            <?php endif; ?>
+            </th>
         <?php endif; ?>
             <?php if (! empty($extra_display_field)): ?><th class="rs-custom-field"><?php echo $extra_display_field; ?></th>
         <?php endif; ?>
