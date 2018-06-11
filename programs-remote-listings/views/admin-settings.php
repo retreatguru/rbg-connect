@@ -84,6 +84,25 @@
                 </td>
             </tr>
             <tr>
+                <th scope="row">Listing page URL format</th>
+                <td>
+                    <p>Chose the format of the listing page URLs eg: <code>programs/123/program-title-slug</code></p>
+                    <fieldset>
+                        <label>
+                            <input type="radio" name="rs_remote_settings[listing_page_url_format]" value="id"
+                                <?php echo ! empty($options['listing_page_url_format']) ? checked($options['listing_page_url_format'], 'id') : 'checked="checked"'; ?>>
+                            Use IDs eg: <code>programs/123/program-title-slug</code>
+                        </label>
+                        <br>
+                        <label>
+                            <input type="radio" name="rs_remote_settings[listing_page_url_format]" value="slug"
+                                <?php checked($options['listing_page_url_format'], 'slug'); ?>>
+                            Don't use IDs eg: <code>programs/program-title-slug</code>
+                        </label>
+                    </fieldset>
+                </td>
+            </tr>
+            <tr>
                 <th scope="row">Image thumbnails</th>
                 <td>
                     <fieldset>
