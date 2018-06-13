@@ -141,9 +141,9 @@ $teacher_word = $teacher_details->title_plural ?: 'Hosts';
             <?php if (! empty($show_register_link)) : ?>
                 <td class="rs-show-register-link">
                     <?php if ($program->registration_wait_list): ?>
-                        <a href="<?php echo $program->registration_link; ?>" target="_blank">Join waiting list</a>
+                        <a href="<?php echo $program->registration_link; ?>" target="_blank"><?php echo ! empty($wait_list_text) && is_string($wait_list_text) ? $wait_list_text : ' Join waiting list'; ?></a>
                     <?php elseif ($program->registration_bookable): ?>
-                        <a href="<?php echo $program->registration_link; ?>" target="_blank">Register now</a>
+                        <a href="<?php echo $program->registration_link; ?>" target="_blank"><?php echo is_string($show_register_link) ? $show_register_link : ' Register Now'; ?></a>
                     <?php else: ?>
                         <?php if (empty($program->registration_action)) { echo 'Closed'; } else { echo $program->registration_action; } ?>
                     <?php endif; ?>

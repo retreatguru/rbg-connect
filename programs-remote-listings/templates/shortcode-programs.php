@@ -75,7 +75,7 @@ if (! empty($rs_the_programs)) {
             <?php endif; ?>
 
             <?php if (! empty($show_more_link)) : ?>
-                <a href="<?php echo $details_url; ?>" target="_blank"><?php echo is_string($show_more_link) ? $show_more_link : ' see more...'; ?></a><br>
+                <a class="rs-program-see-more-link" href="<?php echo $details_url; ?>" target="_blank"><?php echo is_string($show_more_link) ? $show_more_link : ' see more...'; ?></a><br>
             <?php endif; ?>
 
             <?php if (! empty($show_register_link)) : ?>
@@ -84,9 +84,10 @@ if (! empty($rs_the_programs)) {
                 // todo: identical logic is also duplicated in table view
                 ?>
                 <?php if ($program->registration_wait_list): ?>
-                    <a href="<?php echo $program->registration_link; ?>" target="_blank">Join waiting list</a>
+                    <a class="rs-program-register-link rs-program-wait-list-link" href="<?php echo $program->registration_link; ?>"
+                       target="_blank"><?php echo ! empty($wait_list_text) && is_string($wait_list_text) ? $wait_list_text : ' Join waiting list'; ?></a>
                 <?php elseif ($program->registration_bookable): ?>
-                    <a href="<?php echo $program->registration_link; ?>" target="_blank">Register Now</a>
+                    <a class="rs-program-register-link" href="<?php echo $program->registration_link; ?>" target="_blank"><?php echo is_string($show_register_link) ? $show_register_link : ' Register Now'; ?></a>
                 <?php else: ?>
                     <?php if (empty($program->registration_action)) { echo 'Closed'; } else { echo $program->registration_action; } ?>
                 <?php endif; ?>

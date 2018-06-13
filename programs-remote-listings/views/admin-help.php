@@ -36,6 +36,10 @@
             <br>show the full price list. Outputs a full price list.
         </li>
         <li>
+            <code>show_price_first</code>
+            <br>show the lowest of the prices eg. From $50
+        </li>
+        <li>
             <code>show_more_link="see more..."</code>
             <br>show a link to prompt guests to see more about the program.
             <br><small>Optionally add a value to customize the text.</small>
@@ -47,19 +51,28 @@
         </li>
         <li>
             <code>show_availability_words="Availability"</code>
-            <br>show the availability as a word eg: 'Nearly full'.
+            <br>show the availability as a word eg: 'Full'.
             <br><small>Optionally add a value to customize the label text.</small>
+        </li>
+        <li>
+            <code>show_register_link="Register"</code>
+            <br>show a button to link directly to the registration form.
+            <br><small>Optionally add a value to customize the text.</small>
+        </li>
+        <li>
+            <code>wait_list_text="Join waiting list"</code>
+            <br>Customize the text for the Join waiting list button.
         </li>
     </ul>
 
     <style>.rs-connect-help-show-program-list li { margin-top: 2% !important; }</style>
 
-    <p><code>[rs_programs show_first_teacher_photo show_first_price show_price_details show_more_link="see more..." show_availability="Spaces" show_availability_words="Availability"]</code></p>
+    <p><code>[rs_programs show_first_teacher_photo show_first_price show_price_details show_more_link="see more..." show_availability="Spaces" show_availability_words="Availability" show_register_link="Register Now" wait_list_text="Join waiting list"]</code></p>
 
     <h3>Add a link directly to the registration form</h3>
     <p>To add a link underneath each program that points directly to the registration form, you can add the following attribute to the shortcode:</p>
 
-    <p><code>[rs_programs show_register_link]</code></p>
+    <p><code>[rs_programs show_register_link="Register now"]</code></p>
 
     <h3>Table view</h3>
     <p>This view is useful when your programs are mainly identical except for the dates, location or teachers. You can decide what data to show in the table list. All items are optional. A simple and
@@ -67,7 +80,7 @@
 
     <p><code>[rs_programs table show_date show_register_link]</code></p>
 
-    <p><code>[rs_programs table show_title="Retreats" show_date="Dates" show_availability="Available Spots" show_availability_words="Availability" show_teachers="Hosts" show_location="Location" show_price_details="Price" show_price_first="Price from" show_more_link="Details" show_register_link="Register"]</code></p>
+    <p><code>[rs_programs table show_title="Retreats" show_date="Dates" show_availability="Spaces" show_availability_words="Availability" show_teachers="Hosts" show_location="Location" show_price_details="Price" show_price_first="Price from" show_more_link="Details" show_register_link="Register" wait_list_text="Join waiting list"]</code></p>
 
     <p>Program extra display fields can be accesses using <code>extra_display_field="My Title"</code> where "My Title" is the exact title of the extra display field as set when editing the program.</p>
 
