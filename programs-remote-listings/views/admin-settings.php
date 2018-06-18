@@ -161,7 +161,7 @@
                 <th scope="row">Advanced Settings<br><small>(for developers)</small></th>
                 <td>
                     <div>
-                        <?php if (current_user_can('activate_plugins')) : ?>
+                        <?php if (current_user_can('publish_pages')) : ?>
                             <fieldset id="rs-connect-settings-show-theme-js">
                                 Add JavaScript code below. <strong>* Warning * Be careful, this could break the listings pages</strong><br/>
                                 <label>
