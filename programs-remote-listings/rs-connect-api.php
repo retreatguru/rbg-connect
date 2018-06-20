@@ -36,8 +36,8 @@ class RS_Connect_Api
         $base_domain = 'secure.retreat.guru';
         $http = 'https://';
 
-        if (isset($_SERVER['SERVER_NAME']) && 'programs-remote.dev' == $_SERVER['SERVER_NAME']) {
-            $base_domain = 'programs.dev';
+        if (isset($_SERVER['SERVER_NAME']) && 'rgconnect.test' == $_SERVER['SERVER_NAME']) {
+            $base_domain = 'rbgapp.com';
             $http = 'http://';
         }
 

@@ -5,7 +5,7 @@ global $shortcode_atts;
 global $rs_the_program;
 $options = get_option('rs_remote_settings');
 
-$datetime_title = ! empty($rs_the_program->datetime_title) ? $rs_the_program->datetime_title : 'Date &amp; Time Details:';
+$date_title = ! empty($rs_the_program->date_title) ? $rs_the_program->date_title : 'Date &amp; Time Details:';
 $location_title = ! empty($rs_the_program->location_title) ? $rs_the_program->location_title : 'Location:';
 $address_title = ! empty($rs_the_program->address_title) ? $rs_the_program->address_title : 'Address:';
 
@@ -38,7 +38,7 @@ if (is_array($shortcode_atts)) extract($shortcode_atts); ?>
 
                 <?php // Datetime details ?>
                 <?php if ($rs_the_program->date_time) : ?>
-                    <p class="rs-program-datetime"><span class="rs-program-label"><?php echo $datetime_title; ?></span> <?php echo $rs_the_program->date_time; ?></p>
+                    <p class="rs-program-datetime"><span class="rs-program-label"><?php echo $date_title; ?></span> <?php echo $rs_the_program->date_time; ?></p>
                 <?php endif; ?>
 
                 <?php // Location ?>
