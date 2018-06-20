@@ -9,16 +9,28 @@
     <form action="options.php" method="post"><?php
         settings_fields('rs_remote_settings');
         do_settings_sections(__FILE__);
-        $options = get_option('rs_remote_settings'); ?>
+        $options = get_option('rs_remote_settings');
+        $rs_domain = (! empty($options['rs_domain']) && $options['rs_domain'] != '') ? $options['rs_domain'] : '';
+        $base_domain = '.secure.retreat.guru';
+        $http = 'https://';
+
+        if (isset($_SERVER['SERVER_NAME']) && ('rgconnect.test' == $_SERVER['SERVER_NAME'] || 'qa-testing.booking-demo.com' == $_SERVER['SERVER_NAME'])) {
+            $base_domain = '.rbgapp.com';
+            $http = 'http://';
+        }
+
+        $site_link = $http.$rs_domain.$base_domain.'/wp-admin';
+
+        ?>
         <table class="form-table">
             <tr>
                 <th scope="row">Subdomain</th>
                 <td>
                     <fieldset>
-                        <label><?php $rs_domain = (! empty($options['rs_domain']) && $options['rs_domain'] != '') ? $options['rs_domain'] : ''; ?>
-                            https:// <input name="rs_remote_settings[rs_domain]" type="text" id="rs_domain"
-                                            value="<?php echo $rs_domain; ?>"/>
-                            .secure.retreat.guru<br/>
+                        <label><?php  ?>
+                            <?php echo $http; ?>
+                            <input name="rs_remote_settings[rs_domain]" type="text" id="rs_domain" value="<?php echo $rs_domain; ?>"/>
+                            <a target="_blank" href="<?php echo $site_link; ?>"> <?php echo $base_domain; ?></a><br/>
                         </label> <?php if(empty($rs_domain)) { echo "<span style='color:red;'>Required</span>"; } ?>
                     </fieldset>
                 </td>
