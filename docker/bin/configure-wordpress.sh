@@ -42,4 +42,4 @@ wp post create --post_type=page --post_title='Shortcode Event List Table Less' -
 wp post create --post_type=page --post_title='Shortcode Event List Table by Category' --post_status=publish --post_content="[rs_programs table show_title show_date category='plant-medicine']"
 
 # Set default posts to host content to Events and Teachers
-wp option update rs_remote_settings --format=json '{"rs_domain":"tests", "page": {"programs": 3, "teachers": 4}}'
+wp option update rs_remote_settings --format=json '{"rs_domain":"tests", "page": {"programs": 4, "teachers": 5}}'
