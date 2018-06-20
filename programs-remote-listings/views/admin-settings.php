@@ -60,7 +60,7 @@
                                 'sort_order' => 'asc',
                                 'sort_column' => 'post_title',
                                 'post_type' => 'page',
-                                'post_status' => 'publish,private',
+                                'post_status' => 'publish,private,draft',
                             );
                             $pages = get_pages($args);
 
