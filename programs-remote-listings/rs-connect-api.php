@@ -36,7 +36,7 @@ class RS_Connect_Api
         $base_domain = 'secure.retreat.guru';
         $http = 'https://';
 
-        if (isset($_SERVER['SERVER_NAME']) && 'rgconnect.test' == $_SERVER['SERVER_NAME']) {
+        if (isset($_SERVER['SERVER_NAME']) && ('rgconnect.test' == $_SERVER['SERVER_NAME'] || 'qa-testing.booking-demo.com' ==  $_SERVER['SERVER_NAME'])) {
             $base_domain = 'rbgapp.com';
             $http = 'http://';
         }
