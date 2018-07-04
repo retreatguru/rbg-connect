@@ -23,5 +23,3 @@ env:
             config:
                 PhpBrowser:
                     url: 'http://rgconnect.test'
-
-

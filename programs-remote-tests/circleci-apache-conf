@@ -5,7 +5,7 @@
 
   DocumentRoot /home/ubuntu/rbg-connect
   DirectoryIndex index.php
-  ServerName programsconnect.dev
+  ServerName rgconnect.test
   <FilesMatch \.php$>
     SetHandler application/x-httpd-php
   </FilesMatch>
