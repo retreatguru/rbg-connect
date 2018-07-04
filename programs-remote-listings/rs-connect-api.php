@@ -41,7 +41,7 @@ class RS_Connect_Api
             $http = 'http://';
         }
 
-        $sub_domain = ! empty($options['rs_domain']) ? $options['rs_domain'] : 'demo.qa0';
+        $sub_domain = ! empty($options['rs_domain']) ? $options['rs_domain'] : 'tests.qa0';
 
         return $http.$sub_domain.'.'.$base_domain;
     }

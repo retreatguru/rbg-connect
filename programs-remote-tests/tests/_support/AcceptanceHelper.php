@@ -12,7 +12,7 @@ class AcceptanceHelper extends \Codeception\Module
 
         // Save settings
         $I->amOnPage('/wp-admin/admin.php?page=options-mbm');
-        $I->fillField('#rs_domain', 'tests');
+        $I->fillField('#rs_domain', 'tests.qa0');
         $I->selectOption('#page-programs', $programPage);
         $I->selectOption('#page-teachers', $teacherPage);
         $I->click('Save');

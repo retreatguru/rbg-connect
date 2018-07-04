@@ -62,7 +62,7 @@ class ProgramsCest
         $I->see('Mauris placerat eleifend leo. Quisque sit amet est et sapien ullamcorper pharetra');
         $I->see('Header Level 3');
         $I->see('Vestibulum auctor dapibus neque');
-        $I->see('Teachers');
+        $I->see('Leaders');
         $I->see('Learn more about Yogi Bear Test');
         $I->see('A yogi is a practitioner of yoga');
         $I->see('Learn more about Kumare Test');
