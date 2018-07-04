@@ -13,7 +13,7 @@ if (! empty($rs_the_programs)) {
     foreach($rs_the_programs as $program):
 
         $image_size = ! empty($options['rs_template']['image_size']) ? $options['rs_template']['image_size'] : 'medium';
-        $details_url = $program->alternate_url ? $program->alternate_url : $RS_Connect->get_page_url('programs').$program->ID.'/'.$program->slug; ?>
+        $details_url = $program->alternate_url ? $program->alternate_url : $RS_Connect->get_page_url('programs').$RS_Connect->get_single_page_url($program); ?>
 
         <?php // todo: the program categories should be appended with rs-program-category- ?>
         <div class="rs-program rs-group <?php foreach($program->categories as $category) {echo $category->slug . " ";} ?>"

@@ -100,7 +100,7 @@ if (is_array($shortcode_atts)) extract($shortcode_atts); ?>
                         count($rs_the_program->teacher_details->teacher_objects)) ?></h2>
 
                 <?php foreach ($rs_the_program->teacher_details->teacher_objects as $teacher) : ?>
-                    <?php $teacher_url = $RS_Connect->get_page_url('teachers') . $teacher->ID . '/' . $teacher->slug; ?>
+                    <?php $teacher_url = $RS_Connect->get_page_url('teachers').$RS_Connect->get_single_page_url($teacher); ?>
                     <div class="teacher" style="clear:left; position:relative;">
                         <?php if (isset($teacher->photo_details->medium)) { ?>
                             <div

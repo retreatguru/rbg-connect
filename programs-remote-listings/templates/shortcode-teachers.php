@@ -7,7 +7,7 @@ $image_size = ! empty($options['rs_template']['image_size']) ? $options['rs_temp
 if (is_array($shortcode_atts)) extract($shortcode_atts);
 if (! empty($rs_the_teachers)) {
     foreach ($rs_the_teachers as $teacher) :
-        $details_url = $RS_Connect->get_page_url('teachers').$teacher->ID.'/'.$teacher->slug; ?>
+        $details_url = $RS_Connect->get_page_url('teachers').$RS_Connect->get_single_page_url($teacher); ?>
         <div class="rs-teacher rs-group">
             <div class="teacher type-teacher status-publish has-post-thumbnail hentry rs-teacher rs-group"
             id="rs-single-teacher-id-<?php echo $teacher->ID; ?>">

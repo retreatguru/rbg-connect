@@ -30,7 +30,7 @@ if (is_array($shortcode_atts)) extract($shortcode_atts); ?>
                 <h3 style="margin-top: 30px;">Events with <?php echo $rs_the_teacher->name; ?></h3>
 
                 <?php foreach($rs_the_teacher->programs as $program) : ?>
-                    <?php $program_url = $RS_Connect->get_page_url('programs').$program->ID.'/'.$program->slug; ?>
+                    <?php $program_url = $RS_Connect->get_page_url('programs').$RS_Connect->get_single_page_url($program); ?>
                     <div class="program" style="float:left; clear:left;">
                         <?php if(! empty($program->photo_details->thumbnail->url)) : ?>
                         <a href="<?php echo $program_url; ?>"><img src="<?php echo $program->photo_details->thumbnail->url; ?>" style="float:left; margin:5px 15px 15px 0;"></a>

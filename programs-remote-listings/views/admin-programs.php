@@ -14,7 +14,7 @@ $rs_programs = RS_Connect_Api::get_programs();
 
     <tbody>
     <?php foreach ((array) $rs_programs as $program): ?>
-        <?php $details_url = $program->alternate_url ? $program->alternate_url : $RS_Connect->get_page_url('programs').$program->ID.'/'.$program->slug; ?>
+        <?php $details_url = $program->alternate_url ? $program->alternate_url : $RS_Connect->get_page_url('programs').$RS_Connect->get_single_page_url($program); ?>
         <tr>
             <td>
                 <a href="<?php echo RS_Connect_Api::get_base_url(); ?>/wp-admin/post.php?action=edit&post=<?php echo $program->ID; ?>"><?php echo $program->title; ?></a>

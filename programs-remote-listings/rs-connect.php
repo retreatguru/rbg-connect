@@ -43,6 +43,8 @@ class RS_Connect
 
         add_action('init', array('RS_Upgrade_Remote', 'init'));
         add_filter('wp', array($this, 'remove_rel_canonical'));
+
+        add_filter('parse_request', array($this, 'filter_parse_request'));
     }
 
     public function includes()
@@ -74,10 +76,12 @@ class RS_Connect
         $programs_page_slug = $programs_page->post_name;
         add_rewrite_rule($programs_page_slug.'/category/([^/]*)/?',
             'index.php?page_id='.$programs_page->ID.'&rs_category=$matches[1]', 'top');
-        add_rewrite_rule($programs_page_slug.'/([^/]*)/?',
+        add_rewrite_rule($programs_page_slug.'/(\d[^/]*)/?',
             'index.php?page_id='.$programs_page->ID.'&rs_program=$matches[1]', 'top');
         add_rewrite_rule($programs_page_slug.'/([^/]*)/([^/]*)/?',
             'index.php?page_id='.$programs_page->ID.'&rs_program=$matches[1]', 'top');
+        add_rewrite_rule($programs_page_slug.'/([^\d/]*)/?',
+            'index.php?page_id='.$programs_page->ID.'&rs_program_slug=$matches[1]', 'top');
 
         // Teachers
         $teachers_page = $this->get_page('teachers');
@@ -104,6 +108,21 @@ class RS_Connect
             'index.php?page_id='.$teachers_page->ID.'&rs_category=$matches[1]', 'top');
         add_rewrite_rule('teacher/([^/]*)/([^/]*)/?',
             'index.php?page_id='.$teachers_page->ID.'&rs_teacher=$matches[1]', 'top');
+    }
+
+    public function filter_parse_request($parse_request)
+    {
+        $args = wp_parse_args($parse_request->matched_query);
+        $program_slug = ! empty($args['rs_program_slug']) ? $args['rs_program_slug'] : '';
+
+        if ($program_slug) {
+            $program = RS_Connect_Api::get_programs('fields=slug&name='.$program_slug);
+            if ($program && ! empty($program->ID)) {
+                $parse_request->query_vars['rs_program'] = $program->ID;
+            }
+        }
+
+        return $parse_request;
     }
 
     public function register_query_var($vars)
@@ -229,6 +248,19 @@ class RS_Connect
         $entity_base = $this->get_page($type);
 
         return get_permalink($entity_base->ID);
+    }
+
+    public function get_single_page_url($object)
+    {
+        $options = get_option('rs_remote_settings');
+
+        if (! empty($options['listing_page_url_format']) && $options['listing_page_url_format'] == 'slug') {
+            $url = $object->slug;
+        } else {
+            $url = $object->ID.'/'.$object->slug;
+        }
+
+        return $url;
     }
 
     public function admin_add_menu_items()
