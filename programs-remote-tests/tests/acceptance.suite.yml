@@ -11,17 +11,17 @@ modules:
         - AcceptanceHelper
     config:
         PhpBrowser:
-            url: 'http://rgconnect.dev'
+            url: 'http://rgconnect.test'
 env:
     ci:
         modules:
             config:
                 PhpBrowser:
-                    url: 'http://programsconnect.dev'
+                    url: 'http://rgconnect.test'
     docker:
         modules:
             config:
                 PhpBrowser:
-                    url: 'http://rgconnect.dev'
+                    url: 'http://rgconnect.test'
 
 
