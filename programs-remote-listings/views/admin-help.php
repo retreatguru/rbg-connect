@@ -19,6 +19,9 @@
 
     <p><code>[rs_programs hide_photo hide_date hide_location hide_discount hide_text]</code></p>
 
+    <p>You can also limit the number of programs that are shown in the list view or the table view.</p>
+    <p><code>[rs_programs limit="10"]</code></p>
+
     <h3>Showing extra items that are not enabled by default:</h3>
     <p>If you want to add additional information on the program list page, you can add the following attributes.</p>
 
