@@ -15,8 +15,54 @@ class ShortcodesCest
         $I->dontSee('Multi Person Tiered');
     }
 
+    public function listEventsWithCustomContent(AcceptanceTester $I)
+    {
+        $I->wantTo('Set default content for the list page using shortcodes');
+        $I->loginAdmin($I);
+        $I->amOnPage('/wp-admin/edit.php?post_type=page');
+        $I->click('Shortcode Event List');
+        $I->fillField('#wp-content-editor-container textarea', '[rs_programs category="plant-medicine"]');
+        $I->click('#publish');
+
+        $I->amOnPage('/shortcode-event-list');
+        $I->see('Example Program');
+        $I->see('Exhaustive Program');
+
+        $I->wantTo('Set custom content for the list page using shortcodes');
+        $I->loginAdmin($I);
+        $I->amOnPage('/wp-admin/edit.php?post_type=page');
+        $I->click('Shortcode Event List');
+        $I->fillField('#wp-content-editor-container textarea',
+            '[rs_programs show_first_teacher_photo show_first_price show_price_details show_more_link="see more info..."'.
+            ' show_availability="Spots" show_availability_words="Spots Left" show_register_link="Apply Now"'.
+            ' wait_list_text="Join wait list"]'
+        );
+        $I->click('#publish');
+
+        $I->amOnPage('/shortcode-event-list');
+        $I->see('Example Program');
+        $I->see('Exhaustive Program');
+
+        $I->see('Exhaustive program', '.rs-program-title');
+        $I->see('With Yogi Bear Test and Kumare Test', '.rs-program-with-teachers');
+        $I->see('Flexible Dates', '.rs-program-date');
+        $I->see('Nelson', '.rs-program-location');
+        $I->see('From $100.00', '.rs-program-first-price');
+        $I->see('see more info', '.rs-program-see-more-link');
+        $I->see('Apply Now', '.rs-program-register-link');
+    }
+
     public function listEventsTable(AcceptanceTester $I)
     {
+        $I->wantTo('Set up a default list table');
+        $I->loginAdmin($I);
+        $I->amOnPage('/wp-admin/edit.php?post_type=page');
+        $I->click('Shortcode Event List Table');
+        $I->fillField('#wp-content-editor-container textarea',
+            '[rs_programs table show_title show_date show_availability show_availability_words show_teachers show_location show_price_details show_price_first show_more_link show_register_link wait_list_text]'
+        );
+        $I->click('#publish');
+
         $I->amOnPage('/shortcode-event-list-table');
 
         $I->wantTo('Verify that the headers are correct');
@@ -36,6 +82,40 @@ class ShortcodesCest
         $I->see('$800.00', '.rs-program-multi-person-tiered .rs-price-first');
         $I->see('4', '.rs-program-multi-person-tiered .rs-availability');
         $I->see('Open', '.rs-program-multi-person-tiered .rs-availability-words');
+
+        $I->wantTo('Set custom head titles for the table using shortcodes');
+        $I->amOnPage('/wp-admin/edit.php?post_type=page');
+        $I->click('Shortcode Event List Table');
+        $I->fillField('#wp-content-editor-container textarea',
+            '[rs_programs table show_title="Lux Retreats" show_date="Date" show_availability="Spots"'.
+            ' show_availability_words="Spots Left" show_teachers="Hosts" show_location="Locale"'.
+            ' show_price_details="Cost" show_price_first="Cost from" show_more_link="More info"'.
+            ' show_register_link="Apply Now" wait_list_text="Interested"]'
+        );
+        $I->click('#publish');
+
+        $I->wantTo('Verify that the custom headers are correct');
+        $I->amOnPage('/shortcode-event-list-table');
+        $I->see('Date', '.rs-program thead .rs-dates');
+        $I->see('Lux Retreats', '.rs-program thead .rs-title');
+        $I->see('Hosts', '.rs-program thead .rs-teachers');
+        $I->see('Cost', '.rs-program thead .rs-price');
+        $I->see('Cost from', '.rs-program thead .rs-price-first');
+        $I->see('More info', '.rs-program thead .rs-show-more-link');
+        $I->see('Spots', '.rs-program thead .rs-availability');
+        $I->see('Spots Left', '.rs-program thead .rs-availability-words');
+        $I->see('Apply Now', '.rs-program thead .rs-show-register-link');
+
+        $I->see('Flexible Dates', '.rs-program td.rs-dates');
+        $I->see('Lodging Hotel Program', '.rs-program td.rs-title');
+        $I->see('With Yogi Bear ', '.rs-program td.rs-teachers');
+        $I->see('Nelson ', '.rs-program td.rs-location');
+        $I->see('Discount Sale – $69.00', '.rs-program td.rs-price');
+        $I->see('$50.00', '.rs-program td.rs-price-first');
+        $I->see('View Details', '.rs-program td.rs-show-more-link');
+        $I->see('5', '.rs-program td.rs-availability');
+        $I->see('Open', '.rs-program td.rs-availability-words');
+        $I->see('Apply Now', '.rs-program td.rs-show-register-link');
     }
 
     public function eventListHideDescriptionAndLocation(AcceptanceTester $I)

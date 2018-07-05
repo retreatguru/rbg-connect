@@ -29,12 +29,12 @@ class RS_Connect_Shortcodes {
             $template = 'shortcode-programs-table.php';
         }
 
-        if (isset($atts['show_first_teacher_photo'])) {
-            $vars .= ',teacher_details';
+        if (isset($shortcode_atts['show_first_price'])) {
+            $vars .= ',price_first';
         }
 
-        if (isset($atts['show_first_price'])) {
-            $vars .= ',price_first';
+        if (isset($shortcode_atts['show_first_teacher_photo'])) {
+            $vars .= ',teacher_details';
         }
 
         if (isset($atts['category'])) {
