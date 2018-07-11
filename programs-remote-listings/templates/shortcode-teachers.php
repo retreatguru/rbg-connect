@@ -12,7 +12,7 @@ if (! empty($rs_the_teachers)) {
             <div class="teacher type-teacher status-publish has-post-thumbnail hentry rs-teacher rs-group"
             id="rs-single-teacher-id-<?php echo $teacher->ID; ?>">
                 <?php if (isset($teacher->photo_details->thumbnail)) : ?>
-                    <div class="rs-teacher-thumbnail"><a href="<?php echo $details_url; ?>"><img src="<?php echo $teacher->photo_details->{$image_size}->url; ?>" class="attachment-thumbnail wp-post-image" alt="DavidRome700" /></a></div>
+                    <div class="rs-teacher-thumbnail"><a href="<?php echo $details_url; ?>"><img src="<?php echo $teacher->photo_details->{$image_size}->url; ?>" class="attachment-thumbnail wp-post-image" alt="Teacher profile image" /></a></div>
                 <?php endif; ?>
                 <div class="rs-teacher-content-wrap">
                     <h2 class="rs-teacher-title"><a href="<?php echo $details_url; ?>"><?php echo $teacher->name; ?></a></h2>
