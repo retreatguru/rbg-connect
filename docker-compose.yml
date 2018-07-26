@@ -27,6 +27,8 @@ services:
       WORDPRESS_DB_NAME: rgconnect
       WORDPRESS_DB_USER: wp
       WORDPRESS_DB_PASSWORD: wp
+      TEST_HOST: "${TEST_HOST}"
+      TEST_SUB_DOM: "${TEST_SUB_DOM}"
     hostname: rgconnect.test
     volumes:
       - .:/var/www:cached

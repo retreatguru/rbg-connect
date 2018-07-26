@@ -11,11 +11,13 @@
         do_settings_sections(__FILE__);
         $options = get_option('rs_remote_settings');
         $rs_domain = (! empty($options['rs_domain']) && $options['rs_domain'] != '') ? $options['rs_domain'] : '';
+        $test_host = getenv('TEST_HOST');
+        $sub_domain_default = getenv('TEST_SUB_DOM') ?: 'tests';
         $base_domain = '.secure.retreat.guru';
         $http = 'https://';
 
-        if (isset($_SERVER['SERVER_NAME']) && ('rgconnect.test' == $_SERVER['SERVER_NAME'] || 'qa-testing.booking-demo.com' == $_SERVER['SERVER_NAME'])) {
-            $base_domain = '.rbgapp.com';
+        if (is_string($test_host)) {
+            $base_domain = '.'.$test_host;
             $http = 'http://';
         }
 
