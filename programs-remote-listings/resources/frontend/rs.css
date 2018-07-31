@@ -5,12 +5,18 @@
 
 /* program display */
 .rs-program, .rs-teacher { margin-bottom: 25px;}
+.rs-teacher-container {
+    backface-visibility: hidden;
+    box-shadow: none;
+    pointer-events: none;
+}
 .rs-teachers-container div.teacher { position: static !important;}
 .rs-program-list-intro { margin-bottom: 20px; }
 .rs-program-label { font-size: 85%; text-transform: uppercase; font-weight: bold; }
 /*.rs-program.important { border-top: 2px solid #ffd; padding-top: 8px; background-image: -webkit-linear-gradient(#ffd, #fff); background-image: -moz-linear-gradient(#ffe1bd, #fef9ef); }*/
 .rs-program.minor, .rs-programs-widget.minor { display: none; }
-.rs-program-thumbnail, .rs-teacher-thumbnail { float: left; margin-right: 15px; clear: left; margin-bottom: 5px;}
+.rs-program-thumbnail, .rs-teacher-thumbnail { width: 32%; margin-right: 2%; clear: left; margin-bottom: 5px; display: inline-block; }
+.rs-program-content-wrap, .rs-teacher-content-wrap { width: 64%; display: inline-block; float: right; }
 .rs-program-title, .rs-program-teacher, .rs-teacher-title, .rs-program-with-teachers { line-height: 1.2; clear: none; }
 h2.rs-program-title { margin:0!important; }
 .rs-program-photo { margin-bottom: 20px; width:100%;}
@@ -171,10 +177,24 @@ div.hasDatepicker { float: left; margin-right: 20px; }
     .rs-program.shortcode.table td, .rs-program.shortcode.table th { border-bottom: none; border-top: none; padding: 2px; text-align: center; }
 }
 
+@media only screen and (max-width: 768px)
+{
+    .rs-program-content-wrap, .rs-teacher-content-wrap, .rs-program-thumbnail, .rs-teacher-thumbnail {
+        display: block;
+        float: none;
+        width: 100%;
+    }
+}
+
 @media only screen and (max-width: 520px)
 {
     .single-program .rs-program-meta { width:100% !important; }
     .rs-program-title { padding:20px 0 0; }
+    .rs-program-thumbnail, .rs-teacher-thumbnail {
+        display: block;
+        float: none;
+        width: 100%;
+    }
 }
 
 /* teachers page responsive layout */

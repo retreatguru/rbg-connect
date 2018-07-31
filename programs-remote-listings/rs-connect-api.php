@@ -33,15 +33,17 @@ class RS_Connect_Api
     {
         $options = get_option('rs_remote_settings');
 
+        $test_host = getenv('TEST_HOST');
+        $sub_domain_default = getenv('TEST_SUB_DOM') ?: 'tests';
         $base_domain = 'secure.retreat.guru';
         $http = 'https://';
 
-        if (isset($_SERVER['SERVER_NAME']) && 'programs-remote.dev' == $_SERVER['SERVER_NAME']) {
-            $base_domain = 'programs.dev';
+        if (is_string($test_host)) {
+            $base_domain = $test_host;
             $http = 'http://';
         }
 
-        $sub_domain = ! empty($options['rs_domain']) ? $options['rs_domain'] : 'demo';
+        $sub_domain = ! empty($options['rs_domain']) ? $options['rs_domain'] : $sub_domain_default;
 
         return $http.$sub_domain.'.'.$base_domain;
     }

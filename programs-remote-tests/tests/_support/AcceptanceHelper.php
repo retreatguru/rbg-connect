@@ -8,11 +8,12 @@ class AcceptanceHelper extends \Codeception\Module
 {
     public function changeDefaultPages(\AcceptanceTester $I, $programPage, $teacherPage)
     {
+        $sub_domain_default = getenv('TEST_SUB_DOM') ?: 'tests';
         $I->loginAdmin($I);
 
         // Save settings
         $I->amOnPage('/wp-admin/admin.php?page=options-mbm');
-        $I->fillField('#rs_domain', 'tests');
+        $I->fillField('#rs_domain', $sub_domain_default);
         $I->selectOption('#page-programs', $programPage);
         $I->selectOption('#page-teachers', $teacherPage);
         $I->click('Save');

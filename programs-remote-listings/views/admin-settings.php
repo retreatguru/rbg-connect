@@ -9,16 +9,30 @@
     <form action="options.php" method="post"><?php
         settings_fields('rs_remote_settings');
         do_settings_sections(__FILE__);
-        $options = get_option('rs_remote_settings'); ?>
+        $options = get_option('rs_remote_settings');
+        $rs_domain = (! empty($options['rs_domain']) && $options['rs_domain'] != '') ? $options['rs_domain'] : '';
+        $test_host = getenv('TEST_HOST');
+        $sub_domain_default = getenv('TEST_SUB_DOM') ?: 'tests';
+        $base_domain = '.secure.retreat.guru';
+        $http = 'https://';
+
+        if (is_string($test_host)) {
+            $base_domain = '.'.$test_host;
+            $http = 'http://';
+        }
+
+        $site_link = $http.$rs_domain.$base_domain.'/wp-admin';
+
+        ?>
         <table class="form-table">
             <tr>
                 <th scope="row">Subdomain</th>
                 <td>
                     <fieldset>
-                        <label><?php $rs_domain = (! empty($options['rs_domain']) && $options['rs_domain'] != '') ? $options['rs_domain'] : ''; ?>
-                            https:// <input name="rs_remote_settings[rs_domain]" type="text" id="rs_domain"
-                                            value="<?php echo $rs_domain; ?>"/>
-                            .secure.retreat.guru<br/>
+                        <label><?php  ?>
+                            <?php echo $http; ?>
+                            <input name="rs_remote_settings[rs_domain]" type="text" id="rs_domain" value="<?php echo $rs_domain; ?>"/>
+                            <a target="_blank" href="<?php echo $site_link; ?>"> <?php echo $base_domain; ?></a><br/>
                         </label> <?php if(empty($rs_domain)) { echo "<span style='color:red;'>Required</span>"; } ?>
                     </fieldset>
                 </td>
@@ -60,7 +74,7 @@
                                 'sort_order' => 'asc',
                                 'sort_column' => 'post_title',
                                 'post_type' => 'page',
-                                'post_status' => 'publish,private',
+                                'post_status' => 'publish,private,draft',
                             );
                             $pages = get_pages($args);
 
@@ -152,6 +166,26 @@
                                   id="rs_remote_settings[rs_template][css]"
                         ><?php if (isset($options['rs_template']['css'])) echo trim($options['rs_template']['css']); ?></textarea><br/>
                     </fieldset>
+                </td>
+            </tr>
+            <tr>
+                <th><a href="javascript:;" id="rs-plugin-settings-show-advanced">Show advanced settings +</a></th>
+            </tr>
+            <tr class="rs-plugin-settings-advanced-container" style="<?php echo empty($options['rs_template']['js']) ? 'display: none' : ''; ?>">
+                <th scope="row">Advanced Settings<br><small>(for developers)</small></th>
+                <td>
+                    <div>
+                        <?php if (current_user_can('publish_pages')) : ?>
+                            <fieldset id="rs-connect-settings-show-theme-js">
+                                Add JavaScript code below. <strong>* Warning * Be careful, this could break the listings pages</strong><br/>
+                                <label>
+                            <textarea name="rs_remote_settings[rs_template][js]"
+                                      type="text" style="width:700px; height:200px;"
+                                      id="rs_remote_settings[rs_template][js]"
+                            ><?php if (isset($options['rs_template']['js'])) echo trim($options['rs_template']['js']); ?></textarea><br/>
+                            </fieldset>
+                        <?php endif; ?>
+                    </div>
                 </td>
             </tr>
             <tr style="display:none;">

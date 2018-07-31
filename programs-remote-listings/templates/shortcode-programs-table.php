@@ -4,21 +4,50 @@ global $shortcode_atts;
 global $rs_the_programs;
 if (is_array($shortcode_atts)) extract($shortcode_atts);
 $programs_page_title = $RS_Connect->get_programs_page()->post_title;
+$teacher_details = ! empty($rs_the_programs[0]) ? $rs_the_programs[0]->teacher_details->teacher_settings : [];
+$teacher_word = $teacher_details->title_plural ?: 'Hosts';
 ?>
 <table class="pure-table rs-program rs-group shortcode table">
     <thead>
     <tr>
-        <?php if (! empty($show_date)){ ?><th class="rs-dates">Dates</th><?php } ?>
-        <?php if (! empty($show_title)){ ?><th class="rs-title"><?php _e($programs_page_title) ?></th><?php } ?>
-        <?php if (! empty($extra_display_field)){ ?><th class="rs-custom-field"><?php echo $extra_display_field; ?></th><?php } ?>
-        <?php if (! empty($show_teachers)){ ?><th class="rs-teachers">Hosts</th><?php } ?>
-        <?php if (! empty($show_location)){ ?><th class="rs-location">Location</th><?php } ?>
-        <?php if (! empty($show_price_details)){ ?><th class="rs-price">Price</th><?php } ?>
-        <?php if (! empty($show_price_first)){ ?><th class="rs-price-first">Price From</th><?php } ?>
-        <?php if (! empty($show_more_link)){ ?><th class="rs-show-more-link" >Details</th><?php } ?>
-        <?php if (! empty($show_availability)){ ?><th class="rs-availability">Available Spots</th><?php } ?>
-        <?php if (! empty($show_availability_words)){ ?><th class="rs-availability-words">Availability</th><?php } ?>
-        <?php if (! empty($show_register_link)){ ?><th class="rs-show-register-link">Register</th><?php } ?>
+        <?php if (! empty($show_date)) : ?>
+            <th class="rs-dates"><?php echo is_string($show_date) ? $show_date : 'Dates'; ?></th>
+        <?php endif; ?>
+        <?php if (! empty($show_title)) : ?>
+            <th class="rs-title">
+            <?php if (is_string($show_title)) : ?>
+                <?php echo $show_title; ?>
+            <?php else: ?>
+                <?php _e($programs_page_title); ?>
+            <?php endif; ?>
+            </th>
+        <?php endif; ?>
+            <?php if (! empty($extra_display_field)): ?><th class="rs-custom-field"><?php echo $extra_display_field; ?></th>
+        <?php endif; ?>
+        <?php if (! empty($show_teachers)) : ?>
+            <th class="rs-teachers"><?php echo is_string($show_teachers) ? $show_teachers : $teacher_word; ?></th>
+        <?php endif; ?>
+        <?php if (! empty($show_location)) : ?>
+            <th class="rs-location"><?php echo is_string($show_location) ? $show_location : 'Location'; ?></th>
+        <?php endif; ?>
+        <?php if (! empty($show_price_details)) : ?>
+            <th class="rs-price"><?php echo is_string($show_price_details) ? $show_price_details : 'Price'; ?></th>
+        <?php endif; ?>
+        <?php if (! empty($show_price_first)) : ?>
+            <th class="rs-price-first"><?php echo is_string($show_price_first) ? $show_price_first : 'Price From'; ?></th>
+        <?php endif; ?>
+        <?php if (! empty($show_more_link)) : ?>
+            <th class="rs-show-more-link"><?php echo is_string($show_more_link) ? $show_more_link : 'Details'; ?></th>
+        <?php endif; ?>
+        <?php if (! empty($show_availability)) : ?>
+            <th class="rs-availability"><?php echo is_string($show_availability) ? $show_availability : 'Available Spots'; ?></th>
+        <?php endif; ?>
+        <?php if (! empty($show_availability_words)) : ?>
+            <th class="rs-availability-words"><?php echo is_string($show_availability_words) ? $show_availability_words : 'Availability'; ?></th>
+        <?php endif; ?>
+        <?php if (! empty($show_register_link)) : ?>
+            <th class="rs-show-register-link"><?php echo is_string($show_register_link) ? $show_register_link : 'Register'; ?></th>
+        <?php endif; ?>
     </tr>
     </thead>
     <tbody>
@@ -112,9 +141,9 @@ $programs_page_title = $RS_Connect->get_programs_page()->post_title;
             <?php if (! empty($show_register_link)) : ?>
                 <td class="rs-show-register-link">
                     <?php if ($program->registration_wait_list): ?>
-                        <a href="<?php echo $program->registration_link; ?>" target="_blank">Join waiting list</a>
+                        <a href="<?php echo $program->registration_link; ?>" target="_blank"><?php echo ! empty($wait_list_text) && is_string($wait_list_text) ? $wait_list_text : ' Join waiting list'; ?></a>
                     <?php elseif ($program->registration_bookable): ?>
-                        <a href="<?php echo $program->registration_link; ?>" target="_blank">Register now</a>
+                        <a href="<?php echo $program->registration_link; ?>" target="_blank"><?php echo is_string($show_register_link) ? $show_register_link : ' Register Now'; ?></a>
                     <?php else: ?>
                         <?php if (empty($program->registration_action)) { echo 'Closed'; } else { echo $program->registration_action; } ?>
                     <?php endif; ?>

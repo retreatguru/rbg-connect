@@ -8,7 +8,8 @@ $options = get_option('rs_remote_settings');
 <?php
 if (is_array($shortcode_atts)) extract($shortcode_atts); ?>
 
-<article class="page type-page status-publish entry hentry single-teacher">
+<article class="page type-page status-publish entry hentry single-teacher"
+         id="rs-single-teacher-id-<?php echo $rs_the_teacher->ID; ?>">
     <header class="entry-header">
         <h1 class="rs-program-title"><?php echo $rs_the_teacher->name; ?></h1>
     </header>

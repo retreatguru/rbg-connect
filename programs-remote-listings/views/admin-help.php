@@ -19,17 +19,63 @@
 
     <p><code>[rs_programs hide_photo hide_date hide_location hide_discount hide_text]</code></p>
 
-    <p>Showing extra items that are not enabled by default:</p>
-    <p>
-        - show_first_teacher_photo - show the image of the first teacher (usually used in conjunction with hide_photo to show the teacher photo rather than the program photo)<br>
-        - show_first_price - show the first/lowest price. Outputs "From $xxxx.xx".<br>
-    </p>
-    <p><code>[rs_programs show_first_teacher_photo show_first_price]</code></p>
+    <p>You can also limit the number of programs that are shown in the list view or the table view.</p>
+    <p><code>[rs_programs limit="10"]</code></p>
+
+    <h3>Showing extra items that are not enabled by default:</h3>
+    <p>If you want to add additional information on the program list page, you can add the following attributes.</p>
+
+    <ul class="rs-connect-help-show-program-list">
+        <li>
+            <code>show_first_teacher_photo</code>
+            <br>show the image of the first teacher (usually used in conjunction with hide_photo to show the teacher photo rather than the program photo)
+        </li>
+        <li>
+            <code>show_first_price</code>
+            <br>show the first/lowest price. Outputs "From $xxxx.xx".
+        </li>
+        <li>
+            <code>show_price_details</code>
+            <br>show the full price list. Outputs a full price list.
+        </li>
+        <li>
+            <code>show_price_first</code>
+            <br>show the lowest of the prices eg. From $50
+        </li>
+        <li>
+            <code>show_more_link="see more..."</code>
+            <br>show a link to prompt guests to see more about the program.
+            <br><small>Optionally add a value to customize the text.</small>
+        </li>
+        <li>
+            <code>show_availability="Spaces"</code>
+            <br>show the number of available spaces left.
+            <br><small>Optionally add a value to customize the label text.</small>
+        </li>
+        <li>
+            <code>show_availability_words="Availability"</code>
+            <br>show the availability as a word eg: 'Full'.
+            <br><small>Optionally add a value to customize the label text.</small>
+        </li>
+        <li>
+            <code>show_register_link="Register"</code>
+            <br>show a button to link directly to the registration form.
+            <br><small>Optionally add a value to customize the text.</small>
+        </li>
+        <li>
+            <code>wait_list_text="Join waiting list"</code>
+            <br>Customize the text for the Join waiting list button.
+        </li>
+    </ul>
+
+    <style>.rs-connect-help-show-program-list li { margin-top: 2% !important; }</style>
+
+    <p><code>[rs_programs show_first_teacher_photo show_first_price show_price_details show_more_link="see more..." show_availability="Spaces" show_availability_words="Availability" show_register_link="Register Now" wait_list_text="Join waiting list"]</code></p>
 
     <h3>Add a link directly to the registration form</h3>
     <p>To add a link underneath each program that points directly to the registration form, you can add the following attribute to the shortcode:</p>
 
-    <p><code>[rs_programs show_register_link]</code></p>
+    <p><code>[rs_programs show_register_link="Register now"]</code></p>
 
     <h3>Table view</h3>
     <p>This view is useful when your programs are mainly identical except for the dates, location or teachers. You can decide what data to show in the table list. All items are optional. A simple and
@@ -37,7 +83,7 @@
 
     <p><code>[rs_programs table show_date show_register_link]</code></p>
 
-    <p><code>[rs_programs table show_date show_availability show_availability_words show_teachers show_title show_location show_price_details show_more_link show_register_link]</code></p>
+    <p><code>[rs_programs table show_title="Retreats" show_date="Dates" show_availability="Spaces" show_availability_words="Availability" show_teachers="Hosts" show_location="Location" show_price_details="Price" show_price_first="Price from" show_more_link="Details" show_register_link="Register" wait_list_text="Join waiting list"]</code></p>
 
     <p>Program extra display fields can be accesses using <code>extra_display_field="My Title"</code> where "My Title" is the exact title of the extra display field as set when editing the program.</p>
 

@@ -11,15 +11,19 @@ if (is_array($shortcode_atts)) {
 if (! empty($rs_the_programs)) {
 
     foreach($rs_the_programs as $program):
+
         $image_size = ! empty($options['rs_template']['image_size']) ? $options['rs_template']['image_size'] : 'medium';
         $details_url = $program->alternate_url ? $program->alternate_url : $RS_Connect->get_page_url('programs').$program->ID.'/'.$program->slug; ?>
 
         <?php // todo: the program categories should be appended with rs-program-category- ?>
-        <div class="rs-program rs-group <?php foreach($program->categories as $category) {echo $category->slug . " ";} ?>">
+        <div class="rs-program rs-group <?php foreach($program->categories as $category) {echo $category->slug . " ";} ?>"
+             id="rs-program-id-<?php echo $program->ID; ?>">
             <?php if ($program->photo_details && empty($hide_photo)) : ?>
                 <?php $program_image_url = $program->photo_details->{$image_size}->url; ?>
                 <div class="rs-program-thumbnail"><a href="<?php echo $details_url; ?>"><img src="<?php echo $program_image_url; ?>"></a></div>
             <?php endif; ?>
+
+            <div class="rs-program-content-wrap">
 
             <?php if ($program->teacher_details->teacher_objects && ! empty($show_first_teacher_photo)) : ?>
                 <?php $teacher_image_url = $program->teacher_details->teacher_objects[0]->photo_details->{$image_size}->url; ?>
@@ -54,19 +58,42 @@ if (! empty($rs_the_programs)) {
                 <div class="rs-program-first-price">From <?php echo $program->price_first; ?></div>
             <?php endif; ?>
 
+            <?php if (! empty($show_price_details) && ! empty($program->price_details)) : ?>
+                <div class="rs-program-price-details"><?php echo $program->price_details; ?></div>
+            <?php endif; ?>
+
+            <?php if (! empty($show_availability) && ! empty($program->registration_spaces_available)) : ?>
+                <div class="rs-availability"><?php echo is_string($show_availability) ? $show_availability : 'Spaces'; ?>
+                    <span class="rs-availability-number"> <?php echo $program->registration_spaces_available; ?></span>
+                </div>
+            <?php endif; ?>
+
+            <?php if (! empty($show_availability_words) && ! empty($program->registration_spaces_available_words)) : ?>
+                <div class="rs-availability-words"><?php echo is_string($show_availability_words) ? $show_availability_words : 'Availability'; ?>
+                    <span class="rs-availability-words-value"><?php echo $program->registration_spaces_available_words; ?></span>
+                </div>
+            <?php endif; ?>
+
+            <?php if (! empty($show_more_link)) : ?>
+                <a class="rs-program-see-more-link" href="<?php echo $details_url; ?>" target="_blank"><?php echo is_string($show_more_link) ? $show_more_link : ' see more...'; ?></a><br>
+            <?php endif; ?>
+
             <?php if (! empty($show_register_link)) : ?>
                 <?php
                 // todo: this is messy. why check for bookable and then also for action. and why insert 'closed' we should get most everything here from api
                 // todo: identical logic is also duplicated in table view
                 ?>
                 <?php if ($program->registration_wait_list): ?>
-                    <a href="<?php echo $program->registration_link; ?>" target="_blank">Join waiting list</a>
+                    <a class="rs-program-register-link rs-program-wait-list-link" href="<?php echo $program->registration_link; ?>"
+                       target="_blank"><?php echo ! empty($wait_list_text) && is_string($wait_list_text) ? $wait_list_text : ' Join waiting list'; ?></a>
                 <?php elseif ($program->registration_bookable): ?>
-                    <a href="<?php echo $program->registration_link; ?>" target="_blank">Register Now</a>
+                    <a class="rs-program-register-link" href="<?php echo $program->registration_link; ?>" target="_blank"><?php echo is_string($show_register_link) ? $show_register_link : ' Register Now'; ?></a>
                 <?php else: ?>
                     <?php if (empty($program->registration_action)) { echo 'Closed'; } else { echo $program->registration_action; } ?>
                 <?php endif; ?>
             <?php endif; ?>
+
+            </div> <!-- rs-program-content-wrap -->
         </div>
 
     <?php endforeach;

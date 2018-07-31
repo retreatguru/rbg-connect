@@ -3,7 +3,7 @@
 /*
 Plugin Name: Retreat Booking Guru Connect
 Description: Connect to Retreat Booking Guru to show program listings on your site and link to registration forms.
-Version: 2.2.4
+Version: 2.2.6
 Author: Retreat Guru
 Author URI: http://retreat.guru/booking
 */
@@ -12,7 +12,7 @@ class RS_Connect
 {
     protected $options = null;
     protected $program = null;
-    public static $plugin_version = 'wp2.2.5'; // todo: always update this with wp + the plugin Version set above
+    public static $plugin_version = 'wp2.2.6'; // todo: always update this with wp + the plugin Version set above
 
     public function __construct()
     {
@@ -35,6 +35,7 @@ class RS_Connect
 
         add_filter('query_vars', array($this, 'register_query_var'));
         add_action('wp_enqueue_scripts', array($this, 'enqueue_header_items'));
+        add_action('admin_enqueue_scripts', array($this, 'enqueue_admin_header_items'));
 
         add_filter('body_class', array($this, 'body_classes'));
         add_action('template_redirect', array($this, 'receive_preview_request'));
@@ -298,7 +299,13 @@ class RS_Connect
         if (isset($this->options['rs_template']['css'])) {
             $inline_styles .= $this->options['rs_template']['css'];
         }
+
         wp_add_inline_style('rs-f', $inline_styles);
+
+        if (isset($this->options['rs_template']['js'])) {
+            $inline_script = $this->options['rs_template']['js'];
+            wp_add_inline_script('rs-js', $inline_script);
+        }
     }
 
     public function enqueue_footer_items()
@@ -307,6 +314,12 @@ class RS_Connect
             wp_register_script('rs-ga-js', plugins_url('/resources/frontend/rs_ga.js', __FILE__), null, self::$plugin_version, true);
             wp_print_scripts('rs-ga-js');
         }
+    }
+
+    public function enqueue_admin_header_items()
+    {
+        wp_enqueue_script('rs-js', plugins_url('/resources/admin/rs-admin.js', __FILE__), array('jquery'), self::$plugin_version);
+        wp_enqueue_style('rs-f', plugins_url('/resources/admin/rs.css', __FILE__), null, self::$plugin_version);
     }
 
     public function configured()

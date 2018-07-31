@@ -22,18 +22,19 @@ class RS_Connect_Shortcodes {
         $vars = 'fields=_program_base_,_program_registration_';
 
         if (empty($shortcode_atts['table'])) {
+            $vars .= ',price_details';
             $template = 'shortcode-programs.php';
         } else {
-            $vars .= ',price_details,price_first,custom_fields';
+            $vars .= ',price_details,teacher_details,price_first,custom_fields';
             $template = 'shortcode-programs-table.php';
         }
 
-        if (isset($atts['show_first_teacher_photo'])) {
-            $vars .= ',teacher_details';
+        if (isset($shortcode_atts['show_first_price'])) {
+            $vars .= ',price_first';
         }
 
-        if (isset($atts['show_first_price'])) {
-            $vars .= ',price_first';
+        if (isset($shortcode_atts['show_first_teacher_photo'])) {
+            $vars .= ',teacher_details';
         }
 
         if (isset($atts['category'])) {
