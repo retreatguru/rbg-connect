@@ -15,7 +15,7 @@ wp core install \
     --title="RG Connect Site" \
     --admin_email=info@retreat.guru \
     --admin_user=admin \
-    --admin_password=admin \
+    --admin_password=oldweasel84 \
     --skip-email
 wp plugin activate programs-remote-listings
 wp rewrite structure --hard /%postname%/
