@@ -2,9 +2,10 @@
 1. Make sure docker is installed and configured
 1. Checkout the branch
 1. Run ``./dev up``
-1. Add rgconnect.dev to your hosts file
-1. Verify the site is accessible at http://rgconnect.dev
-1. Configure the plugin in http://rgconnect.dev/wp-admin accordingly
+1. Add the following to your /etc/hosts file:
+    ``127.0.0.1    rgconnect.test``
+1. Verify the site is accessible at http://rgconnect.test
+1. Configure the plugin in http://rgconnect.test/wp-admin accordingly (admin/admin)
 1. Ensure tests pass by running `./dev test`
 
 ## Pre-Deployment Checklist ##
