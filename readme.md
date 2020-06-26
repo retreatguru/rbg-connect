@@ -19,10 +19,10 @@
 
 ## Actual Deployment ##
 
-To deploy the plugin directly to the wordpress repository you will need a wordpress username and password and be an author of the plugin. From Vagrant box:
+To deploy the plugin directly to the wordpress repository you will need a wordpress username and password and be an author of the plugin. From Docker shell:
 
-    $ cd /srv/www/rg/remote/htdocs/wp-content/plugins/programs-remote-listings
-    $ bash ./deploy.sh
+    $ ./dev shell
+    docker-$ bash ./deploy.sh
     
 Then provide your wordpress username, password and a commit message. 
 In about a minute you should see the new version live on the wordpress repository:
