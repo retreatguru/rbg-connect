@@ -1,4 +1,4 @@
-FROM retreatguru/php56-apache
+FROM retreatguru/php71-apache
 COPY docker/bin /usr/local/bin
 # install subversion for wp plugin deployment
 RUN apt-get update
