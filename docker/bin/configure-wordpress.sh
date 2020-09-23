@@ -4,6 +4,9 @@
 mkdir -p wp-content/plugins
 cd wp-content/plugins/
 ln -fs ../../../programs-* .
+
+unzip -qqo '../../../plugins/*.zip' -d ./
+
 cd - > /dev/null
 
 # Install wordpress
@@ -18,6 +21,7 @@ wp core install \
     --admin_password=admin \
     --skip-email
 wp plugin activate programs-remote-listings
+wp plugin activate classic-editor
 wp rewrite structure --hard /%postname%/
 wp option update rewrite_rules ''
 
