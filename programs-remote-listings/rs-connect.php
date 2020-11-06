@@ -43,8 +43,6 @@ class RS_Connect
 
         add_action('init', array('RS_Upgrade_Remote', 'init'));
         add_filter('wp', array($this, 'remove_rel_canonical'));
-
-        add_action('wp', array($this, 'verify_listing_exists'));
     }
 
     public function includes()
@@ -62,21 +60,6 @@ class RS_Connect
     {
         if (get_query_var('rs_program') || get_query_var('rs_teacher') || get_query_var('rs_category')) {
             remove_action('wp_head', 'rel_canonical');
-        }
-    }
-
-    public function verify_listing_exists() {
-        $program_id = (int) get_query_var('rs_program');
-        $teacher_id = (int) get_query_var('rs_teacher');
-        $program = $program_id ? RS_Connect_Api::get_program($program_id) : false;
-        $teacher = $teacher_id ? RS_Connect_Api::get_teacher($teacher_id) : false;
-
-        if ($program_id && ! $program) {
-            self::force_404();
-        }
-
-        if ($teacher_id && ! $teacher) {
-            self::force_404();
         }
     }
 
@@ -390,14 +373,6 @@ class RS_Connect
         //global $wp_rewrite;
         //$wp_rewrite->flush_rules();
         //RS_Upgrade_Remote::init();
-    }
-
-    private static function force_404(): void
-    {
-        status_header(404);
-        nocache_headers();
-        include(get_query_template('404'));
-        die();
     }
 }
 
