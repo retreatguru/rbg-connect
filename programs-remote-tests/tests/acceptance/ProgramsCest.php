@@ -27,6 +27,10 @@ class ProgramsCest
 
         $I->wantTo('Verify that the listing blurb shows up');
         $I->see('A shortened version of the program description!');
+
+        $I->wantTo('Verify that listing path to missing program throws a 404 error');
+        $I->amOnPage('/events/123456/not-a-real-program');
+        $I->see('The page you were looking for could not be found', '.error404-content');
     }
 
     public function viewProgramCategoryViaURL(AcceptanceTester $I)
