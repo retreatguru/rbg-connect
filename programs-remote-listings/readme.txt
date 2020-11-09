@@ -35,6 +35,9 @@ email support@retreat.guru or phone 1-888-881-0404 if you need help. Or send us 
 
 == Changelog ==
 
+= 2.2.7 =
+* Fixed minor issue for teachers or programs that were deleted
+
 = 2.2.6 =
 * fixing mobile display on program list page, customized titles and text in shortcodes for list, table view, and single program view
 

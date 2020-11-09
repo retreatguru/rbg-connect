@@ -60,6 +60,11 @@ class RS_Connect_Shortcodes {
         global $rs_the_program;
         global $shortcode_atts;
         $rs_the_program = RS_Connect_Api::get_program($atts['id']);
+
+        if (empty($rs_the_program->ID)) {
+            self::force_404();
+        }
+
         $shortcode_atts = $this->normalize_empty_atts($atts);
 
         return $this->include_shortcode_template('shortcode-programs-single.php');
@@ -103,6 +108,11 @@ class RS_Connect_Shortcodes {
         global $rs_the_teacher;
         global $shortcode_atts;
         $rs_the_teacher = RS_Connect_Api::get_teacher($atts['id']);
+
+        if (empty($rs_the_teacher->ID)) {
+            self::force_404();
+        }
+
         $shortcode_atts = $this->normalize_empty_atts($atts);
 
         return $this->include_shortcode_template('shortcode-teachers-single.php');
@@ -136,6 +146,14 @@ class RS_Connect_Shortcodes {
         }
 
         return $atts;
+    }
+
+    private static function force_404(): void
+    {
+        status_header(404);
+        nocache_headers();
+        include(get_query_template('404'));
+        die();
     }
 }
 

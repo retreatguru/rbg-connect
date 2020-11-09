@@ -17,6 +17,10 @@ class TeachersCest
         $I->see('Program w/ Teachers');
         $I->see('Exhaustive program');
         $I->see('Donec non enim in');
+
+        $I->wantTo('Verify that listing path to missing teacher throws a 404 error');
+        $I->amOnPage('/leaders/123456/not-a-real-teacher');
+        $I->see('The page you were looking for could not be found', '.error404-content');
     }
 
     public function viewTeacherViaProgram(AcceptanceTester $I)
