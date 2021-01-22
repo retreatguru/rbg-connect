@@ -5,7 +5,7 @@ global $rs_the_programs;
 if (is_array($shortcode_atts)) extract($shortcode_atts);
 $programs_page_title = $RS_Connect->get_programs_page()->post_title;
 $teacher_details = ! empty($rs_the_programs[0]) ? $rs_the_programs[0]->teacher_details->teacher_settings : [];
-$teacher_word = $teacher_details->title_plural ?: 'Hosts';
+$teacher_word = ! empty($teacher_details->title_plural) ? $teacher_details->title_plural : 'Hosts';
 ?>
 <table class="pure-table rs-program rs-group shortcode table">
     <thead>
@@ -52,14 +52,14 @@ $teacher_word = $teacher_details->title_plural ?: 'Hosts';
     </thead>
     <tbody>
     <?php foreach($rs_the_programs as $program): ?>
-        <tr class="rs-program-<?php echo $program->slug; ?>">
-            <?php if (! empty($show_date)){ ?>
+        <tr class="rs-program-<?php echo ! empty($program->slug) ? $program->slug : ''; ?>">
+            <?php if (! empty($show_date)): ?>
                 <td class="rs-dates">
                     <?php if (! empty($program->date)) : ?>
                         <?php echo $program->date; ?>
                     <?php endif; ?>
                 </td>
-            <?php } ?>
+            <?php endif; ?>
 
             <?php if (! empty($show_title)) : ?>
                 <td class="rs-title">
