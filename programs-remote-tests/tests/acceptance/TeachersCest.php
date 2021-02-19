@@ -32,5 +32,24 @@ class TeachersCest
         $I->see('A yogi is a practitioner of yoga');
     }
 
+    public function verifyExcerptLength(AcceptanceTester $I)
+    {
+        $full_length_text = 'A yogi is a practitioner of yoga. The term yogi is also used to refer specifically to Siddhas, and broadly to refer to ascetic practitioners of meditation in a number of Indian religions including Hinduism, Buddhism, and Jainism.';
+        $excerpt_text = 'A yogi is a practitioner of yoga.';
+
+        $I->amOnPage('/leaders/');
+        $I->see($full_length_text);
+        $I->loginAdmin($I);
+        $I->amOnPage('/wp-admin/admin.php?page=options-mbm');
+        $I->fillField('input[name="rs_remote_settings[rs_template][limit_description]"]', '7');
+        $I->click('Save');
+        $I->amOnPage('/wp-admin/admin.php?page=options-mbm');
+        $I->seeInField('input[name="rs_remote_settings[rs_template][limit_description]"]', '7');
+
+        $I->amOnPage('/leaders/');
+        $I->dontSee($full_length_text);
+        $I->see($excerpt_text); // 7 word max
+    }
+
     // todo: test teacher category via url: ie. /teachers/category/awesome/
 }

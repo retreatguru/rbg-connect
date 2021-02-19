@@ -16,7 +16,7 @@ if (! empty($rs_the_teachers)) {
                 <?php endif; ?>
                 <div class="rs-teacher-content-wrap">
                     <h2 class="rs-teacher-title"><a href="<?php echo $details_url; ?>"><?php echo $teacher->name; ?></a></h2>
-                    <p class="rs-teacher-excerpt"><?php echo wp_trim_words($teacher->text, 100); ?></p>
+                    <p class="rs-teacher-excerpt"><?php echo $RS_Connect->excerpt($teacher->text); ?></p>
                 </div>
             </div>
         </div>
