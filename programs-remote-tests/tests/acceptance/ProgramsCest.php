@@ -27,10 +27,6 @@ class ProgramsCest
 
         $I->wantTo('Verify that the listing blurb shows up');
         $I->see('A shortened version of the program description!');
-
-        $I->wantTo('Verify that listing path to missing program throws a 404 error');
-        $I->amOnPage('/events/123456/not-a-real-program');
-        $I->see('The page you were looking for could not be found', '.error404-content');
     }
 
     public function viewProgramCategoryViaURL(AcceptanceTester $I)
@@ -96,6 +92,23 @@ class ProgramsCest
         $I->amOnPage('/events/');
         $I->dontSee($long_text);
         $I->see($excerpt_text); // 7 word max
+
+        // reset settings
+        $I->amOnPage('/wp-admin/admin.php?page=options-mbm');
+        $I->fillField('input[name="rs_remote_settings[rs_template][limit_description]"]', '100');
+        $I->click('Save');
+    }
+
+    public function verify404PageNotFound(AcceptanceTester $I)
+    {
+        $I->wantTo('Verify that listing path to missing program throws a 404 error');
+        $I->amOnPage('/events/123456/not-a-real-program');
+
+        try { // 404 pages are different depending on the theme, and local and ci have different themes :(
+            $I->seeElement('.error404-content');
+        } catch (Exception $e) {
+            $I->seeElement('.error-404');
+        }
     }
 
 }

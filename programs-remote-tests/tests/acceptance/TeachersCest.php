@@ -16,11 +16,7 @@ class TeachersCest
         $I->see('Events with Yogi Bear Test');
         $I->see('Program w/ Teachers');
         $I->see('Exhaustive program');
-        $I->see('Donec non enim in');
-
-        $I->wantTo('Verify that listing path to missing teacher throws a 404 error');
-        $I->amOnPage('/leaders/123456/not-a-real-teacher');
-        $I->see('The page you were looking for could not be found', '.error404-content');
+        $I->see('Pellentesque habitant morbi tristique senectus et netus');
     }
 
     public function viewTeacherViaProgram(AcceptanceTester $I)
@@ -49,6 +45,23 @@ class TeachersCest
         $I->amOnPage('/leaders/');
         $I->dontSee($full_length_text);
         $I->see($excerpt_text); // 7 word max
+
+        // reset settings
+        $I->amOnPage('/wp-admin/admin.php?page=options-mbm');
+        $I->fillField('input[name="rs_remote_settings[rs_template][limit_description]"]', '100');
+        $I->click('Save');
+    }
+
+    public function verify404PageNotFound(AcceptanceTester $I)
+    {
+        $I->wantTo('Verify that listing path to missing teacher throws a 404 error');
+        $I->amOnPage('/leaders/123456/not-a-real-teacher');
+
+        try { // 404 pages are different depending on the theme, and local and ci have different themes :(
+            $I->seeElement('.error404-content');
+        } catch (Exception $e) {
+            $I->seeElement('.error-404');
+        }
     }
 
     // todo: test teacher category via url: ie. /teachers/category/awesome/
