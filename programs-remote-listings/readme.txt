@@ -35,6 +35,9 @@ email support@retreat.guru or phone 1-888-881-0404 if you need help. Or send us 
 
 == Changelog ==
 
+= 2.2.9 =
+* Fixed teacher page open dates wording
+
 = 2.2.8 =
 * Fixed excerpt length setting for teacher list page, and suppressed notices and warnings caused by empty values
 
