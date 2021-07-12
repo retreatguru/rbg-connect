@@ -74,7 +74,7 @@ class ShortcodesCest
         $I->see('Register', '.rs-program thead .rs-show-register-link');
 
         $I->wantTo('Verify the table content');
-        $I->see('Lodging Hotel Program', 'tbody tr:nth-child(1) .rs-title'); // ensure order
+        $I->see('Virtual Mind & Body Nurture & Alignment Retreat September Package', 'tbody tr:nth-child(1) .rs-title'); // ensure order
         $I->see('Flexible Dates', '.rs-program-lodging-hotel-program .rs-dates');
         $I->see('Lodging Hotel Program', '.rs-program-lodging-hotel-program .rs-title');
         $I->see('View Details', '.rs-program-lodging-hotel-program .rs-show-more-link');
@@ -113,9 +113,9 @@ class ShortcodesCest
         $I->see('Discount Sale – $69.00', '.rs-program td.rs-price');
         $I->see('$50.00', '.rs-program td.rs-price-first');
         $I->see('View Details', '.rs-program td.rs-show-more-link');
-        $I->see('5', '.rs-program td.rs-availability');
-        $I->see('Open', '.rs-program td.rs-availability-words');
-        $I->see('Apply Now', '.rs-program td.rs-show-register-link');
+        $I->see('10', '.rs-program-hotel-pricing td.rs-availability');
+        $I->see('Open', '.rs-program-hotel-pricing td.rs-availability-words');
+        $I->see('Apply Now', '.rs-program-hotel-pricing td.rs-show-register-link');
     }
 
     public function eventListHideDescriptionAndLocation(AcceptanceTester $I)
