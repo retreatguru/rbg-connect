@@ -36,7 +36,7 @@ if (is_array($shortcode_atts)) extract($shortcode_atts); ?>
                         <a href="<?php echo $program_url; ?>"><img src="<?php echo $program->photo_details->thumbnail->url; ?>" style="float:left; margin:5px 15px 15px 0;"></a>
                         <?php endif; ?>
                         <strong><a href="<?php echo $program_url; ?>"><?php echo $program->title; ?></a></strong><br/>
-                        <?php echo date('F j, Y', $program->start); ?>
+                        <?php echo $program->date_display; ?>
                         <p><?php echo $RS_Connect->excerpt($program->text); ?></p>
                     </div>
                 <?php endforeach; ?>
