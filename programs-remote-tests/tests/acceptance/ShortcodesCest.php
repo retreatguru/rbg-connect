@@ -74,7 +74,7 @@ class ShortcodesCest
         $I->see('Register', '.rs-program thead .rs-show-register-link');
 
         $I->wantTo('Verify the table content');
-        $I->see('Virtual Mind & Body Nurture & Alignment Retreat September Package', 'tbody tr:nth-child(1) .rs-title'); // ensure order
+        $I->see('Ongoing Dateless Program', 'tbody tr:nth-child(1) .rs-title'); // ensure order
         $I->see('Flexible Dates', '.rs-program-lodging-hotel-program .rs-dates');
         $I->see('Lodging Hotel Program', '.rs-program-lodging-hotel-program .rs-title');
         $I->see('View Details', '.rs-program-lodging-hotel-program .rs-show-more-link');
