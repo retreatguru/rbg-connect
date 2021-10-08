@@ -14,7 +14,7 @@ $program_title = ! empty($rs_the_program->title) ? $rs_the_program->title : '';
 $date_title = ! empty($rs_the_program->date_title) ? $rs_the_program->date_title : 'Date &amp; Time Details:';
 $location_title = ! empty($rs_the_program->location_title) ? $rs_the_program->location_title : 'Location:';
 $address_title = ! empty($rs_the_program->address_title) ? $rs_the_program->address_title : 'Address:';
-$photo_url = ! empty($rs_the_program->photo_details->large->url) ? $rs_the_program->photo_details->large->url : '';
+$program_image = $rs_the_program->photo_details->large ?? null;
 $early_bird_discount =! empty($rs_the_program->early_bird_discount) ? $rs_the_program->early_bird_discount : '';
 $price_details = ! empty($rs_the_program->price_details) ? $rs_the_program->price_details : '';
 $date_time = ! empty($rs_the_program->date_time) ? $rs_the_program->date_time : '';
@@ -42,9 +42,9 @@ if (is_array($shortcode_atts)) extract($shortcode_atts); ?>
     <div class="entry-content">
 
         <div class="rs-program-meta">
-            <?php if ($photo_url) : ?>
+            <?php if ($program_image->url ?? '') : ?>
                 <div class="rs-program-photo">
-                    <img src="<?php echo $photo_url; ?>">
+                    <img src="<?php echo $program_image->url ?? ''; ?>" alt="<?php echo $program_image->alt ?? 'Program featured image'; ?>">
                 </div>
             <?php endif; ?>
 
@@ -127,15 +127,15 @@ if (is_array($shortcode_atts)) extract($shortcode_atts); ?>
                     $teacher_slug = ! empty($teacher->slug) ? $teacher->slug : '';
                     $teacher_name = ! empty($teacher->name) ? $teacher->name : '';
                     $teacher_text = ! empty($teacher->text) ? $teacher->text : '';
-                    $teacher_image_src = ! empty($teacher->photo_details->medium->url) ? $teacher->photo_details->medium->url : '';
+                    $teacher_image = $teacher->photo_details->medium ?? null;
                     $teacher_url = $RS_Connect->get_page_url('teachers') . $teacher_id . '/' . $teacher_slug;
                     ?>
                     <div class="teacher" style="clear:left; position:relative;">
-                        <?php if (isset($teacher->photo_details->medium)) : ?>
+                        <?php if (isset($teacher_image)) : ?>
                             <div
                                 style="float:left; width:<?php echo $teacher->photo_details->medium->width; ?>px; margin-right:20px;">
                                 <a href="<?php echo $teacher_url; ?>" style="float:left; margin:5px 20px 10px 0;">
-                                    <img src="<?php echo $teacher_image_src ?>" style="float:left; margin:5px 20px 10px 0;">
+                                    <img src="<?php echo $teacher_image->url ?? '' ?>" alt="<?php echo $teacher_image->alt ?? 'Teacher profile image'; ?>" style="float:left; margin:5px 20px 10px 0;">
                                 </a>
                             </div>
                         <?php endif; ?>

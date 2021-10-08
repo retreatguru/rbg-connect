@@ -13,6 +13,7 @@ class ProgramsCest
         $I->see('Closed Program');
         $I->dontSee('Past Program');
         $I->dontSee('Hidden Program');
+        $I->seeElement('#rs-program-id-31 img[alt="alt text demo meditation"]');
 
         $I->wantTo('Verify some details of the exhaustive program');
         $I->see('Exhaustive program'); //name
@@ -47,7 +48,9 @@ class ProgramsCest
         $I->amOnPage('/events/');
         $I->click('Exhaustive program');
         $I->see('Exhaustive Program');
+        $I->seeElement('.rs-program-photo img[alt="alt text demo meditation"]');
         $I->see('With Yogi Bear Test and Kumare Test');
+        $I->seeElement('.teacher img[alt="alt text teacher 1"]');
         $I->see('Register now');
         $I->see('Book now and get 20% off listed prices. Only 69 days left!');
         $I->see('$100.00 – Program Price');
