@@ -3,7 +3,7 @@
     <h2>Retreat Booking Guru Settings</h2>
 
     <div class="updated">
-        <p>For Booking Guru support please contact us via email: <a href="mailto:support@retreat.guru">support@retreat.guru</a>, live chat at <a href="http://bookingsoftware.guru" target="_blank">bookingsoftware.guru</a>, or phone: 1-888-881-0404.</p>
+        <p>For Booking Guru Support please contact us via email: <a href="mailto:support@retreat.guru">support@retreat.guru</a></p>
     </div>
 
     <form action="options.php" method="post"><?php
