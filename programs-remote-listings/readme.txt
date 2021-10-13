@@ -35,6 +35,9 @@ email support@retreat.guru or phone 1-888-881-0404 if you need help. Or send us 
 
 == Changelog ==
 
+= 2.3.0 =
+* Added alt image text to list and single pages
+
 = 2.2.9 =
 * Fixed teacher page open dates wording
 

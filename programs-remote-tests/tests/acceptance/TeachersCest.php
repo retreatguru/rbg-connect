@@ -9,11 +9,14 @@ class TeachersCest
         $I->see('A yogi is a practitioner of yoga');
         $I->see('Kumare Test');
         $I->see('Test description');
+        $I->seeElement('#rs-single-teacher-id-2 img[alt="alt text teacher 1"]');
 
         $I->click('Yogi Bear Test');
         $I->see('A yogi is a practitioner of yoga.');
+        $I->seeElement('.rs-teacher-content img[alt="alt text teacher 1"]');
 
         $I->see('Events with Yogi Bear Test');
+        $I->seeElement('.rs-teacher-programs img[alt="alt text demo meditation"]');
         $I->see('Program w/ Teachers');
         $I->see('Exhaustive program');
         $I->see('Pellentesque habitant morbi tristique senectus et netus');
