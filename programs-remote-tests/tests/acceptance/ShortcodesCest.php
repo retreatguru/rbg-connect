@@ -140,7 +140,7 @@ class ShortcodesCest
         $I->dontSee('Price from');
         $I->dontSee('Details');
         $I->dontSee('Available Spots');
-        $I->dontSee('Register');
+        $I->dontSee('Register Now', '.rs-show-register-link');
     }
 
     public function eventListTableCategory(AcceptanceTester $I)
