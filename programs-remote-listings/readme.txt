@@ -3,7 +3,7 @@ Contributors: retreatguru, dwenaus, skasai, cloudedwards
 Donate link: http://retreat.guru/booking
 Tags: retreat, booking, events, registration, retreat guru, event booking, event manager
 Requires at least: 3.0
-Tested up to: 5.5.1
+Tested up to: 6.3
 Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -34,6 +34,9 @@ email support@retreat.guru or phone 1-888-881-0404 if you need help. Or send us 
 1. coming soon.
 
 == Changelog ==
+= 2.3.1 =
+* Tested with PHP 8.1 and Wordpress 6.3
+* Fixed warning being triggered on certain program view pages
 
 = 2.3.0 =
 * Added alt image text to list and single pages

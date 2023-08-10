@@ -76,7 +76,7 @@ build() {
     # start containers and setup wordpress
     docker-compose up --build -d
     docker-compose exec wordpress wait-db.sh
-    # docker-compose exec --user=noroot wordpress composer install -d ../programs-remote-tests
+    docker-compose exec --user=noroot wordpress composer install -d ../programs-remote-tests
     docker-compose exec --user=noroot wordpress configure-wordpress.sh
     docker-compose exec --user=noroot wordpress configure-dev-options.sh
 

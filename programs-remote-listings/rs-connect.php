@@ -12,7 +12,7 @@ class RS_Connect
 {
     protected $options = null;
     protected $program = null;
-    public static $plugin_version = 'wp2.3.0'; // todo: always update this with wp + the plugin Version set above
+    public static $plugin_version = 'wp2.3.1'; // todo: always update this with wp + the plugin Version set above
 
     public function __construct()
     {
@@ -339,7 +339,10 @@ class RS_Connect
     {
         $current_page = $GLOBALS['post']->post_name;
 
-        if ($current_page == $this->get_programs_page()->post_name) {
+        $programs_page = $this->get_programs_page();
+        $teachers_page = $this->get_teachers_page();
+
+        if ($programs_page && $current_page == $this->get_programs_page()->post_name) {
             if (get_query_var('rs_program')) {
                 $classes[] = 'rs-programs-single';
             } else {
@@ -347,7 +350,7 @@ class RS_Connect
             }
         }
 
-        if ($current_page == $this->get_teachers_page()->post_name) {
+        if ($teachers_page && $current_page == $this->get_teachers_page()->post_name) {
             if (get_query_var('rs_teacher')) {
                 $classes[] = 'rs-teachers-single';
             } else {
