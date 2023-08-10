@@ -25,6 +25,9 @@ main() {
         clean)
             clean
             ;;
+        logs)
+            logs
+            ;;
         shell)
             docker-compose exec wordpress bash "$@"
             ;;
@@ -56,6 +59,7 @@ down     Destroy development environment (also clears the DB)
 clean    Destroy development environment and all data
 shell    Enter wordpress container shell
 debug    Turn debugging (xdebug) on or off
+logs     View logs
 EOF
             exit 1
             ;;
@@ -72,7 +76,7 @@ build() {
     # start containers and setup wordpress
     docker-compose up --build -d
     docker-compose exec wordpress wait-db.sh
-    docker-compose exec --user=noroot wordpress composer install -d ../programs-remote-tests
+    # docker-compose exec --user=noroot wordpress composer install -d ../programs-remote-tests
     docker-compose exec --user=noroot wordpress configure-wordpress.sh
     docker-compose exec --user=noroot wordpress configure-dev-options.sh
 
@@ -86,6 +90,11 @@ clean() {
     docker-compose down --volumes
     git clean -xdf html/
     rm $MARKER
+}
+
+# view logs
+logs() {
+    docker compose logs $1 wordpress
 }
 
 main "$@"

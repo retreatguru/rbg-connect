@@ -163,14 +163,18 @@ class RS_Connect
             $program_id = get_query_var('rs_program');
             $this->program = RS_Connect_Api::get_program($program_id);
             $program_url = $this->get_page_url('programs').$this->program->ID.'/'.$this->program->slug;
-            $meta_description = $this->program->seo_description ? $this->program->seo_description : wp_trim_words($this->program->text, 50, '...');
+            $meta_description = ! empty($this->program->seo_description) ? $this->program->seo_description : wp_trim_words($this->program->text, 50, '...');
 
             if (! empty($this->program->text)) {
                 echo '<meta property="og:url" content="'.$program_url.'/" />'."\n";
                 echo '<meta property="og:title" content="'.$this->program->title.'" />'."\n";
-                echo '<meta property="og:image" content="'.$this->program->photo_details->medium->url.'" />'."\n";
-                echo '<meta property="og:image:width" content="'.$this->program->photo_details->medium->width.'" />'."\n";
-                echo '<meta property="og:image:height" content="'.$this->program->photo_details->medium->height.'" />'."\n";
+
+                if (! empty($this->program->photo_details->medium) && is_object($this->program->photo_details->medium)) {
+                    echo '<meta property="og:image" content="'.$this->program->photo_details->medium->url.'" />'."\n";
+                    echo '<meta property="og:image:width" content="'.$this->program->photo_details->medium->width.'" />'."\n";
+                    echo '<meta property="og:image:height" content="'.$this->program->photo_details->medium->height.'" />'."\n";
+                }
+
                 echo '<meta property="og:description" content="'.$meta_description.'" />'."\n";
                 echo '<meta name="description" content="'.$meta_description.'" />'."\n";
             }
