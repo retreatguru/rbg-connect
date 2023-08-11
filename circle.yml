@@ -32,6 +32,7 @@ jobs:
               cp .env.default .env
               composer install -d programs-remote-tests/
               chown noroot:www-data /var/www/html
+              su noroot -c '/usr/local/bin/wait-db.sh'
               su noroot -c 'cd /var/www/html && ../docker/bin/configure-wordpress.sh'
               su noroot -c 'cd /var/www/html && ../docker/bin/configure-options.sh'
 
