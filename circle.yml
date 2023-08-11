@@ -3,7 +3,7 @@ jobs:
   build:
      working_directory: /var/www
      docker:
-        - image: retreatguru/php71-apache
+        - image: php:8.1-apache
           environment:
             WORDPRESS_DB_HOST: 127.0.0.1
             WORDPRESS_DB_NAME: rgconnect
