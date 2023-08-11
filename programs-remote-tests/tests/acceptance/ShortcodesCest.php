@@ -4,6 +4,15 @@ class ShortcodesCest
 {
     public function listEventsByCategory(AcceptanceTester $I)
     {
+        // Reset page to original content
+        $I->loginAdmin($I);
+        $I->amOnPage('/wp-admin/edit.php?post_type=page');
+        $I->click('Shortcode Event List');
+        $I->fillField('#wp-content-editor-container textarea',
+            '[rs_programs category="plant-medicine"]'
+        );
+        $I->click('#publish');
+
         $I->amOnPage('/shortcode-event-list');
         $I->see('Example Program');
         $I->see('Exhaustive Program');

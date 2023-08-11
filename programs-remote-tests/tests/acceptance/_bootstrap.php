@@ -10,6 +10,8 @@ if (getenv('CIRCLE_BUILD_NUM')) {
     $url = "http://$sub_domain_default.$test_host";
 }
 
+echo "Using data from " . $url . "\n";
+
 $ch = curl_init($url. '/?rs_clear_database_and_seed=true');
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 curl_exec($ch);

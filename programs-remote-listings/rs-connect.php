@@ -162,6 +162,11 @@ class RS_Connect
         if (get_query_var('rs_program')) {
             $program_id = get_query_var('rs_program');
             $this->program = RS_Connect_Api::get_program($program_id);
+
+            if (! $this->program) {
+                return;
+            }
+
             $program_url = $this->get_page_url('programs').$this->program->ID.'/'.$this->program->slug;
             $meta_description = ! empty($this->program->seo_description) ? $this->program->seo_description : wp_trim_words($this->program->text, 50, '...');
 
