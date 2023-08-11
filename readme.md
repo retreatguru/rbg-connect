@@ -6,7 +6,7 @@
     ``127.0.0.1    rgconnect.test``
 1. Verify the site is accessible at http://rgconnect.test
 1. Configure the plugin in http://rgconnect.test/wp-admin accordingly (admin/admin)
-1. Ensure tests pass by running `./dev test`
+1. Ensure tests pass by running `./dev test tests`
 
 ## Pre-Deployment Checklist ##
 
