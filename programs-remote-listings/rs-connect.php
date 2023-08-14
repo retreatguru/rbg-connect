@@ -3,7 +3,7 @@
 /*
 Plugin Name: Retreat Booking Guru Connect
 Description: Connect to Retreat Booking Guru to show program listings on your site and link to registration forms.
-Version: 2.3.0
+Version: 2.3.1
 Author: Retreat Guru
 Author URI: http://retreat.guru/booking
 */
@@ -12,7 +12,7 @@ class RS_Connect
 {
     protected $options = null;
     protected $program = null;
-    public static $plugin_version = 'wp2.3.0'; // todo: always update this with wp + the plugin Version set above
+    public static $plugin_version = 'wp2.3.1'; // todo: always update this with wp + the plugin Version set above
 
     public function __construct()
     {
@@ -162,15 +162,25 @@ class RS_Connect
         if (get_query_var('rs_program')) {
             $program_id = get_query_var('rs_program');
             $this->program = RS_Connect_Api::get_program($program_id);
+
+            if (! $this->program || ! is_object($this->program)) {
+                return;
+            }
+
             $program_url = $this->get_page_url('programs').$this->program->ID.'/'.$this->program->slug;
-            $meta_description = $this->program->seo_description ? $this->program->seo_description : wp_trim_words($this->program->text, 50, '...');
+            $meta_description = ! empty($this->program->seo_description) ? $this->program->seo_description : wp_trim_words($this->program->text, 50, '...');
 
             if (! empty($this->program->text)) {
                 echo '<meta property="og:url" content="'.$program_url.'/" />'."\n";
                 echo '<meta property="og:title" content="'.$this->program->title.'" />'."\n";
-                echo '<meta property="og:image" content="'.$this->program->photo_details->medium->url.'" />'."\n";
-                echo '<meta property="og:image:width" content="'.$this->program->photo_details->medium->width.'" />'."\n";
-                echo '<meta property="og:image:height" content="'.$this->program->photo_details->medium->height.'" />'."\n";
+
+                $medium = $this->program->photo_details->medium ?? null;
+                if (is_object($medium)) {
+                    echo '<meta property="og:image" content="'.$medium->url.'" />'."\n";
+                    echo '<meta property="og:image:width" content="'.$medium->width.'" />'."\n";
+                    echo '<meta property="og:image:height" content="'.$medium->height.'" />'."\n";
+                }
+
                 echo '<meta property="og:description" content="'.$meta_description.'" />'."\n";
                 echo '<meta name="description" content="'.$meta_description.'" />'."\n";
             }
@@ -227,6 +237,9 @@ class RS_Connect
     public function get_page_url($type)
     {
         $entity_base = $this->get_page($type);
+        if (! $entity_base) {
+            return false;
+        }
 
         return get_permalink($entity_base->ID);
     }
@@ -335,7 +348,10 @@ class RS_Connect
     {
         $current_page = $GLOBALS['post']->post_name;
 
-        if ($current_page == $this->get_programs_page()->post_name) {
+        $programs_page = $this->get_programs_page();
+        $teachers_page = $this->get_teachers_page();
+
+        if ($programs_page && $current_page == $this->get_programs_page()->post_name) {
             if (get_query_var('rs_program')) {
                 $classes[] = 'rs-programs-single';
             } else {
@@ -343,7 +359,7 @@ class RS_Connect
             }
         }
 
-        if ($current_page == $this->get_teachers_page()->post_name) {
+        if ($teachers_page && $current_page == $this->get_teachers_page()->post_name) {
             if (get_query_var('rs_teacher')) {
                 $classes[] = 'rs-teachers-single';
             } else {

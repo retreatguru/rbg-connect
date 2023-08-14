@@ -1,5 +1,7 @@
 <?php
 
+use Codeception\Util\HttpCode;
+
 class TeachersCest
 {
     public function listTeachers(AcceptanceTester $I)
@@ -60,11 +62,7 @@ class TeachersCest
         $I->wantTo('Verify that listing path to missing teacher throws a 404 error');
         $I->amOnPage('/leaders/123456/not-a-real-teacher');
 
-        try { // 404 pages are different depending on the theme, and local and ci have different themes :(
-            $I->seeElement('.error404-content');
-        } catch (Exception $e) {
-            $I->seeElement('.error-404');
-        }
+        $I->seeResponseCodeIs(HttpCode::NOT_FOUND);
     }
 
     // todo: test teacher category via url: ie. /teachers/category/awesome/

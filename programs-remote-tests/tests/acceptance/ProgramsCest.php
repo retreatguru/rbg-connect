@@ -1,5 +1,7 @@
 <?php
 
+use Codeception\Util\HttpCode;
+
 class ProgramsCest
 {
     public function listPrograms(AcceptanceTester $I)
@@ -107,11 +109,7 @@ class ProgramsCest
         $I->wantTo('Verify that listing path to missing program throws a 404 error');
         $I->amOnPage('/events/123456/not-a-real-program');
 
-        try { // 404 pages are different depending on the theme, and local and ci have different themes :(
-            $I->seeElement('.error404-content');
-        } catch (Exception $e) {
-            $I->seeElement('.error-404');
-        }
+        $I->seeResponseCodeIs(HttpCode::NOT_FOUND);
     }
 
 }

@@ -25,6 +25,9 @@ main() {
         clean)
             clean
             ;;
+        logs)
+            logs
+            ;;
         shell)
             docker-compose exec wordpress bash "$@"
             ;;
@@ -56,6 +59,7 @@ down     Destroy development environment (also clears the DB)
 clean    Destroy development environment and all data
 shell    Enter wordpress container shell
 debug    Turn debugging (xdebug) on or off
+logs     View logs
 EOF
             exit 1
             ;;
@@ -86,6 +90,11 @@ clean() {
     docker-compose down --volumes
     git clean -xdf html/
     rm $MARKER
+}
+
+# view logs
+logs() {
+    docker compose logs $1 wordpress
 }
 
 main "$@"
