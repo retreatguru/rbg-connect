@@ -1,0 +1,6 @@
+version: '2.1'
+
+services:
+  db:
+    # mysql 5.7 arm64 is not available, falling back to maria until we find a viable image or get arch amd64 working.
+    image: mariadb:10.7.1
