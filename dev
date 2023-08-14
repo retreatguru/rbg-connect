@@ -2,6 +2,13 @@
 
 MARKER=.dev.build
 
+if [ $(arch) = "arm64" ]; then
+    echo "Detected M1, using docker-compose.m1.yml"
+    M1="-f docker-compose.yml -f docker-compose.m1.yml"
+else
+    M1=""
+fi
+
 main() {
     cd $(dirname $0)
 
@@ -14,7 +21,7 @@ main() {
     case $COMMAND in
         up)
             if [ -f $MARKER ] && [ "$1" != "--build" ]; then
-                docker-compose up -d
+                docker-compose $M1 up -d
             else
                 build
             fi
@@ -74,7 +81,7 @@ wp() {
 # build wordpress and link in the theme
 build() {
     # start containers and setup wordpress
-    docker-compose up --build -d
+    docker-compose $M1 up --build -d
     docker-compose exec wordpress wait-db.sh
     docker-compose exec --user=noroot wordpress composer install -d ../programs-remote-tests
     docker-compose exec --user=noroot wordpress configure-wordpress.sh
