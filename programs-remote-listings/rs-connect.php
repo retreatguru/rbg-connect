@@ -163,7 +163,7 @@ class RS_Connect
             $program_id = get_query_var('rs_program');
             $this->program = RS_Connect_Api::get_program($program_id);
 
-            if (! $this->program) {
+            if (! $this->program || ! is_object($this->program)) {
                 return;
             }
 
@@ -174,10 +174,11 @@ class RS_Connect
                 echo '<meta property="og:url" content="'.$program_url.'/" />'."\n";
                 echo '<meta property="og:title" content="'.$this->program->title.'" />'."\n";
 
-                if (! empty($this->program->photo_details->medium) && is_object($this->program->photo_details->medium)) {
-                    echo '<meta property="og:image" content="'.$this->program->photo_details->medium->url.'" />'."\n";
-                    echo '<meta property="og:image:width" content="'.$this->program->photo_details->medium->width.'" />'."\n";
-                    echo '<meta property="og:image:height" content="'.$this->program->photo_details->medium->height.'" />'."\n";
+                $medium = $this->program->photo_details->medium ?? null;
+                if (is_object($medium)) {
+                    echo '<meta property="og:image" content="'.$medium->url.'" />'."\n";
+                    echo '<meta property="og:image:width" content="'.$medium->width.'" />'."\n";
+                    echo '<meta property="og:image:height" content="'.$medium->height.'" />'."\n";
                 }
 
                 echo '<meta property="og:description" content="'.$meta_description.'" />'."\n";
@@ -236,6 +237,9 @@ class RS_Connect
     public function get_page_url($type)
     {
         $entity_base = $this->get_page($type);
+        if (! $entity_base) {
+            return false;
+        }
 
         return get_permalink($entity_base->ID);
     }

@@ -3,7 +3,8 @@ global $RS_Connect;
 global $shortcode_atts;
 global $rs_the_programs;
 if (is_array($shortcode_atts)) extract($shortcode_atts);
-$programs_page_title = $RS_Connect->get_programs_page()->post_title;
+$programs_page = $RS_Connect->get_programs_page();
+$programs_page_title = $programs_page ? $programs_page->post_title : '';
 $teacher_details = ! empty($rs_the_programs[0]) ? $rs_the_programs[0]->teacher_details->teacher_settings : [];
 $teacher_word = ! empty($teacher_details->title_plural) ? $teacher_details->title_plural : 'Hosts';
 ?>
