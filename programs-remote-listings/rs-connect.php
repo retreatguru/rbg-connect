@@ -122,6 +122,11 @@ class RS_Connect
         if ($this->configured()) {
             $current_page = $GLOBALS['post']->post_name ?? null;
 
+            // Return early if unable to determine the post_name from the page
+            if (! $current_page) {
+                return $content;
+            }
+
             if ($current_page == $this->get_programs_page()->post_name) {
                 return $this->use_shortcode('rs_program', $content);
             }
