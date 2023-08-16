@@ -3,7 +3,7 @@
 /*
 Plugin Name: Retreat Booking Guru Connect
 Description: Connect to Retreat Booking Guru to show program listings on your site and link to registration forms.
-Version: 2.3.1
+Version: 2.3.2
 Author: Retreat Guru
 Author URI: http://retreat.guru/booking
 */
@@ -12,7 +12,7 @@ class RS_Connect
 {
     protected $options = null;
     protected $program = null;
-    public static $plugin_version = 'wp2.3.1'; // todo: always update this with wp + the plugin Version set above
+    public static $plugin_version = 'wp2.3.2'; // todo: always update this with wp + the plugin Version set above
 
     public function __construct()
     {
@@ -120,7 +120,7 @@ class RS_Connect
     public function insert_shortcode($content)
     {
         if ($this->configured()) {
-            $current_page = $GLOBALS['post']->post_name;
+            $current_page = $GLOBALS['post']->post_name ?? null;
 
             if ($current_page == $this->get_programs_page()->post_name) {
                 return $this->use_shortcode('rs_program', $content);
@@ -346,7 +346,12 @@ class RS_Connect
 
     function body_classes($classes)
     {
-        $current_page = $GLOBALS['post']->post_name;
+        $current_page = $GLOBALS['post']->post_name ?? null;
+
+        // If page cannot be detected, return the existing classes
+        if (! $current_page) {
+            return $classes;
+        }
 
         $programs_page = $this->get_programs_page();
         $teachers_page = $this->get_teachers_page();

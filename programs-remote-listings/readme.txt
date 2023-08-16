@@ -34,6 +34,9 @@ email support@retreat.guru or phone 1-888-881-0404 if you need help. Or send us 
 1. coming soon.
 
 == Changelog ==
+= 2.3.2 =
+* Addressed additional PHP warnings
+
 = 2.3.1 =
 * Tested with PHP 8.1 and Wordpress 6.3
 * Fixed warning being triggered on certain program view pages
