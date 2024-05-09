@@ -3,7 +3,7 @@ Contributors: retreatguru, dwenaus, skasai, cloudedwards, andychute
 Donate link: http://retreat.guru/booking
 Tags: retreat, booking, events, registration, retreat guru, event booking, event manager
 Requires at least: 3.0
-Tested up to: 6.3
+Tested up to: 6.5.2
 Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
