@@ -26,6 +26,8 @@ To deploy the plugin directly to the wordpress repository you will need a wordpr
     $ bash ./deploy.sh
     
 Then provide your wordpress username, password and a commit message.
-*Note: If you get the error message "Access to '/!svn/me' forbidden" just use deryk's credentials which are in OnePass
+
+*Note: If you get the error message "Access to '/!svn/me' forbidden" just use deryk's credentials which are in 1Password
+
 In about a minute you should see the new version live on the wordpress repository:
 https://en-ca.wordpress.org/plugins/retreat-booking-guru-connect/
