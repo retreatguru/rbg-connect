@@ -1,4 +1,4 @@
-=== Plugin Name ===
+=== Retreat Booking Guru Connect ===
 Contributors: retreatguru, dwenaus, skasai, cloudedwards, andychute
 Donate link: http://retreat.guru/booking
 Tags: retreat, booking, events, registration, retreat guru, event booking, event manager
