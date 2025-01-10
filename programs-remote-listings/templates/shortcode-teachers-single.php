@@ -4,7 +4,8 @@ global $rs_the_teacher;
 global $shortcode_atts;
 
 $options = get_option('rs_remote_settings');
-$teacher_image = $rs_the_teacher->photo_details->medium ?? null;
+$image_size = ! empty($options['rs_template']['image_size']) ? $options['rs_template']['image_size'] : 'medium';
+$teacher_image = $rs_the_teacher->photo_details->{$image_size} ?? null;
 
 ?>
 
@@ -20,7 +21,7 @@ if (is_array($shortcode_atts)) extract($shortcode_atts); ?>
     <div class="entry-content">
         <?php // Program Details ?>
         <div class="rs-teacher-content" style="padding:20px;">
-            <?php if (isset($rs_the_teacher->photo_details->medium)) : ?>
+            <?php if (isset($teacher_image)) : ?>
                 <img src="<?php echo $teacher_image->url ?? ''; ?>" alt="<?php echo $teacher_image->alt ?? 'Teacher profile image'; ?>" class="alignleft" style="padding:0 20px 20px 0px; float: left;">
             <?php endif; ?>
 

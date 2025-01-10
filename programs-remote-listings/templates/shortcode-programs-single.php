@@ -32,6 +32,8 @@ $teacher_details = ! empty($rs_the_program->teacher_details) ? $rs_the_program->
 $teacher_objects = $teacher_details && ! empty($teacher_details->teacher_objects) ? $teacher_details->teacher_objects : [];
 $teacher_settings = $teacher_details && ! empty($teacher_details->teacher_settings) ? $teacher_details->teacher_settings : false;
 
+$image_size = ! empty($options['rs_template']['image_size']) ? $options['rs_template']['image_size'] : 'medium';
+
 ?>
 
 <?php
@@ -127,13 +129,13 @@ if (is_array($shortcode_atts)) extract($shortcode_atts); ?>
                     $teacher_slug = ! empty($teacher->slug) ? $teacher->slug : '';
                     $teacher_name = ! empty($teacher->name) ? $teacher->name : '';
                     $teacher_text = ! empty($teacher->text) ? $teacher->text : '';
-                    $teacher_image = $teacher->photo_details->medium ?? null;
+                    $teacher_image = $teacher->photo_details->{$image_size} ?? null;
                     $teacher_url = $RS_Connect->get_page_url('teachers') . $teacher_id . '/' . $teacher_slug;
                     ?>
                     <div class="teacher" style="clear:left; position:relative;">
                         <?php if (isset($teacher_image)) : ?>
                             <div
-                                style="float:left; width:<?php echo $teacher->photo_details->medium->width; ?>px; margin-right:20px;">
+                                style="float:left; width:<?php echo $teacher->photo_details->{$image_size}->width; ?>px; margin-right:20px;">
                                 <a href="<?php echo $teacher_url; ?>" style="float:left; margin:5px 20px 10px 0;">
                                     <img src="<?php echo $teacher_image->url ?? '' ?>" alt="<?php echo $teacher_image->alt ?? 'Teacher profile image'; ?>" style="float:left; margin:5px 20px 10px 0;">
                                 </a>

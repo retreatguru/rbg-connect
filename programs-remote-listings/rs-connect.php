@@ -174,12 +174,14 @@ class RS_Connect
 
             $program_url = $this->get_page_url('programs').$this->program->ID.'/'.$this->program->slug;
             $meta_description = ! empty($this->program->seo_description) ? $this->program->seo_description : wp_trim_words($this->program->text, 50, '...');
+            $options = get_option('rs_remote_settings');
+            $image_size = ! empty($options['rs_template']['image_size']) ? $options['rs_template']['image_size'] : 'medium';
 
             if (! empty($this->program->text)) {
                 echo '<meta property="og:url" content="'.$program_url.'/" />'."\n";
                 echo '<meta property="og:title" content="'.$this->program->title.'" />'."\n";
 
-                $medium = $this->program->photo_details->medium ?? null;
+                $medium = $this->program->photo_details->{$image_size} ?? null;
                 if (is_object($medium)) {
                     echo '<meta property="og:image" content="'.$medium->url.'" />'."\n";
                     echo '<meta property="og:image:width" content="'.$medium->width.'" />'."\n";
