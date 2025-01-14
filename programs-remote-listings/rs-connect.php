@@ -3,7 +3,7 @@
 /*
 Plugin Name: Retreat Booking Guru Connect
 Description: Connect to Retreat Booking Guru to show program listings on your site and link to registration forms.
-Version: 2.3.2
+Version: 2.3.3
 Author: Retreat Guru
 Author URI: http://retreat.guru/booking
 */
@@ -12,7 +12,7 @@ class RS_Connect
 {
     protected $options = null;
     protected $program = null;
-    public static $plugin_version = 'wp2.3.2'; // todo: always update this with wp + the plugin Version set above
+    public static $plugin_version = 'wp2.3.3'; // todo: always update this with wp + the plugin Version set above
 
     public function __construct()
     {
@@ -174,12 +174,14 @@ class RS_Connect
 
             $program_url = $this->get_page_url('programs').$this->program->ID.'/'.$this->program->slug;
             $meta_description = ! empty($this->program->seo_description) ? $this->program->seo_description : wp_trim_words($this->program->text, 50, '...');
+            $options = get_option('rs_remote_settings');
+            $image_size = ! empty($options['rs_template']['image_size']) ? $options['rs_template']['image_size'] : 'medium';
 
             if (! empty($this->program->text)) {
                 echo '<meta property="og:url" content="'.$program_url.'/" />'."\n";
                 echo '<meta property="og:title" content="'.$this->program->title.'" />'."\n";
 
-                $medium = $this->program->photo_details->medium ?? null;
+                $medium = $this->program->photo_details->{$image_size} ?? null;
                 if (is_object($medium)) {
                     echo '<meta property="og:image" content="'.$medium->url.'" />'."\n";
                     echo '<meta property="og:image:width" content="'.$medium->width.'" />'."\n";

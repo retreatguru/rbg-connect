@@ -105,6 +105,7 @@
                             <?php $image_size = ! empty($options['rs_template']['image_size']) ? $options['rs_template']['image_size'] : 'medium'; ?>
                             <option value="thumbnail" <?php selected($image_size, 'thumbnail') ?>>Small - Square Cropped</option>
                             <option value="medium" <?php selected($image_size, 'medium') ?>>Medium - Uncropped</option>
+                            <option value="large" <?php selected($image_size, 'large') ?>>Large - Uncropped</option>
                         </select>
                     </fieldset>
                 </td>
