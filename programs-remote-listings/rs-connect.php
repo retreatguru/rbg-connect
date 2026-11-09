@@ -12,6 +12,7 @@ class RS_Connect
 {
     protected $options = null;
     protected $program = null;
+    public $plugin_dir = null;
     public static $plugin_version = 'wp2.3.3'; // todo: always update this with wp + the plugin Version set above
 
     public function __construct()

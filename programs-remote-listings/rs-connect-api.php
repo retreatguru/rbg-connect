@@ -7,7 +7,7 @@ class RS_Connect_Api
     public static function get_program($id)
     {
         // quick and dirty single request cache because we call this 3 times on a single page load. ugh.
-        if (empty(self::$programs[$id])) {
+        if (! array_key_exists($id, self::$programs)) {
             self::$programs[$id] = self::remote_get('events/' . $id . '?' . self::version());
         }
 
@@ -53,7 +53,7 @@ class RS_Connect_Api
      * todo: better would be to always serve cached data, then reset cache when new data is available via remote post from RBG.
      *
      * @param $url
-     * @return array|bool|mixed|object
+     * @return array|bool|mixed|object|null
      */
     private static function remote_get($url)
     {
@@ -73,17 +73,44 @@ class RS_Connect_Api
         );
         $response = wp_remote_get($versioned_url, $args);
 
-        if (is_wp_error($response) || 200 != wp_remote_retrieve_response_code($response)) {
+        if (self::api_is_down($response)) {
             $rs_api_status = 'down';
 
             return self::get_api_cache($url);
         }
 
         $rs_api_status = 'good';
+
+        // The api answered but has nothing for us (ie. a 404 for a deleted program). Trust that answer over the cache,
+        // and clear the cache so a later outage can't bring the stale data back.
+        if (200 != wp_remote_retrieve_response_code($response)) {
+            delete_option(self::api_cache_slug($url));
+
+            return null;
+        }
+
         $body = json_decode(wp_remote_retrieve_body($response));
         self::save_api_cache($url, $body);
 
         return $body;
+    }
+
+    /**
+     * Only connection failures, server errors (5xx), timeouts (408) and rate limiting (429) mean the api is down.
+     * Any other status code is a valid response from the api.
+     *
+     * @param array|WP_Error $response
+     * @return bool
+     */
+    private static function api_is_down($response)
+    {
+        if (is_wp_error($response)) {
+            return true;
+        }
+
+        $status = (int) wp_remote_retrieve_response_code($response);
+
+        return $status >= 500 || in_array($status, array(408, 429), true);
     }
 
     // occasionally save api data in case RBG is down later, if the value is the same, wp won't update it
