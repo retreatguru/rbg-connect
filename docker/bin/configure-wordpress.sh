@@ -25,10 +25,6 @@ wp plugin activate classic-editor
 wp rewrite structure --hard /%postname%/
 wp option update rewrite_rules ''
 
-# Set up sidebar to show list of pages
-wp widget reset sidebar-1
-wp widget add pages sidebar-1
-
 # Seed root pages for testing
 wp post create --post_type=page --post_title='Events' --post_status=publish
 wp post create --post_type=page --post_title='Leaders' --post_status=publish
