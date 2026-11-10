@@ -83,7 +83,7 @@ class RS_Connect_Api
 
         // The api answered but has nothing for us (ie. a 404 for a deleted program). Trust that answer over the cache,
         // and clear the cache so a later outage can't bring the stale data back.
-        if (200 != wp_remote_retrieve_response_code($response)) {
+        if (wp_remote_retrieve_response_code($response) != 200) {
             delete_option(self::api_cache_slug($url));
 
             return null;
