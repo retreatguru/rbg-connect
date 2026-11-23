@@ -2,13 +2,6 @@
 
 MARKER=.dev.build
 
-if [ $(arch) = "arm64" ]; then
-    echo "Detected M1, using docker-compose.m1.yml"
-    M1="-f docker-compose.yml -f docker-compose.m1.yml"
-else
-    M1=""
-fi
-
 main() {
     cd $(dirname $0)
 
@@ -21,13 +14,13 @@ main() {
     case $COMMAND in
         up)
             if [ -f $MARKER ] && [ "$1" != "--build" ]; then
-                docker-compose $M1 up -d
+                docker compose up -d
             else
                 build
             fi
             ;;
         down)
-            docker-compose down
+            docker compose down
             ;;
         clean)
             clean
@@ -36,13 +29,13 @@ main() {
             logs
             ;;
         shell)
-            docker-compose exec wordpress bash "$@"
+            docker compose exec wordpress bash "$@"
             ;;
         test)
             if [ ! $1 ]; then
                 set -- "--help"
             fi
-            docker-compose exec wordpress codecept.sh run --env docker "$@"
+            docker compose exec wordpress codecept.sh run --env docker "$@"
             ;;
         debug)
             if [ ! "$1" ]; then
@@ -50,8 +43,8 @@ main() {
                 exit 1
             fi
             HOST=$(ifconfig | grep 'inet ' | grep -v '127.0.0.1' | head -1 | awk '{print $2}')
-            docker-compose exec wordpress xdebug.sh $1 $HOST 9000
-            docker-compose restart wordpress
+            docker compose exec wordpress xdebug.sh $1 $HOST 9000
+            docker compose restart wordpress
             ;;
         *)
             cat <<EOF
@@ -75,17 +68,17 @@ EOF
 
 # run a wp-cli command
 wp() {
-    docker-compose exec --user=noroot wordpress wp "$@"
+    docker compose exec --user=noroot wordpress wp "$@"
 }
 
 # build wordpress and link in the theme
 build() {
     # start containers and setup wordpress
-    docker-compose $M1 up --build -d
-    docker-compose exec wordpress wait-db.sh
-    docker-compose exec --user=noroot wordpress composer install -d ../programs-remote-tests
-    docker-compose exec --user=noroot wordpress configure-wordpress.sh
-    docker-compose exec --user=noroot wordpress configure-dev-options.sh
+    docker compose up --build -d
+    docker compose exec wordpress wait-db.sh
+    docker compose exec --user=noroot wordpress composer install -d ../programs-remote-tests
+    docker compose exec --user=noroot wordpress configure-wordpress.sh
+    docker compose exec --user=noroot wordpress configure-dev-options.sh
 
     echo "Remember to add rgconnect.test to your /etc/hosts file"
 
@@ -94,7 +87,7 @@ build() {
 
 # remove containers, volumes, db cache and wordpress
 clean() {
-    docker-compose down --volumes
+    docker compose down --volumes
     git clean -xdf html/
     rm $MARKER
 }

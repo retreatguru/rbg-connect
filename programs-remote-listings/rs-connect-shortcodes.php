@@ -79,7 +79,7 @@ class RS_Connect_Shortcodes {
         // todo: Build link here to customize the link title instead of pulling it dynamically or maybe just search and replace string
         $program = RS_Connect_Api::get_program($atts['id']);
 
-        return $program->registration_action;
+        return $program->registration_action ?? '';
     }
 
     public function shortcode_teachers($atts)

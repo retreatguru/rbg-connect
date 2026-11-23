@@ -3,7 +3,7 @@ Contributors: retreatguru, dwenaus, skasai, cloudedwards, andychute
 Donate link: http://retreat.guru/booking
 Tags: retreat, booking, events, registration, retreat guru, event booking, event manager
 Requires at least: 3.0
-Tested up to: 6.5.2
+Tested up to: 7.1.4
 Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -34,6 +34,10 @@ email support@retreat.guru or phone 1-888-881-0404 if you need help. Or send us 
 1. coming soon.
 
 == Changelog ==
+= 2.3.4 =
+* Tested with PHP 8.4, WordPress 7.1 and MySQL 8.4
+* Programs and teachers that no longer exist (404 and other error responses) are no longer shown from the local cache
+
 = 2.3.3 =
 * Added option in settings to use the Large resolution for thumbnail images
 
