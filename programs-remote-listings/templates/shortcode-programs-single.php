@@ -56,7 +56,8 @@ if (is_array($shortcode_atts)) extract($shortcode_atts); ?>
                     <div class="rs-program-early-bird-discount rs-highlight"><?php echo $early_bird_discount; ?></div>
                 <?php endif; ?>
 
-                <?php if (! empty($rs_the_program->summary_panel)) : ?>
+                <?php // program-edit-v3 sites send summary_panel, [] when no row shows; older RG versions leave it out. ?>
+                <?php if (isset($rs_the_program->summary_panel)) : ?>
                     <?php
                     $row_classes = [
                         'date' => 'rs-program-datetime',

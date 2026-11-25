@@ -39,12 +39,23 @@ class SingleProgramTemplateTest extends \Codeception\Test\Unit
         $this->assertSame(0, $xpath->query('//*[contains(text(), "Legacy")]')->length, 'The legacy fields are not printed next to the rows');
     }
 
-    /**
-     * @dataProvider legacyFeeds
-     */
-    public function testLegacyBlocksWithoutSummaryPanel($summary_panel)
+    public function testEmptySummaryPanelPrintsNoRowsAndNoLegacyBlocks()
     {
-        $xpath = $this->render($summary_panel === 'missing' ? array() : array('summary_panel' => $summary_panel));
+        // A program-edit-v3 program with no row that shows sends an empty list. That's the admin's panel, not a reason to
+        // fall back.
+        $xpath = $this->render(array('summary_panel' => array()));
+
+        $this->assertSame(array(
+            'rs-program-early-bird-discount rs-highlight',
+            'rs-button',
+            'rs-regsitration-wrap',
+        ), $this->sidebarClasses($xpath));
+    }
+
+    public function testLegacyBlocksWithoutSummaryPanel()
+    {
+        // Sites without program-edit-v3 and older RetreatGuru versions don't send the field.
+        $xpath = $this->render(array());
 
         $this->assertSame(array(
             'rs-program-early-bird-discount rs-highlight',
@@ -58,13 +69,6 @@ class SingleProgramTemplateTest extends \Codeception\Test\Unit
             'rs-regsitration-wrap',
         ), $this->sidebarClasses($xpath));
         $this->assertSame(array('Date & Time Details: Legacy date', 'Location: Legacy location', 'Address: Legacy address'), $this->texts($xpath, '//p[@class="rs-program-datetime" or @class="rs-program-location" or @class="rs-program-address"]'));
-    }
-
-    public function legacyFeeds()
-    {
-        // Sites without program-edit-v3 and older RetreatGuru versions don't send the field; a V3 program with no rows
-        // sends it empty.
-        return array(array('missing'), array(array()));
     }
 
     private function row($label, $html, $source)
