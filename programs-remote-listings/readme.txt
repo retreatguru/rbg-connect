@@ -34,6 +34,9 @@ email support@retreat.guru or phone 1-888-881-0404 if you need help. Or send us 
 1. coming soon.
 
 == Changelog ==
+= 2.4.0 =
+* Program sidebar follows the summary panel configured in Retreat Guru
+
 = 2.3.4 =
 * Tested with PHP 8.4, WordPress 7.1 and MySQL 8.4
 * Programs and teachers that no longer exist (404 and other error responses) are no longer shown from the local cache

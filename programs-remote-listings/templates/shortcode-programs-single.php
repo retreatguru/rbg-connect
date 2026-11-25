@@ -56,34 +56,74 @@ if (is_array($shortcode_atts)) extract($shortcode_atts); ?>
                     <div class="rs-program-early-bird-discount rs-highlight"><?php echo $early_bird_discount; ?></div>
                 <?php endif; ?>
 
-                <?php // Pricing ?>
-                <?php if ($price_details) : ?>
-                    <div class="rs-program-price"><?php echo $price_details ?></div>
-                <?php endif; ?>
+                <?php // program-edit-v3 sites send summary_panel, [] when no row shows; older RG versions leave it out. ?>
+                <?php if (isset($rs_the_program->summary_panel)) : ?>
+                    <?php
+                    $row_classes = [
+                        'date' => 'rs-program-datetime',
+                        'location' => 'rs-program-location',
+                        'address' => 'rs-program-address',
+                        'contact' => 'rs-program-contact',
+                        'price' => 'rs-program-price',
+                    ];
+                    $custom_rows = '';
+                    foreach ($rs_the_program->summary_panel as $row) {
+                        $row_class = $row_classes[$row->source ?? ''] ?? '';
+                        // Labels arrive as the admin typed them: one colon, none on price, like the RetreatGuru page.
+                        $row_label = rtrim($row->label, ' :');
+                        if ($row_label !== '' && $row_class !== 'rs-program-price') {
+                            $row_label .= ':';
+                        }
+                        $row_html = sprintf(
+                            '<div class="%s">%s%s</div>',
+                            $row_class ?: 'program-custom',
+                            $row_label === '' ? '' : '<span class="rs-program-label">' . $row_label . '</span> ',
+                            $row->html
+                        );
+                        if (! $row_class) {
+                            $custom_rows .= $row_html;
+                            continue;
+                        }
+                        if ($custom_rows) {
+                            echo '<div class="rs-program-custom-wrap">' . $custom_rows . '</div>';
+                            $custom_rows = '';
+                        }
+                        echo $row_html;
+                    }
+                    if ($custom_rows) {
+                        echo '<div class="rs-program-custom-wrap">' . $custom_rows . '</div>';
+                    }
+                    ?>
+                <?php else : ?>
+                    <?php // Pricing ?>
+                    <?php if ($price_details) : ?>
+                        <div class="rs-program-price"><?php echo $price_details ?></div>
+                    <?php endif; ?>
 
-                <?php // Datetime details ?>
-                <?php if ($date_time) : ?>
-                    <p class="rs-program-datetime"><span class="rs-program-label"><?php echo $date_title; ?></span> <?php echo $date_time; ?></p>
-                <?php endif; ?>
+                    <?php // Datetime details ?>
+                    <?php if ($date_time) : ?>
+                        <p class="rs-program-datetime"><span class="rs-program-label"><?php echo $date_title; ?></span> <?php echo $date_time; ?></p>
+                    <?php endif; ?>
 
-                <?php // Location ?>
-                <?php if ($location) : ?>
-                    <p class="rs-program-location"><span class="rs-program-label"><?php echo $location_title; ?></span> <?php echo $location; ?></p>
-                <?php endif; ?>
+                    <?php // Location ?>
+                    <?php if ($location) : ?>
+                        <p class="rs-program-location"><span class="rs-program-label"><?php echo $location_title; ?></span> <?php echo $location; ?></p>
+                    <?php endif; ?>
 
-                <?php // Address ?>
-                <?php if ($address) : ?>
-                    <p class="rs-program-address"><span class="rs-program-label"><?php echo $address_title; ?></span> <?php echo $address; ?></p>
-                <?php endif; ?>
+                    <?php // Address ?>
+                    <?php if ($address) : ?>
+                        <p class="rs-program-address"><span class="rs-program-label"><?php echo $address_title; ?></span> <?php echo $address; ?></p>
+                    <?php endif; ?>
 
-                <?php // Contact details ?>
-                <?php if ($contact) : ?>
-                    <p class="rs-program-contact"><?php echo $contact ?></p>
-                <?php endif; ?>
+                    <?php // Contact details ?>
+                    <?php if ($contact) : ?>
+                        <p class="rs-program-contact"><?php echo $contact ?></p>
+                    <?php endif; ?>
 
-                <?php // Custom fields ?>
-                <?php if ($custom) : ?>
-                    <div class="rs-program-custom-wrap"><?php echo $custom; ?></div>
+                    <?php // Custom fields ?>
+                    <?php if ($custom) : ?>
+                        <div class="rs-program-custom-wrap"><?php echo $custom; ?></div>
+                    <?php endif; ?>
                 <?php endif; ?>
 
                 <?php if ($email && empty($options['rs_template']['hide_contact_button'])) : ?>
